@@ -1,7 +1,9 @@
 # Final Team Project (Default)
 
-# Team: !Collision
-# 
+# Team Name: !Collision
+
+ >>> With shield or deadlock <<<
+
 Team Members: 
 Mikheil Zhghenti, 
 Otar Jankhoteli, 
