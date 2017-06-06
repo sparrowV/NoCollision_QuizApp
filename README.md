@@ -2,7 +2,7 @@
 
 # Team Name: !Collision
 
- >>> With shield or deadlock <<<
+ # >>>With shield or deadlock<<<
 
 Team Members: 
 Mikheil Zhghenti, 
