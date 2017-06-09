@@ -5,14 +5,14 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash {
 	/**
-	 * Encodes given string with SHA algorithm.
+	 * Encodes given string with SHA-256 algorithm.
 	 *
 	 * @param word string
 	 * @return encoded byte[]
 	 */
-	public static String stringToSHA(String word) {
+	public static String encode(String word) {
 		try {
-			MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 			messageDigest.update(word.getBytes());
 			byte[] res = messageDigest.digest();
 			return hexToString(res);
@@ -31,9 +31,9 @@ public class Hash {
 	 * @return hex string
 	 */
 	private static String hexToString(byte[] bytes) {
-		StringBuffer buff = new StringBuffer();
-		for (int i = 0; i < bytes.length; i++) {
-			int val = bytes[i];
+		StringBuilder buff = new StringBuilder();
+		for (byte aByte : bytes) {
+			int val = aByte;
 			val = val & 0xff;  // remove higher bits, sign
 			if (val < 16) buff.append('0'); // leading 0
 			buff.append(Integer.toString(val, 16));

@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
         UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
         User user = new User(request.getParameter(ServletKey.USERNAME), request.getParameter(ServletKey.PASSWORD));
 
-        if (manager.isCorrect(user)) {
+        if (manager.correctLogin(user)) {
             dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
             dispatcher.forward(request, response);
         } else {

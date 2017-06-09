@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
+@WebServlet(name = "SignUp", value = "/SignUp")
 public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
@@ -20,13 +20,13 @@ public class SignUp extends HttpServlet {
 
         String firstName = request.getParameter(ServletKey.FIRST_NAME);
         String lastName = request.getParameter(ServletKey.LAST_NAME);
-        String userName = request.getParameter(ServletKey.USERNAME);
+        String username = request.getParameter(ServletKey.USERNAME);
         String password = request.getParameter(ServletKey.PASSWORD);
 
-        if (!userManager.isTaken(userName)) {
+        if (!userManager.usernameTaken(username)) {
             // new user
 
-            String hashedPassword = Hash.stringToSHA(password);
+            String hashedPassword = Hash.encode(password);
 
 
             dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
