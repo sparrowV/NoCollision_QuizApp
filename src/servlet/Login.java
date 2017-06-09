@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Login", urlPatterns = {"/Login", "/index.html"})
+@WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
 		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 		User user = new User(request.getParameter(LoginKey.USERNAME), request.getParameter(LoginKey.PASSWORD));
 
-		if(manager.userExists(user)) {
+		if (manager.userExists(user)) {
 			dispatcher = request.getRequestDispatcher("welcome.jsp");
 			dispatcher.forward(request, response);
 		} else {

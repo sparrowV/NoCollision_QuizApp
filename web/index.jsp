@@ -9,8 +9,8 @@
 <h3>Please log in</h3>
 
 <form action="Login" method="post">
-    <p>Username: <input type="text" name="<%= LoginKey.USERNAME%>" title="title"/>
-    <p>Password: <input type="password" name="<%= LoginKey.PASSWORD%>" title="title"/>
+    <p>Username: <input type="text" name="<%= LoginKey.USERNAME%>"/>
+    <p>Password: <input type="password" name="<%= LoginKey.PASSWORD%>"/>
         <input type="submit" value = "login"/></p>
 </form>
 <a href="${pageContext.request.contextPath}/create.jsp">Create New Account</a>
