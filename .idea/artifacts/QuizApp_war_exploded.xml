@@ -7,6 +7,10 @@
         <element id="directory" name="classes">
           <element id="module-output" name="QuizApp" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql:mysql-connector-java:6.0.6" />
+          <element id="library" level="project" name="org.apache.tomcat:tomcat-jdbc:8.5.15" />
+        </element>
       </element>
     </root>
   </artifact>

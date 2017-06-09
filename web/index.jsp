@@ -11,8 +11,8 @@
 <form action="Login" method="post">
     <p>Username: <input type="text" name="<%= LoginKey.USERNAME%>"/>
     <p>Password: <input type="password" name="<%= LoginKey.PASSWORD%>"/>
-        <input type="submit" value = "login"/></p>
+        <input type="submit" value="login"/></p>
 </form>
-<a href="${pageContext.request.contextPath}/create.jsp">Create New Account</a>
+<a href="${pageContext.request.contextPath}/sign-up.jsp">Create New Account</a>
 </body>
 </html>

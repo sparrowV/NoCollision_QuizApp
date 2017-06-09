@@ -4,6 +4,8 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/tomcat-jdbc-8.5.15.jar!/" />
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/tomcat-juli-8.5.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/tomcat-jdbc-8.5.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/tomcat-juli-8.5.15.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
