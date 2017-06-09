@@ -6,6 +6,7 @@
 </head>
 <body>
 <h3>Register here</h3>
+<h4>Your username is already taken. Try another one:</h4>
 
 <form action="SignUp" method="post">
     <p>First Name: <input type="text" name="<%= ServletKey.FIRST_NAME%>"/>
@@ -14,6 +15,5 @@
     <p>Password: <input type="password" name="<%= ServletKey.PASSWORD%>"/>
         <input type="submit" value="Sign Up"/></p>
 </form>
-
 </body>
 </html>

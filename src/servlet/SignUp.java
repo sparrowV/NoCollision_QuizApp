@@ -1,6 +1,6 @@
 package servlet;
 
-import database.bean.Encription;
+import util.Hash;
 import listener.ContextKey;
 import model.UserManager;
 
@@ -12,29 +12,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by m1sho on 10.06.2017.
- */
 @WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
 public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
         RequestDispatcher dispatcher;
 
-        String firstName = request.getParameter(LoginKey.FIRSTNAME);
-        String lastName = request.getParameter(LoginKey.LASTNAME);
-        String userName = request.getParameter(LoginKey.USERNAME);
-        String password = request.getParameter(LoginKey.PASSWORD);
+        String firstName = request.getParameter(ServletKey.FIRST_NAME);
+        String lastName = request.getParameter(ServletKey.LAST_NAME);
+        String userName = request.getParameter(ServletKey.USERNAME);
+        String password = request.getParameter(ServletKey.PASSWORD);
 
-        if (!userManager.userNameTaken(userName)) {
+        if (!userManager.isTaken(userName)) {
             // new user
 
-            String hashedPassword = Encription.stringToSHA(password);
+            String hashedPassword = Hash.stringToSHA(password);
 
 
-            dispatcher = request.getRequestDispatcher("welcome.jsp");
+            dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
         } else {
-            dispatcher = request.getRequestDispatcher("username_taken.jsp");
+            dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);
         }
         dispatcher.forward(request, response);
     }
