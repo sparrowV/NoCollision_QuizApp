@@ -1,5 +1,6 @@
 package servlet;
 
+import database.bean.Encription;
 import listener.ContextKey;
 import model.UserManager;
 
@@ -25,13 +26,17 @@ public class SignUp extends HttpServlet {
         String userName = request.getParameter(LoginKey.USERNAME);
         String password = request.getParameter(LoginKey.PASSWORD);
 
-        if (userManager.userNameTaken(userName)) {
-            //try again
+        if (!userManager.userNameTaken(userName)) {
+            // new user
+
+            String hashedPassword = Encription.stringToSHA(password);
+
+
+            dispatcher = request.getRequestDispatcher("welcome.jsp");
         } else {
-            // save and logged in
+            dispatcher = request.getRequestDispatcher("username_taken.jsp");
         }
-
-
+        dispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
