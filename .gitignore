@@ -208,4 +208,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Specific source files
+/src/database/DBInfo.java
+
 # End of https://www.gitignore.io/api/java,macos,linux,eclipse,windows,intellij
