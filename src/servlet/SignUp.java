@@ -1,5 +1,6 @@
 package servlet;
 
+import database.bean.User;
 import util.Hash;
 import listener.ContextKey;
 import model.UserManager;
@@ -24,11 +25,10 @@ public class SignUp extends HttpServlet {
         String password = request.getParameter(ServletKey.PASSWORD);
 
         if (!userManager.usernameTaken(username)) {
-            // new user
-
             String hashedPassword = Hash.encode(password);
+            User newUser = new User(firstName, lastName, username, hashedPassword);
 
-
+			userManager.addUser(newUser);
             dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
         } else {
             dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);

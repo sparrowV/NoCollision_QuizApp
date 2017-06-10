@@ -3,6 +3,7 @@ package servlet;
 import database.bean.User;
 import listener.ContextKey;
 import model.UserManager;
+import util.Hash;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -19,7 +20,12 @@ public class Login extends HttpServlet {
         ServletContext context = getServletContext();
         RequestDispatcher dispatcher;
         UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
-        User user = new User(request.getParameter(ServletKey.USERNAME), request.getParameter(ServletKey.PASSWORD));
+
+        String username = request.getParameter(ServletKey.USERNAME);
+        // get encrypted password
+        String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
+
+		User user = new User(username, hashedPassword);
 
         if (manager.correctLogin(user)) {
             dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
