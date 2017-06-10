@@ -23,7 +23,7 @@ public class UserDAO {
 	 */
 	public List<User> getUsers() {
 		// Create a new empty list.
-		List<User> products = new ArrayList<>();
+		List<User> users = new ArrayList<>();
 
 		Connection connection = null;
 		try {
@@ -40,11 +40,12 @@ public class UserDAO {
 
 			// Iterate over result set and add products to the list.
 			while (resultSet.next()) {
-				products.add(fetchUser(resultSet));
+				users.add(fetchUser(resultSet));
 			}
 
 			// Close statement and result set.
 			resultSet.close();
+			preparedStatement.close();
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +57,51 @@ public class UserDAO {
 			}
 		}
 
-		return products;
+		return users;
+	}
+
+
+	/**
+	 * Adds given user to the database
+	 * @param user
+	 * @throws  SQLException*/
+	public void addUser(User user) throws SQLException {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// query inserting into users table
+			String query = "INSERT INTO " + DBContract.UserTable.TABLE_NAME + " " + "(" +
+					DBContract.UserTable.COLUMN_NAME_FIRST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_LAST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_USERNAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_PASSWORD + ") " +
+					"VALUES (?,?,?,?);";
+
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, user.getFirstName());
+			preparedStatement.setString(2, user.getLastName());
+			preparedStatement.setString(3, user.getUsername());
+			preparedStatement.setString(4, user.getPassword());
+
+			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
 	}
 
 
