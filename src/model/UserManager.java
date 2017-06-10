@@ -11,7 +11,6 @@ public class UserManager {
 
 	public UserManager(UserDAO dao) {
 		this.dao = dao;
-
 	}
 
 	public boolean correctLogin(User user) {

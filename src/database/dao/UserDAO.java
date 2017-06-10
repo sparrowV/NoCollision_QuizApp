@@ -63,8 +63,10 @@ public class UserDAO {
 
 	/**
 	 * Adds given user to the database
+	 *
 	 * @param user
-	 * @throws  SQLException*/
+	 * @throws SQLException
+	 */
 	public void addUser(User user) throws SQLException {
 		Connection connection = null;
 		try {
@@ -107,6 +109,7 @@ public class UserDAO {
 
 	/**
 	 * Creates and returns user from result set.
+	 *
 	 * @param resultSet
 	 * @return user
 	 * @throws SQLException
