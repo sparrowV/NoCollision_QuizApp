@@ -16,27 +16,27 @@ import java.io.IOException;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletContext context = getServletContext();
-        RequestDispatcher dispatcher;
-        UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext context = getServletContext();
+		RequestDispatcher dispatcher;
+		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
-        String username = request.getParameter(ServletKey.USERNAME);
-        // get encrypted password
-        String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
+		String username = request.getParameter(ServletKey.USERNAME);
+		// get encrypted password
+		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 
 		User user = new User(username, hashedPassword);
 
-        if (manager.correctLogin(user)) {
-            dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
-            dispatcher.forward(request, response);
-        } else {
-            dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
-            dispatcher.forward(request, response);
-        }
-    }
+		if (manager.correctLogin(user)) {
+			dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
+			dispatcher.forward(request, response);
+		} else {
+			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
+			dispatcher.forward(request, response);
+		}
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 }

@@ -1,9 +1,9 @@
 package servlet;
 
 import database.bean.User;
-import util.Hash;
 import listener.ContextKey;
 import model.UserManager;
+import util.Hash;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +37,6 @@ public class SignUp extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request, response);
     }
 }
