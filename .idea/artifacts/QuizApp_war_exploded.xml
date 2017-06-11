@@ -11,6 +11,8 @@
           <element id="library" level="project" name="mysql:mysql-connector-java:6.0.6" />
           <element id="library" level="project" name="org.apache.tomcat:tomcat-jdbc:8.5.15" />
           <element id="library" level="module" name="JUnit4" module-name="QuizApp" />
+          <element id="library" level="project" name="org.mockito:mockito-core:2.8.9" />
+          <element id="library" level="project" name="junit:junit:4.12" />
         </element>
       </element>
     </root>
