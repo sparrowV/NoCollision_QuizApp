@@ -1,6 +1,7 @@
 package database.bean;
 
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class QuestionPlain implements Question {
 
     public String toHtml() {
         return "";
+    }
+
+    @Override
+    public PreparedStatement toSql() {
+        return null;
     }
 
     @Override
