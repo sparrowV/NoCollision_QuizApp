@@ -9,7 +9,7 @@ CREATE TABLE users (
   user_id    INT AUTO_INCREMENT,
   first_name NVARCHAR(30) NOT NULL,
   last_name  NVARCHAR(30) NOT NULL,
-  username   VARCHAR(20)  NOT NULL,
+  username   VARCHAR(20)  NOT NULL UNIQUE,
   password   VARCHAR(200) NOT NULL,
 
   CONSTRAINT users_pk PRIMARY KEY (user_id)
@@ -29,11 +29,11 @@ CREATE TABLE quizzes (
 
 DROP TABLE IF EXISTS questions_to_quizzes;
 CREATE TABLE questions_to_quizzes (
-  question_id INT AUTO_INCREMENT,
+  question_id INT,
   type_id     INT NOT NULL,
   quiz_id     INT NOT NULL,
 
-  CONSTRAINT questions_to_quizzes_pk PRIMARY KEY (question_id, type_id),
+  CONSTRAINT questions_to_quizzes_pk PRIMARY KEY (question_id, type_id, quiz_id),
   CONSTRAINT questions_to_quizzes_fk FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id)
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE questions_to_quizzes (
 DROP TABLE IF EXISTS questions_plain;
 CREATE TABLE questions_plain (
   question_id INT AUTO_INCREMENT,
-  type_id     INT           NOT NULL,
+  type_id     INT          NOT NULL DEFAULT 1,
   question    VARCHAR(1000) NOT NULL,
 
   CONSTRAINT questions_plain_pk PRIMARY KEY (question_id)
@@ -70,12 +70,13 @@ CREATE TABLE answers_to_questions_plain (
 DROP TABLE IF EXISTS questions_multchoice;
 CREATE TABLE questions_multchoice (
   question_id INT AUTO_INCREMENT,
-  type_id     INT          NOT NULL,
+  type_id     INT          NOT NULL DEFAULT 2,
+  question    VARCHAR(500) NOT NULL,
   choice1     VARCHAR(200) NOT NULL,
   choice2     VARCHAR(200) NOT NULL,
-  choice3     VARCHAR(200) NOT NULL,
-  choice4     VARCHAR(200) NOT NULL,
-  choice5     VARCHAR(200) NOT NULL,
+  choice3     VARCHAR(200) NULL,
+  choice4     VARCHAR(200) NULL,
+  choice5     VARCHAR(200) NULL,
   answer      INT          NOT NULL,
 
   CONSTRAINT questions_multchoice_pk PRIMARY KEY (question_id)
