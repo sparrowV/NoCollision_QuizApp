@@ -17,14 +17,12 @@ public class ContextListener implements ServletContextListener {
 		ServletContext context = sce.getServletContext();
 		try {
 			// Create and set connection pool parameters.
-			// Uses Apache Tomcat's JDBC pool (https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html).
 			PoolProperties properties = new PoolProperties();
 			properties.setDriverClassName(DBInfo.MYSQL_DRIVER_CLASS_NAME);
 			properties.setUrl(DBInfo.MYSQL_DATABASE_SERVER);
 			properties.setUsername(DBInfo.MYSQL_USERNAME);
 			properties.setPassword(DBInfo.MYSQL_PASSWORD);
 			properties.setInitialSize(DBInfo.MYSQL_POOL_INITIAL_SIZE);
-
 			// Create new database pool.
 			DataSource pool = new DataSource();
 			pool.setPoolProperties(properties);
