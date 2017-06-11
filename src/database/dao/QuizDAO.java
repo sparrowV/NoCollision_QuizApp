@@ -22,14 +22,14 @@ public class QuizDAO {
     }
 
     /**
-     * Returns a list of quizes from database for particular author.
+     * Returns a list of quizzes from database for particular author.
      *
-     * @return list of quizes.
+     * @return list of quizzes.
      */
 
-    public List<Quiz> getQuizzes(String authorId) {
+    public List<Quiz> getQuizzes(Integer authorId) {
         //new list
-        List<Quiz> quizes = new ArrayList<>();
+        List<Quiz> quizzes = new ArrayList<>();
         Connection connection = null;
         try {
             // Get the connection from the pool.
@@ -40,13 +40,15 @@ public class QuizDAO {
 
             // Prepare and execute 'SELECT' query.
             String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + "WHERE" +
-                    DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID + "=" + authorId + ";";
+                    DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID + " = ?;";
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, authorId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Iterate over result set and add products to the list.
             while (resultSet.next()) {
-                quizes.add(fetchQuiz(resultSet));
+                quizzes.add(fetchQuiz(resultSet));
             }
 
             // Close statement and result set.
@@ -63,7 +65,7 @@ public class QuizDAO {
             }
         }
 
-        return quizes;
+        return quizzes;
 
 
     }
@@ -92,7 +94,7 @@ public class QuizDAO {
 
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, quiz.getAuthorId());
+            preparedStatement.setInt(1, quiz.getAuthorId());
             preparedStatement.setString(2, quiz.getTitle());
             //converting java date to sql date
             java.sql.Date sqlDate = new java.sql.Date(quiz.getDateCreated().getTime());
@@ -127,7 +129,7 @@ public class QuizDAO {
         Quiz quiz = new Quiz();
 
         // Set values.
-        quiz.setAuthorId(resultSet.getString(DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID));
+        quiz.setAuthorId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID));
         quiz.setTitle(resultSet.getString(DBContract.QuizTable.COLUMN_NAME_TITLE));
         quiz.setDateCreated(resultSet.getDate(DBContract.QuizTable.COLUMN_NAME_DATA_CREATED));
 
