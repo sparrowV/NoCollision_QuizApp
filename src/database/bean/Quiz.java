@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Quiz {
-    private String authorId;
+    private Integer authorId;
     private String title;
     private Date dateCreated;
     private List<Question> questions;
@@ -14,18 +14,18 @@ public class Quiz {
 
     }
 
-    public Quiz(String author_id, String title, Date dateCreated, List<Question> questions) {
+    public Quiz(int author_id, String title, Date dateCreated, List<Question> questions) {
         this.authorId = author_id;
         this.title = title;
         this.dateCreated = dateCreated;
         this.questions = questions;
     }
 
-    public String getAuthorId() {
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String author_id) {
+    public void setAuthorId(Integer author_id) {
         this.authorId = author_id;
     }
 
