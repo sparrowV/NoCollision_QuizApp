@@ -94,7 +94,6 @@ public class UserDAO {
 
 			preparedStatement.close();
 			statement.close();
-
 		} catch (SQLException e) {
 			e.getStackTrace();
 		} finally {

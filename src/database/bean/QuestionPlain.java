@@ -7,7 +7,7 @@ import java.util.List;
 
 public class QuestionPlain implements Question {
     private String question;
-    private ArrayList<String> answers;
+	private List<String> answers;
 
     public QuestionPlain(String question, List<String> answers) {
         this.question = question;

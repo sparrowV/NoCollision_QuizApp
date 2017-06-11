@@ -1,20 +1,14 @@
 package database.bean;
 
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by sparrow on 6/11/2017.
- */
 public class Quiz {
     private String authorId;
     private String title;
     private Date dateCreated;
     private List<Question> questions;
-
 
     public Quiz() {
 
@@ -53,11 +47,10 @@ public class Quiz {
 
     public List<Question> getQuestions() {
         return questions;
-
     }
 
-    public void setQuestions(ArrayList<Question> questions) {
-        this.questions = questions;
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
     }
 
     @Override
@@ -70,7 +63,6 @@ public class Quiz {
         if (!getAuthorId().equals(quiz.getAuthorId())) return false;
         return getTitle().equals(quiz.getTitle());
     }
-
 
     @Override
     public int hashCode() {
@@ -87,6 +79,4 @@ public class Quiz {
                 ", dateCreated=" + dateCreated.toString() +
                 '}';
     }
-
-
 }
