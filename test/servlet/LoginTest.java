@@ -91,8 +91,8 @@ public class LoginTest {
 		List<String> values = captor.getAllValues();
 
 		// Verify results.
-		assertEquals(ServletKey.WELCOME_JSP, values.get(0));
-		assertEquals(ServletKey.WELCOME_JSP, values.get(1));
+		assertEquals(ServletKey.HOME_PAGE_JSP, values.get(0));
+		assertEquals(ServletKey.HOME_PAGE_JSP, values.get(1));
 	}
 
 	@Test
@@ -114,8 +114,8 @@ public class LoginTest {
 		List<String> values = captor.getAllValues();
 
 		// Verify results.
-		assertEquals(ServletKey.WELCOME_JSP, values.get(0));
-		assertEquals(ServletKey.WELCOME_JSP, values.get(1));
+		assertEquals(ServletKey.HOME_PAGE_JSP, values.get(0));
+		assertEquals(ServletKey.HOME_PAGE_JSP, values.get(1));
 	}
 
 	@Test

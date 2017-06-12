@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Login", value = "/Login")
@@ -20,16 +21,19 @@ public class Login extends HttpServlet {
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher;
 		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
-
+		HttpSession session = request.getSession();
 		String username = request.getParameter(ServletKey.USERNAME);
 		// get encrypted password
 		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 
 		User user = new User(username, hashedPassword);
+		//request.getSession().setAttribute();
 
 		if (manager.correctLogin(user)) {
-			dispatcher = request.getRequestDispatcher(ServletKey.WELCOME_JSP);
+			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 			dispatcher.forward(request, response);
+			request.getSession().setAttribute("user", user);
+
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
 			dispatcher.forward(request, response);
