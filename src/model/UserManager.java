@@ -26,6 +26,10 @@ public class UserManager {
 		}
 	}
 
+	public int getUserId(User user) {
+		return dao.getUserId(user.getUsername());
+	}
+
 	public boolean usernameTaken(String username) {
 		List<User> users = dao.getUsers();
 		for (User user : users) {

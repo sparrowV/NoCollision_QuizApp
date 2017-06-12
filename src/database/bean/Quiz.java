@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Quiz {
-    private Integer authorId;
+    private int authorId;
     private String title;
     private Date dateCreated;
     private List<Question> questions;
@@ -21,11 +21,11 @@ public class Quiz {
         this.questions = questions;
     }
 
-    public Integer getAuthorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer author_id) {
+    public void setAuthorId(int author_id) {
         this.authorId = author_id;
     }
 
@@ -60,13 +60,13 @@ public class Quiz {
 
         Quiz quiz = (Quiz) o;
 
-        if (!getAuthorId().equals(quiz.getAuthorId())) return false;
+        if (!(getAuthorId() == (quiz.getAuthorId()))) return false;
         return getTitle().equals(quiz.getTitle());
     }
 
     @Override
     public int hashCode() {
-        int result = getAuthorId().hashCode();
+        int result = Integer.toString(getAuthorId()).hashCode();
         result = 31 * result + getTitle().hashCode();
         return result;
     }

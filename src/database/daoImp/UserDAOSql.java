@@ -107,6 +107,37 @@ public class UserDAOSql implements UserDAO {
 	}
 
 	@Override
+	public int getUserId(String username) {
+		int userId = -1;
+		Connection connection = null;
+
+
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT " + DBContract.UserTable.COLUMN_NAME_ID + " FROM " +
+					DBContract.UserTable.TABLE_NAME + " WHERE " +
+					DBContract.UserTable.COLUMN_NAME_USERNAME + " = " + username;
+
+			ResultSet resultSet = statement.executeQuery(query);
+			resultSet.next();
+
+
+			userId = resultSet.getInt(DBContract.UserTable.COLUMN_NAME_ID);
+
+
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return userId;
+		}
+	}
+
+	@Override
 	public void uptdateUser(User user) {
 
 	}
