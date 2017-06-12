@@ -1,19 +1,18 @@
-package database.daoImp;
+package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
 import database.bean.User;
-import database.daoInterface.UserDAO;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOSql implements UserDAO {
+public class UserDAO {
     private DataSource pool;
 
-    public UserDAOSql(DataSource pool) {
+    public UserDAO(DataSource pool) {
         this.pool = pool;
     }
 
@@ -84,7 +83,6 @@ public class UserDAOSql implements UserDAO {
                     DBContract.UserTable.COLUMN_NAME_PASSWORD + ") " +
                     "VALUES (?,?,?,?);";
 
-
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -106,10 +104,15 @@ public class UserDAOSql implements UserDAO {
         }
     }
 
-    @Override
+    /**
+     * Returns given username's id from database.
+     *
+     * @param username
+     * @return id
+     */
     public int getUserId(String username) {
         int userId = -1;
-        Connection connection = null;
+        Connection connection;
 
         try {
             connection = pool.getConnection();
@@ -121,7 +124,6 @@ public class UserDAOSql implements UserDAO {
                     DBContract.UserTable.TABLE_NAME + " WHERE " +
                     DBContract.UserTable.COLUMN_NAME_USERNAME + " = \"" + username + "\";";
 
-            System.out.println(query);
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
 
@@ -133,16 +135,6 @@ public class UserDAOSql implements UserDAO {
         }
 
         return userId;
-    }
-
-    @Override
-    public void uptdateUser(User user) {
-
-    }
-
-    @Override
-    public void deleteUser(User user) {
-
     }
 
 

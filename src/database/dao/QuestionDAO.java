@@ -1,4 +1,4 @@
-package database.daoImp;
+package database.dao;
 
 
 import database.DBInfo;

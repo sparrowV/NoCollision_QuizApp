@@ -1,5 +1,6 @@
 package servlet;
 
+import com.mysql.cj.api.Session;
 import listener.ContextKey;
 import model.UserManager;
 import org.junit.Before;
@@ -11,6 +12,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +32,7 @@ public class LoginTest {
 	public void setUp() throws Exception {
 		// Create mocks.
 		RequestDispatcher requestDispatcherMock = mock(RequestDispatcher.class);
+		HttpSession sessionMock = mock(HttpSession.class);
 		requestMock = mock(HttpServletRequest.class);
 		responseMock = mock(HttpServletResponse.class);
 		servletContextMock = mock(ServletContext.class);
@@ -37,6 +40,7 @@ public class LoginTest {
 
 		// Setup dispatcher.
 		when(requestMock.getRequestDispatcher(anyString())).thenReturn(requestDispatcherMock);
+		when(requestMock.getSession()).thenReturn(sessionMock);
 
 		// Setup ServletContext.
 		login = new Login() {

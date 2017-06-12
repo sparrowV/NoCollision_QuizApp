@@ -19,7 +19,6 @@ public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
         RequestDispatcher dispatcher;
-
 		HttpSession session = request.getSession();
 
         String firstName = request.getParameter(ServletKey.FIRST_NAME);
@@ -30,7 +29,7 @@ public class SignUp extends HttpServlet {
         if (!userManager.usernameTaken(username)) {
             String hashedPassword = Hash.encode(password);
             User newUser = new User(firstName, lastName, username, hashedPassword);
-			session.setAttribute("user", newUser);
+            session.setAttribute(ServletKey.USER, newUser);
 
 			userManager.addUser(newUser);
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);

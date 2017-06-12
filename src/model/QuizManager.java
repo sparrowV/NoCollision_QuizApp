@@ -1,13 +1,10 @@
 package model;
 
-import database.daoImp.QuizDAO;
 import database.bean.Quiz;
+import database.dao.QuizDAO;
 
 import java.sql.SQLException;
 
-/**
- * Created by sparrow on 6/11/2017.
- */
 public class QuizManager {
     private QuizDAO dao;
 
@@ -21,6 +18,5 @@ public class QuizManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }

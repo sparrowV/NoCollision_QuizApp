@@ -1,4 +1,4 @@
-package database.daoImp;
+package database.dao;
 
 
 import database.DBContract;
@@ -11,9 +11,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sparrow on 6/11/2017.
- */
 public class QuizDAO {
     private DataSource pool;
 
@@ -26,7 +23,6 @@ public class QuizDAO {
      *
      * @return list of quizzes.
      */
-
     public List<Quiz> getQuizzes(Integer authorId) {
         List<Quiz> quizzes = new ArrayList<>();
         Connection connection = null;
@@ -71,7 +67,7 @@ public class QuizDAO {
 
 
     /**
-     * Adds given quiz to the particular author's quizzes
+     * Adds given quiz to the particular author's quizzes.
      *
      * @param quiz
      * @throws SQLException
@@ -95,11 +91,7 @@ public class QuizDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, quiz.getAuthorId());
             preparedStatement.setString(2, quiz.getTitle());
-            //converting java date to sql date
-            java.sql.Date sqlDate = new java.sql.Date(quiz.getDateCreated().getTime());
-            preparedStatement.setDate(3, sqlDate);
-
-            System.out.println(preparedStatement.toString());
+            preparedStatement.setDate(3, new java.sql.Date(quiz.getDateCreated().getTime()));  // Convert Java date to SQL date.
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -130,7 +122,6 @@ public class QuizDAO {
         quiz.setAuthorId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID));
         quiz.setTitle(resultSet.getString(DBContract.QuizTable.COLUMN_NAME_TITLE));
         quiz.setDateCreated(resultSet.getDate(DBContract.QuizTable.COLUMN_NAME_DATA_CREATED));
-
 
         return quiz;
     }

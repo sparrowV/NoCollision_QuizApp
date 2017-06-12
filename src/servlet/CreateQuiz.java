@@ -1,6 +1,5 @@
 package servlet;
 
-import database.bean.Question;
 import database.bean.Quiz;
 import database.bean.User;
 import listener.ContextKey;
@@ -19,27 +18,22 @@ import java.util.Date;
 
 @WebServlet(name = "CreateQuiz", value = "/CreateQuiz")
 public class CreateQuiz extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//HttpServletContext context=request.getServletContext();
-		UserManager userManager = (UserManager) request.getServletContext().
-				getAttribute(ContextKey.USER_MANAGER);
-		QuizManager quizManager = (QuizManager) request.getServletContext()
-				.getAttribute(ContextKey.QUIZ_MANAGER);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //HttpServletContext context=request.getServletContext();
+        UserManager userManager = (UserManager) request.getServletContext().
+                getAttribute(ContextKey.USER_MANAGER);
+        QuizManager quizManager = (QuizManager) request.getServletContext()
+                .getAttribute(ContextKey.QUIZ_MANAGER);
 
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-		User user = (User) session.getAttribute("user");
-		int userId = userManager.getUserId(user);
-		String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
+        User user = (User) session.getAttribute(ServletKey.USER);
+        int userId = userManager.getUserId(user);
+        String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
+        quizManager.addQuiz(new Quiz(userId, quizTitle, new Date(), null)); // TODO
+    }
 
-		Quiz quiz = new Quiz(userId, quizTitle, new Date(), null); //todo
-
-		quizManager.addQuiz(quiz);
-
-
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
+    }
 }

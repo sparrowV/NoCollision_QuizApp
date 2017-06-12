@@ -20,20 +20,19 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher;
-		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 		HttpSession session = request.getSession();
-		String username = request.getParameter(ServletKey.USERNAME);
-		// get encrypted password
-		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
+		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
+
+		String username = request.getParameter(ServletKey.USERNAME);
+		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 		User user = new User(username, hashedPassword);
 		//request.getSession().setAttribute();
 
 		if (manager.correctLogin(user)) {
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 			dispatcher.forward(request, response);
-			request.getSession().setAttribute("user", user);
-
+			request.getSession().setAttribute(ServletKey.USER, user);
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
 			dispatcher.forward(request, response);
