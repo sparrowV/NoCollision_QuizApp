@@ -1,14 +1,15 @@
 package model;
 
 import database.bean.User;
+import database.daoImp.UserDAOSql;
 import database.daoInterface.UserDAO;
 import java.util.List;
 
 
 public class UserManager {
-	private UserDAO dao;
+	private UserDAOSql dao;
 
-	public UserManager(UserDAO dao) {
+	public UserManager(UserDAOSql dao) {
 		this.dao = dao;
 	}
 

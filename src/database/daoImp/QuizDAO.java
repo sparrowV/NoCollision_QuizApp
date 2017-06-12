@@ -28,7 +28,6 @@ public class QuizDAO {
      */
 
     public List<Quiz> getQuizzes(Integer authorId) {
-        //new list
         List<Quiz> quizzes = new ArrayList<>();
         Connection connection = null;
         try {
@@ -39,7 +38,7 @@ public class QuizDAO {
             statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
             // Prepare and execute 'SELECT' query.
-            String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + "WHERE" +
+            String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + " WHERE " +
                     DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID + " = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -100,12 +99,11 @@ public class QuizDAO {
             java.sql.Date sqlDate = new java.sql.Date(quiz.getDateCreated().getTime());
             preparedStatement.setDate(3, sqlDate);
 
-
+            System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
             statement.close();
-
         } catch (SQLException e) {
             e.getStackTrace();
         } finally {

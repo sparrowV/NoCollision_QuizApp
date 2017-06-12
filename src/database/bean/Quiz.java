@@ -25,8 +25,8 @@ public class Quiz {
         return authorId;
     }
 
-    public void setAuthorId(int author_id) {
-        this.authorId = author_id;
+    public void setAuthorId(int authorID) {
+        this.authorId = authorID;
     }
 
     public String getTitle() {

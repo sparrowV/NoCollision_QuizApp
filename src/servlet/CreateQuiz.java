@@ -37,10 +37,6 @@ public class CreateQuiz extends HttpServlet {
 		quizManager.addQuiz(quiz);
 
 
-
-
-
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
