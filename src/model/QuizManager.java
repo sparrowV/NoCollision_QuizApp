@@ -1,6 +1,6 @@
 package model;
 
-import database.dao.QuizDAO;
+import database.daoImp.QuizDAO;
 import database.bean.Quiz;
 
 import java.sql.SQLException;

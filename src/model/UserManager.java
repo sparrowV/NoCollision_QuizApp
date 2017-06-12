@@ -1,10 +1,9 @@
 package model;
 
 import database.bean.User;
-import database.dao.UserDAO;
-
-import java.sql.SQLException;
+import database.daoInterface.UserDAO;
 import java.util.List;
+
 
 public class UserManager {
 	private UserDAO dao;
@@ -22,7 +21,7 @@ public class UserManager {
 	public void addUser(User user) {
 		try {
 			dao.addUser(user);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

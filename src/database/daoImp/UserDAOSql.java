@@ -1,18 +1,19 @@
-package database.dao;
+package database.daoImp;
 
 import database.DBContract;
 import database.DBInfo;
 import database.bean.User;
+import database.daoInterface.UserDAO;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAOSql implements UserDAO {
 	private DataSource pool;
 
-	public UserDAO(DataSource pool) {
+	public UserDAOSql(DataSource pool) {
 		this.pool = pool;
 	}
 
@@ -103,6 +104,16 @@ public class UserDAO {
 			} catch (Exception ignored) {
 			}
 		}
+	}
+
+	@Override
+	public void uptdateUser(User user) {
+
+	}
+
+	@Override
+	public void deleteUser(User user) {
+
 	}
 
 

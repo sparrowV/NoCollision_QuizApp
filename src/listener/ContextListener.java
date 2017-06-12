@@ -1,7 +1,7 @@
 package listener;
 
 import database.DBInfo;
-import database.dao.UserDAO;
+import database.daoImp.UserDAOSql;
 import model.UserManager;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
@@ -29,7 +29,7 @@ public class ContextListener implements ServletContextListener {
 
 			// Save the database and UserDao in context.
 			context.setAttribute(ContextKey.CONNECTION_POOL, pool);
-			context.setAttribute(ContextKey.USER_MANAGER, new UserManager(new UserDAO(pool)));
+			context.setAttribute(ContextKey.USER_MANAGER, new UserManager(new UserDAOSql(pool)));
 		} catch (Exception ignored) {
 		}
 	}
