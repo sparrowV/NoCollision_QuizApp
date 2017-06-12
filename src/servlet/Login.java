@@ -17,29 +17,25 @@ import java.io.IOException;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-		RequestDispatcher dispatcher;
-		HttpSession session = request.getSession();
-		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext context = getServletContext();
+        RequestDispatcher dispatcher;
+        UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
+        String username = request.getParameter(ServletKey.USERNAME);
+        String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
+        User user = new User(username, hashedPassword);
 
-		String username = request.getParameter(ServletKey.USERNAME);
-		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
-		User user = new User(username, hashedPassword);
-		//request.getSession().setAttribute();
+        if (manager.correctLogin(user)) {
+            dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
+            request.getSession().setAttribute(ServletKey.USER, user);
+        } else {
+            dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
+        }
+        dispatcher.forward(request, response);
+    }
 
-		if (manager.correctLogin(user)) {
-			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
-			dispatcher.forward(request, response);
-			request.getSession().setAttribute(ServletKey.USER, user);
-		} else {
-			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
-			dispatcher.forward(request, response);
-		}
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
+    }
 }
