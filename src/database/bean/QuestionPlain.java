@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionPlain implements Question {
+public class QuestionPlain implements Question, HtmlSerializable {
 	public static final int TYPE = 1;
 	private String question;
 	private List<AnswerPlain> answers;
