@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 public interface Question {
 
     boolean isCorrect(Answer ans);
+
     //int getType();
     String toHtml();
 

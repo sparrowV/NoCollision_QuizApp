@@ -84,8 +84,8 @@ public class QuizDAO {
             String query = "INSERT INTO " + DBContract.QuizTable.TABLE_NAME + " " + "(" +
                     DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID + ", " +
                     DBContract.QuizTable.COLUMN_NAME_TITLE + ", " +
-					DBContract.QuizTable.COLUMN_NAME_DATA_CREATED + ") " +
-					"VALUES (?,?,?);";
+                    DBContract.QuizTable.COLUMN_NAME_DATA_CREATED + ") " +
+                    "VALUES (?,?,?);";
 
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);

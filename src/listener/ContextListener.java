@@ -40,9 +40,9 @@ public class ContextListener implements ServletContextListener {
 
     public void contextDestroyed(ServletContextEvent sce) {
       /* This method is invoked when the Servlet Context
-         (the Web application) is undeployed or 
-         Application Server shuts down.
-      */
+         (the Web application) is undeployed or
+		 Application Server shuts down.
+	  */
     }
 
 }

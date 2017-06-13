@@ -22,15 +22,15 @@ public class SessionListener implements ServletContextListener,
     public void contextInitialized(ServletContextEvent sce) {
       /* This method is called when the servlet context is
          initialized(when the Web application is deployed).
-         You can initialize servlet context related data here.
-      */
+		 You can initialize servlet context related data here.
+	  */
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
-      /* This method is invoked when the Servlet Context 
-         (the Web application) is undeployed or 
-         Application Server shuts down.
-      */
+      /* This method is invoked when the Servlet Context
+         (the Web application) is undeployed or
+		 Application Server shuts down.
+	  */
     }
 
     // -------------------------------------------------------
@@ -54,20 +54,20 @@ public class SessionListener implements ServletContextListener,
     // -------------------------------------------------------
 
     public void attributeAdded(HttpSessionBindingEvent sbe) {
-      /* This method is called when an attribute 
+      /* This method is called when an attribute
          is added to a session.
-      */
+	  */
     }
 
     public void attributeRemoved(HttpSessionBindingEvent sbe) {
       /* This method is called when an attribute
          is removed from a session.
-      */
+	  */
     }
 
     public void attributeReplaced(HttpSessionBindingEvent sbe) {
       /* This method is invoked when an attibute
          is replaced in a session.
-      */
+	  */
     }
 }

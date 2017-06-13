@@ -41,7 +41,7 @@ CREATE TABLE questions_to_quizzes (
 DROP TABLE IF EXISTS questions_plain;
 CREATE TABLE questions_plain (
   question_id INT AUTO_INCREMENT,
-  type_id     INT          NOT NULL DEFAULT 1,
+  type_id     INT           NOT NULL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     DEFAULT 1,
   question    VARCHAR(1000) NOT NULL,
 
   CONSTRAINT questions_plain_pk PRIMARY KEY (question_id)
@@ -69,7 +69,7 @@ CREATE TABLE answers_to_questions_plain (
 
 DROP TABLE IF EXISTS questions_multchoice;
 CREATE TABLE questions_multchoice (
-  question_id INT AUTO_INCREMENT,
+  question_id INT                   AUTO_INCREMENT,
   type_id     INT          NOT NULL DEFAULT 2,
   question    VARCHAR(500) NOT NULL,
   choice1     VARCHAR(200) NOT NULL,

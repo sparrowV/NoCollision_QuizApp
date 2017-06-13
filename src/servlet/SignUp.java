@@ -19,7 +19,7 @@ public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
         RequestDispatcher dispatcher;
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
         String firstName = request.getParameter(ServletKey.FIRST_NAME);
         String lastName = request.getParameter(ServletKey.LAST_NAME);
