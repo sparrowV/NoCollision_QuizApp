@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionPlain implements Question {
-    private String question;
-	private List<String> answers;
+	public static final int TYPE = 1;
+	private String question;
+	private List<AnswerPlain> answers;
 
-    public QuestionPlain(String question, List<String> answers) {
-        this.question = question;
-        this.answers = new ArrayList<>(answers);
-    }
+	public QuestionPlain(String question, List<AnswerPlain> answers) {
+		this.question = question;
+		this.answers = new ArrayList<>(answers);
+	}
 
     public String getQuestion() {
         return question;
@@ -66,7 +67,10 @@ public class QuestionPlain implements Question {
     }
 
     public String toString() {
-        return question;
-    }
+		StringBuilder builder = new StringBuilder();
+		builder.append("Question : ").append(question).append(". Answers : ");
+		for (AnswerPlain ans : answers) builder.append(ans.getAnswer()).append(", ");
+		return builder.toString();
+	}
 
 }
