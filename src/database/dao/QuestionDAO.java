@@ -98,9 +98,6 @@ public class QuestionDAO {
 			}
 		}
 
-		for (Question q : res) {
-			System.out.println(q);
-		}
 		return res;
 	}
 
@@ -145,6 +142,9 @@ public class QuestionDAO {
 					answerDAO.getAnswersByQuestionId(questionId, typeId));
 		} else if (typeId == QuestionMultipleChoice.TYPE) {
 			return new QuestionMultipleChoice(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+					answerDAO.getAnswersByQuestionId(questionId, typeId));
+		} else if (typeId == QuestionFillBlank.TYPE) {
+			return new QuestionFillBlank(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
 					answerDAO.getAnswersByQuestionId(questionId, typeId));
 		}
 		return null;

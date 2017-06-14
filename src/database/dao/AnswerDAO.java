@@ -68,6 +68,12 @@ public class AnswerDAO {
 						resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT)));
 			}
 			return res;
+		} else if (typeId == AnswerFillBlank.TYPE) {
+			while (resultSet.next()) {
+				res.add(new AnswerFillBlank(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
+						resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_INDEX_ID)));
+			}
+			return res;
 		}
 		return null;
 	}
