@@ -1,16 +1,14 @@
 package database.bean;
 
-
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionPlain implements Question, HtmlSerializable {
-	public static final int TYPE = 1;
+public class QuestionMultipleChoice implements Question, HtmlSerializable {
+	public static final int TYPE = 2;
 	private String question;
 	private ArrayList<Answer> answers;
 
-	public QuestionPlain(String question, List<Answer> answers) {
+	public QuestionMultipleChoice(String question, List<Answer> answers) {
 		this.question = question;
 		this.answers = new ArrayList<>(answers);
 	}
@@ -36,40 +34,42 @@ public class QuestionPlain implements Question, HtmlSerializable {
 		return 0;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		QuestionMultipleChoice that = (QuestionMultipleChoice) o;
+
+		if (!question.equals(that.question)) return false;
+		return answers.equals(that.answers);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = question.hashCode();
+		result = 31 * result + answers.hashCode();
+		return result;
+	}
+
 	/**
 	 * Generates the html markup for the question
 	 *
 	 * @return html representation of the question as a String
 	 */
 
+
 	public String toHtml() {
 		return "";
-	}
-
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		QuestionPlain that = (QuestionPlain) o;
-
-		return question.equals(that.question);
-	}
-
-	@Override
-	public int hashCode() {
-		return question.hashCode();
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question : ").append(question).append(". Answers : ");
 		for (Answer ans : answers) {
-			AnswerPlain ansPlain = (AnswerPlain) ans;
-			builder.append(ansPlain.getAnswer()).append(", ");
+			AnswerMultipleChoice ansMult = (AnswerMultipleChoice) ans;
+			builder.append(ansMult.getAnswer()).append(", ");
 		}
 		return builder.toString();
 	}
-
 }

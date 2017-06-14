@@ -10,5 +10,4 @@ public interface Question {
     //int getType();
     String toHtml();
 
-    PreparedStatement toSql();
 }
