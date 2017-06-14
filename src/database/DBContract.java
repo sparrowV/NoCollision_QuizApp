@@ -22,41 +22,36 @@ public final class DBContract {
 	}
 
 	public static class QuestionQuizTable {
-		public static final String TABLE_NAME = "questions_to_quizzes";
+		public static final String TABLE_NAME = "questions_quizzes";
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
-		public static final String COLUMN_NAME_TYPE_ID = "type_id";
 		public static final String COLUMN_NAME_QUIZ_ID = "quiz_id";
+		public static final String COLUMN_NAME_INDEX_ID = "index_id";
 	}
 
-	public static class QuestionPlainTable {
-		public static final String TABLE_NAME = "questions_plain";
+	public static class QuestionTable {
+		public static final String TABLE_NAME = "questions";
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
 		public static final String COLUMN_NAME_TYPE_ID = "type_id";
-		public static final String COLUMN_NAME_QUESTION = "question";
+		public static final String COLUMN_NAME_QUESTION_TEXT = "question_text";
+		public static final String COLUMN_NAME_MEDIA = "media";
 	}
 
-	public static class AnswerPlainTable {
-		public static final String TABLE_NAME = "answers_plain";
+	public static class AnswerTable {
+		public static final String TABLE_NAME = "answers";
 		public static final String COLUMN_NAME_ANSWER_ID = "answer_id";
-		public static final String COLUMN_NAME_ANSWER = "answer";
+		public static final String COLUMN_NAME_ANSWER_TEXT1 = "answer_text";
+		public static final String COLUMN_NAME_ANSWER_TEXT2 = "answer_text2";
+		public static final String COLUMN_NAME_IS_CORRECT = "is_correct";
+		public static final String COLUMN_NAME_MEDIA = "media";
+		public static final String COLUMN_NAME_MEDIA2 = "media2";
+		public static final String COLUMN_NAME_INDEX_ID = "index_id";
+
 	}
 
-	public static class AnswerQuestionPlainTable {
-		public static final String TABLE_NAME = "answers_to_questions_plain";
+	public static class AnswerQuestionTable {
+		public static final String TABLE_NAME = "answers_questions";
 		public static final String COLUMN_NAME_ANSWER_ID = "answer_id";
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
 	}
 
-	public static class QuestionMultipleChoiceTable {
-		public static final String TABLE_NAME = "questions_multchoice";
-		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
-		public static final String COLUMN_NAME_TYPE_ID = "type_id";
-		public static final String COLUMN_NAME_QUESTION = "question";
-		public static final String COLUMN_NAME_CHOICE1 = "choice1";
-		public static final String COLUMN_NAME_CHOICE2 = "choice2";
-		public static final String COLUMN_NAME_CHOICE3 = "choice3";
-		public static final String COLUMN_NAME_CHOICE4 = "choice4";
-		public static final String COLUMN_NAME_CHOICE5 = "choice5";
-		public static final String COLUMN_NAME_ANSWER = "answer";
-	}
 }

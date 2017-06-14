@@ -8,9 +8,9 @@ import java.util.List;
 public class QuestionPlain implements Question, HtmlSerializable {
 	public static final int TYPE = 1;
 	private String question;
-	private List<AnswerPlain> answers;
+	private List<Answer> answers;
 
-	public QuestionPlain(String question, List<AnswerPlain> answers) {
+	public QuestionPlain(String question, List<Answer> answers) {
 		this.question = question;
 		this.answers = new ArrayList<>(answers);
 	}
@@ -69,7 +69,10 @@ public class QuestionPlain implements Question, HtmlSerializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question : ").append(question).append(". Answers : ");
-		for (AnswerPlain ans : answers) builder.append(ans.getAnswer()).append(", ");
+		for (Answer ans : answers) {
+			AnswerPlain ansPlain = (AnswerPlain) ans;
+			builder.append(ansPlain.getAnswer()).append(", ");
+		}
 		return builder.toString();
 	}
 

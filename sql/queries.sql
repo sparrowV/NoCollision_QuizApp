@@ -55,7 +55,7 @@ CREATE TABLE answers (
   type_id      INT NOT NULL,
   answer_text  VARCHAR(500),
   answer_text2 VARCHAR(500),
-  isCorrect    BOOL,
+  is_correct   BOOL,
   media        VARCHAR(1000),
   media2       VARCHAR(1000),
   index_id     INT,

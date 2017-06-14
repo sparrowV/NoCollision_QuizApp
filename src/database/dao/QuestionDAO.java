@@ -16,61 +16,41 @@ import java.util.List;
 
 public class QuestionDAO {
 	private DataSource pool;
+	private AnswerDAO answerDAO;
 	private HashMap<Integer, String> questionTypeMapping;
 
-	public QuestionDAO(DataSource pool) {
+	public QuestionDAO(DataSource pool, AnswerDAO answerDAO) {
 		this.pool = pool;
-		questionTypeMapping = new HashMap<>();
-		questionTypeMapping.put(1, DBContract.QuestionPlainTable.TABLE_NAME);
-		questionTypeMapping.put(2, DBContract.QuestionMultipleChoiceTable.TABLE_NAME);
+		this.answerDAO = answerDAO;
 	}
 
-	public Question getQuestionById(int typeId, int questionId) {
+	public Question getQuestionById(Integer questionId) {
+		Question question = null;
 		Connection connection = null;
 		try {
-			connection = pool.getConnection();
-
-			Statement statement = connection.createStatement();
-			String query = "SELECT * FROM " +
-					questionTypeMapping.get(typeId) + " WHERE " +
-					"question_id = " + questionId + ";";
-			ResultSet resultSet = statement.executeQuery(query);
-			statement.close();
-			resultSet.next();
-			return fetchQuestion(resultSet);
-		} catch (SQLException e) {
-			e.getStackTrace();
-		} finally {
-			if (connection != null) try {
-				// Returns the connection to the pool.
-				connection.close();
-			} catch (Exception ignored) {
-			}
-		}
-		return null;
-	}
-
-	// to be moved to AnswerDAO
-	private List<AnswerPlain> getAnswersPlainById(int questionId) {
-		ArrayList<AnswerPlain> res = new ArrayList<>();
-		Connection connection = null;
-		try {
+			// Get the connection from the pool.
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
-			String query = "select * from answers_to_questions_plain as atqp join answers_plain ap on atqp.answer_id = ap.answer_id"
-					+ " where question_id = " + questionId;
-			ResultSet resultSet = statement.executeQuery(query);
+			// Prepare and execute 'SELECT' query.
+			String query = "SELECT * FROM " + DBContract.QuestionTable.TABLE_NAME + " WHERE " +
+					DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID + " = ?;";
+			System.out.println(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, questionId);
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next()) {
-				res.add(new AnswerPlain(resultSet.getString("answer")));
-			}
+			resultSet.next();
+			question = fetchQuestion(resultSet);
 
+			// Close statement and result set.
+			resultSet.close();
+			preparedStatement.close();
 			statement.close();
 		} catch (SQLException e) {
-			e.getStackTrace();
+			e.printStackTrace();
 		} finally {
 			if (connection != null) try {
 				// Returns the connection to the pool.
@@ -78,10 +58,9 @@ public class QuestionDAO {
 			} catch (Exception ignored) {
 			}
 		}
-		return res;
+
+		return question;
 	}
-
-
 
 
 
@@ -118,10 +97,11 @@ public class QuestionDAO {
 
 
 	private Question fetchQuestion(ResultSet resultSet) throws SQLException {
-		int typeId = resultSet.getInt("type_id");
+		int typeId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_TYPE_ID);
+		int questionId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID);
 		if (typeId == QuestionPlain.TYPE) {
-			return new QuestionPlain(resultSet.getString("question"),
-					getAnswersPlainById(resultSet.getInt("question_id")));
+			return new QuestionPlain(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+					answerDAO.getAnswersByQuestionId(questionId, typeId));
 		}
 		return null;
 	}

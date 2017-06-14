@@ -1,7 +1,7 @@
 package database.bean;
 
 public class AnswerPlain implements Answer {
-
+	public static final int TYPE = 1;
 	private String answer;
 
 	public AnswerPlain(String answer) {
