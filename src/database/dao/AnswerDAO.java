@@ -3,10 +3,7 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.Answer;
-import database.bean.AnswerPlain;
-import database.bean.Question;
-import database.bean.QuestionPlain;
+import database.bean.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -63,6 +60,12 @@ public class AnswerDAO {
 		if (typeId == AnswerPlain.TYPE) {
 			while (resultSet.next()) {
 				res.add(new AnswerPlain(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1)));
+			}
+			return res;
+		} else if (typeId == AnswerMultipleChoice.TYPE) {
+			while (resultSet.next()) {
+				res.add(new AnswerMultipleChoice(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
+						resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT)));
 			}
 			return res;
 		}

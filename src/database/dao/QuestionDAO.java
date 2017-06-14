@@ -3,10 +3,7 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.Answer;
-import database.bean.AnswerPlain;
-import database.bean.Question;
-import database.bean.QuestionPlain;
+import database.bean.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -63,13 +60,13 @@ public class QuestionDAO {
 	}
 
 
-
-	/**
+	/*
 	 * Inserts the given question into the database
 	 *
 	 * @param question the question to be inserted
 	 * @throws SQLException if connection can't be established
 	 */
+	/*
 	public void addQuestion(Question question) throws SQLException {
 		Connection connection = null;
 		try {
@@ -95,12 +92,15 @@ public class QuestionDAO {
 		}
 	}
 
-
+	*/
 	private Question fetchQuestion(ResultSet resultSet) throws SQLException {
 		int typeId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_TYPE_ID);
 		int questionId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID);
 		if (typeId == QuestionPlain.TYPE) {
 			return new QuestionPlain(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+					answerDAO.getAnswersByQuestionId(questionId, typeId));
+		} else if (typeId == QuestionMultipleChoice.TYPE) {
+			return new QuestionMultipleChoice(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
 					answerDAO.getAnswersByQuestionId(questionId, typeId));
 		}
 		return null;
