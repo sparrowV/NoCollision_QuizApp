@@ -34,10 +34,10 @@ public class AnswerDAO {
 					DBContract.AnswerTable.TABLE_NAME + "." + DBContract.AnswerTable.COLUMN_NAME_ANSWER_ID + " = " +
 					DBContract.AnswerQuestionTable.TABLE_NAME + "." + DBContract.AnswerQuestionTable.COLUMN_NAME_ANSWER_ID +
 					" WHERE " + DBContract.AnswerQuestionTable.TABLE_NAME + "." +
-					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = 4;";
+					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = ?;";
 
-			System.out.println(query);
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, questionId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			res = fetchAnswers(resultSet, typeId);
 

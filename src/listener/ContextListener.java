@@ -1,6 +1,8 @@
 package listener;
 
 import database.DBInfo;
+import database.dao.AnswerDAO;
+import database.dao.QuestionDAO;
 import database.dao.QuizDAO;
 import database.dao.UserDAO;
 import model.QuizManager;
@@ -30,12 +32,21 @@ public class ContextListener implements ServletContextListener {
             DataSource pool = new DataSource();
             pool.setPoolProperties(properties);
 
+			// Create DAOs
+			AnswerDAO answerDAO = new AnswerDAO(pool);
+			QuestionDAO questionDAO = new QuestionDAO(pool, answerDAO);
+			QuizDAO quizDAO = new QuizDAO(pool, questionDAO);
+
+
             // Save the database and UserDao in context.
             context.setAttribute(ContextKey.CONNECTION_POOL, pool);
             context.setAttribute(ContextKey.USER_MANAGER, new UserManager(new UserDAO(pool)));
-            context.setAttribute(ContextKey.QUIZ_MANAGER, new QuizManager(new QuizDAO(pool)));
-        } catch (Exception ignored) {
-        }
+			context.setAttribute(ContextKey.QUIZ_MANAGER, new QuizManager(quizDAO));
+			context.setAttribute(ContextKey.ANSWER_DAO, answerDAO);
+			context.setAttribute(ContextKey.QUESTION_DAO, questionDAO);
+			context.setAttribute(ContextKey.QUIZ_DAO, quizDAO);
+		} catch (Exception ignored) {
+		}
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

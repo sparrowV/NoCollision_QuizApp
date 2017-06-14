@@ -1,6 +1,8 @@
 package servlet;
 
 import database.bean.User;
+import database.dao.AnswerDAO;
+import database.dao.QuestionDAO;
 import listener.ContextKey;
 import model.UserManager;
 import util.Hash;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import java.io.IOException;
 
 @WebServlet(name = "Login", value = "/Login")
@@ -32,6 +35,9 @@ public class Login extends HttpServlet {
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
 		}
+		AnswerDAO answerDAO = new AnswerDAO((DataSource) context.getAttribute(ContextKey.CONNECTION_POOL));
+		QuestionDAO questionDAO = new QuestionDAO((DataSource) context.getAttribute(ContextKey.CONNECTION_POOL), answerDAO);
+		questionDAO.getQuestionsByQuiz(1);
 
 		dispatcher.forward(request, response);
 	}
