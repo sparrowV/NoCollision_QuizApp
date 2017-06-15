@@ -7,34 +7,34 @@ import java.util.List;
 
 
 public class UserManager {
-    private UserDAO dao;
+	private UserDAO dao;
 
-    public UserManager(UserDAO dao) {
-        this.dao = dao;
-    }
+	public UserManager(UserDAO dao) {
+		this.dao = dao;
+	}
 
-    public boolean correctLogin(User user) {
-        return dao.getUsers().contains(user);
-    }
+	public boolean correctLogin(User user) {
+		return dao.getUsers().contains(user);
+	}
 
-    public void addUser(User user) {
-        try {
-            dao.addUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void addUser(User user) {
+		try {
+			dao.addUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public int getUserId(User user) {
-        return dao.getUserId(user.getUsername());
-    }
+	public int getUserId(User user) {
+		return dao.getUserId(user.getUsername());
+	}
 
-    public boolean usernameTaken(String username) {
-        List<User> users = dao.getUsers();
-        for (User user : users) {
-            if (user.getUsername().equals(username))
-                return true;
-        }
-        return false;
-    }
+	public boolean usernameTaken(String username) {
+		List<User> users = dao.getUsers();
+		for (User user : users) {
+			if (user.getUsername().equals(username))
+				return true;
+		}
+		return false;
+	}
 }

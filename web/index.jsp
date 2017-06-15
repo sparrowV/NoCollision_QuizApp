@@ -20,7 +20,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>Quiz Website</h1>
+        <h1>Login</h1>
     </div>
 
     <div class="login">

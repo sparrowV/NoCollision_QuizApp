@@ -1,14 +1,13 @@
 package database.bean;
 
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionPlain implements Question, HtmlSerializable {
 	public static final int TYPE = 1;
 	private String question;
-	private ArrayList<Answer> answers;
+	private List<Answer> answers;
 
 	public QuestionPlain(String question, List<Answer> answers) {
 		this.question = question;
@@ -22,11 +21,11 @@ public class QuestionPlain implements Question, HtmlSerializable {
 	/**
 	 * Checks whether the user answered the question correctly
 	 *
-	 * @param ans Answer object that contains the answer to this type of the question
+	 * @param answer Answer object that contains the answer to this type of the question
 	 * @return true if the answer is correct, false otherwise
 	 */
 
-	public boolean isCorrect(Answer ans) {
+	public boolean isCorrect(Answer answer) {
 		return true;
 	}
 
@@ -65,8 +64,8 @@ public class QuestionPlain implements Question, HtmlSerializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question : ").append(question).append(". Answers : ");
-		for (Answer ans : answers) {
-			AnswerPlain ansPlain = (AnswerPlain) ans;
+		for (Answer answer : answers) {
+			AnswerPlain ansPlain = (AnswerPlain) answer;
 			builder.append(ansPlain.getAnswer()).append(", ");
 		}
 		return builder.toString();

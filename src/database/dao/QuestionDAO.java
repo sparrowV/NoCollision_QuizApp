@@ -3,7 +3,10 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.*;
+import database.bean.Question;
+import database.bean.QuestionFillBlank;
+import database.bean.QuestionMultipleChoice;
+import database.bean.QuestionPlain;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -137,15 +140,17 @@ public class QuestionDAO {
 	private Question fetchQuestion(ResultSet resultSet) throws SQLException {
 		int typeId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_TYPE_ID);
 		int questionId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID);
-		if (typeId == QuestionPlain.TYPE) {
-			return new QuestionPlain(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-					answerDAO.getAnswersByQuestionId(questionId, typeId));
-		} else if (typeId == QuestionMultipleChoice.TYPE) {
-			return new QuestionMultipleChoice(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-					answerDAO.getAnswersByQuestionId(questionId, typeId));
-		} else if (typeId == QuestionFillBlank.TYPE) {
-			return new QuestionFillBlank(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-					answerDAO.getAnswersByQuestionId(questionId, typeId));
+
+		switch (typeId) {
+			case QuestionPlain.TYPE:
+				return new QuestionPlain(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+						answerDAO.getAnswersByQuestionId(questionId, typeId));
+			case QuestionMultipleChoice.TYPE:
+				return new QuestionMultipleChoice(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+						answerDAO.getAnswersByQuestionId(questionId, typeId));
+			case QuestionFillBlank.TYPE:
+				return new QuestionFillBlank(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
+						answerDAO.getAnswersByQuestionId(questionId, typeId));
 		}
 		return null;
 	}
