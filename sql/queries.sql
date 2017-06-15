@@ -74,6 +74,21 @@ CREATE TABLE answers_questions (
 
 );
 
+DROP TABLE IF EXISTS users_quiz_history;
+CREATE TABLE users_quiz_history (
+  user_id  INT NOT NULL,
+  quiz_id  INT NOT NULL,
+  status   INT NOT NULL,
+  duration DOUBLE,
+  score    DOUBLE,
+
+  CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
+  CONSTRAINT users_quiz_history_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id)
+);
+
+
+
+
 
 
 
