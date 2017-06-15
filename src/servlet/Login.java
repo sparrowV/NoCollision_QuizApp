@@ -23,11 +23,13 @@ public class Login extends HttpServlet {
         UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
         String username = request.getParameter(ServletKey.USERNAME);
+
         if (username == null) {
             dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);
             return;
         }
+
         String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
         User user = new User(username, hashedPassword);
 

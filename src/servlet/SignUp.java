@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "SignUp", value = "/SignUp")
+@WebServlet(name = "SignUp", value = {"/SignUp", "/Signup"})
 public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
@@ -26,10 +26,16 @@ public class SignUp extends HttpServlet {
         String username = request.getParameter(ServletKey.USERNAME);
         String password = request.getParameter(ServletKey.PASSWORD);
 
+        if (username == null) {
+            dispatcher = request.getRequestDispatcher("sign-up.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
         if (!userManager.usernameTaken(username)) {
             String hashedPassword = Hash.encode(password);
             User newUser = new User(firstName, lastName, username, hashedPassword);
-			userManager.addUser(newUser);
+            userManager.addUser(newUser);
             session.setAttribute(ServletKey.CURRENT_USER, newUser);
 
             dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
