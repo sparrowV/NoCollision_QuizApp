@@ -26,7 +26,7 @@
     </div>
 
 
-    <div class="signup">
+    <div class="login">
         <div class="jumbotron">
 
             <form action="SignUp" method="post">
