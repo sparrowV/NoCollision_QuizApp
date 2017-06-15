@@ -6,7 +6,7 @@ import java.util.List;
 public class QuestionMultipleChoice implements Question, HtmlSerializable {
 	public static final int TYPE = 2;
 	private String question;
-	private ArrayList<Answer> answers;
+	private List<Answer> answers;
 
 	public QuestionMultipleChoice(String question, List<Answer> answers) {
 		this.question = question;
@@ -20,11 +20,11 @@ public class QuestionMultipleChoice implements Question, HtmlSerializable {
 	/**
 	 * Checks whether the user answered the question correctly
 	 *
-	 * @param ans Answer object that contains the answer to this type of the question
+	 * @param answer Answer object that contains the answer to this type of the question
 	 * @return true if the answer is correct, false otherwise
 	 */
 
-	public boolean isCorrect(Answer ans) {
+	public boolean isCorrect(Answer answer) {
 		return true;
 	}
 
@@ -53,12 +53,10 @@ public class QuestionMultipleChoice implements Question, HtmlSerializable {
 	}
 
 	/**
-	 * Generates the html markup for the question
+	 * Generates the html markup for the question.
 	 *
 	 * @return html representation of the question as a String
 	 */
-
-
 	public String toHtml() {
 		return "";
 	}
@@ -66,8 +64,8 @@ public class QuestionMultipleChoice implements Question, HtmlSerializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question : ").append(question).append(". Answers : ");
-		for (Answer ans : answers) {
-			AnswerMultipleChoice ansMult = (AnswerMultipleChoice) ans;
+		for (Answer answer : answers) {
+			AnswerMultipleChoice ansMult = (AnswerMultipleChoice) answer;
 			builder.append(ansMult.getAnswer()).append(", ");
 		}
 		return builder.toString();

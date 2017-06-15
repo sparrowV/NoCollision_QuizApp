@@ -1,6 +1,5 @@
 package servlet;
 
-import com.mysql.cj.api.Session;
 import listener.ContextKey;
 import model.UserManager;
 import org.junit.Before;

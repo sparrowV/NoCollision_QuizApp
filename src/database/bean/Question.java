@@ -1,13 +1,11 @@
 package database.bean;
 
 
-import java.sql.PreparedStatement;
-
 public interface Question {
 
-    boolean isCorrect(Answer ans);
+	boolean isCorrect(Answer answer);
 
-    //int getType();
-    String toHtml();
+	//int getType();
+	String toHtml();
 
 }

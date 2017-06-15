@@ -6,7 +6,7 @@ import java.util.List;
 public class QuestionFillBlank implements Question, HtmlSerializable {
 	public static final int TYPE = 3;
 	private String question;
-	private ArrayList<Answer> answers;
+	private List<Answer> answers;
 
 	public QuestionFillBlank(String question, List<Answer> answers) {
 		this.question = question;
@@ -36,7 +36,7 @@ public class QuestionFillBlank implements Question, HtmlSerializable {
 	}
 
 	@Override
-	public boolean isCorrect(Answer ans) {
+	public boolean isCorrect(Answer answer) {
 		return false;
 	}
 
@@ -48,8 +48,8 @@ public class QuestionFillBlank implements Question, HtmlSerializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question : ").append(question).append(". Answers : ");
-		for (Answer ans : answers) {
-			AnswerFillBlank ansFillBlank = (AnswerFillBlank) ans;
+		for (Answer answer : answers) {
+			AnswerFillBlank ansFillBlank = (AnswerFillBlank) answer;
 			builder.append(ansFillBlank.getAnswer()).append(" (").append(ansFillBlank.getIndex()).append(")").append(", ");
 		}
 		return builder.toString();

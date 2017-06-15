@@ -15,8 +15,8 @@ public class AnswerPlain implements Answer {
 	@Override
 	public boolean equals(Object o) {
 		if (getClass() != o.getClass()) return false;
-		AnswerPlain ans = (AnswerPlain) o;
-		return this.answer.equals((ans.getAnswer()));
+		AnswerPlain answer = (AnswerPlain) o;
+		return this.answer.equals((answer.getAnswer()));
 	}
 
 	@Override

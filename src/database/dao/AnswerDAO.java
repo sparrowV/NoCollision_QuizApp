@@ -3,12 +3,14 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.*;
+import database.bean.Answer;
+import database.bean.AnswerFillBlank;
+import database.bean.AnswerMultipleChoice;
+import database.bean.AnswerPlain;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AnswerDAO {
@@ -19,7 +21,7 @@ public class AnswerDAO {
 	}
 
 	public List<Answer> getAnswersByQuestionId(Integer questionId, Integer typeId) {
-		ArrayList<Answer> res = new ArrayList<>();
+		List<Answer> result = new ArrayList<>();
 		Connection connection = null;
 		try {
 			// Get the connection from the pool.
@@ -39,7 +41,7 @@ public class AnswerDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, questionId);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			res = fetchAnswers(resultSet, typeId);
+			result = fetchAnswers(resultSet, typeId);
 
 			preparedStatement.close();
 			statement.close();
@@ -52,29 +54,32 @@ public class AnswerDAO {
 			} catch (Exception ignored) {
 			}
 		}
-		return res;
+		return result;
 	}
 
-	private ArrayList<Answer> fetchAnswers(ResultSet resultSet, int typeId) throws SQLException {
-		ArrayList<Answer> res = new ArrayList<>();
-		if (typeId == AnswerPlain.TYPE) {
-			while (resultSet.next()) {
-				res.add(new AnswerPlain(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1)));
-			}
-			return res;
-		} else if (typeId == AnswerMultipleChoice.TYPE) {
-			while (resultSet.next()) {
-				res.add(new AnswerMultipleChoice(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
-						resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT)));
-			}
-			return res;
-		} else if (typeId == AnswerFillBlank.TYPE) {
-			while (resultSet.next()) {
-				res.add(new AnswerFillBlank(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
-						resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_INDEX_ID)));
-			}
-			return res;
+	private List<Answer> fetchAnswers(ResultSet resultSet, int typeId) throws SQLException {
+		List<Answer> res = new ArrayList<>();
+
+		switch (typeId) {
+			case AnswerPlain.TYPE:
+				while (resultSet.next()) {
+					res.add(new AnswerPlain(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1)));
+				}
+				return res;
+			case AnswerMultipleChoice.TYPE:
+				while (resultSet.next()) {
+					res.add(new AnswerMultipleChoice(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
+							resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT)));
+				}
+				return res;
+			case AnswerFillBlank.TYPE:
+				while (resultSet.next()) {
+					res.add(new AnswerFillBlank(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
+							resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_INDEX_ID)));
+				}
+				return res;
 		}
+
 		return null;
 	}
 

@@ -16,36 +16,36 @@ import java.io.IOException;
 
 @WebServlet(name = "SignUp", value = {"/SignUp", "/Signup"})
 public class SignUp extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
-        RequestDispatcher dispatcher;
-        HttpSession session = request.getSession();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
+		RequestDispatcher dispatcher;
+		HttpSession session = request.getSession();
 
-        String firstName = request.getParameter(ServletKey.FIRST_NAME);
-        String lastName = request.getParameter(ServletKey.LAST_NAME);
-        String username = request.getParameter(ServletKey.USERNAME);
-        String password = request.getParameter(ServletKey.PASSWORD);
+		String firstName = request.getParameter(ServletKey.FIRST_NAME);
+		String lastName = request.getParameter(ServletKey.LAST_NAME);
+		String username = request.getParameter(ServletKey.USERNAME);
+		String password = request.getParameter(ServletKey.PASSWORD);
 
-        if (username == null) {
-            dispatcher = request.getRequestDispatcher("sign-up.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
+		if (username == null) {
+			dispatcher = request.getRequestDispatcher(ServletKey.SIGN_UP_JSP);
+			dispatcher.forward(request, response);
+			return;
+		}
 
-        if (!userManager.usernameTaken(username)) {
-            String hashedPassword = Hash.encode(password);
-            User newUser = new User(firstName, lastName, username, hashedPassword);
-            userManager.addUser(newUser);
-            session.setAttribute(ServletKey.CURRENT_USER, newUser);
+		if (!userManager.usernameTaken(username)) {
+			String hashedPassword = Hash.encode(password);
+			User newUser = new User(firstName, lastName, username, hashedPassword);
+			userManager.addUser(newUser);
+			session.setAttribute(ServletKey.CURRENT_USER, newUser);
 
-            dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
-        } else {
-            dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);
-        }
-        dispatcher.forward(request, response);
-    }
+			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
+		} else {
+			dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);
+		}
+		dispatcher.forward(request, response);
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 }
