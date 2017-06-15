@@ -3,17 +3,60 @@
 <html>
 <head>
     <title>Sign Up</title>
+
+    <!-- Custom styles for this web-page -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <!-- Bootstrap core JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h3>Register here</h3>
+<div class="container">
+    <div class="page-header">
+        <h3>Register here</h3>
+    </div>
 
-<form action="SignUp" method="post">
-    <p>First Name: <input type="text" name="<%= ServletKey.FIRST_NAME%>"/>
-    <p>Last Name: <input type="text" name="<%= ServletKey.LAST_NAME%>"/>
-    <p>Username: <input type="text" name="<%= ServletKey.USERNAME%>"/>
-    <p>Password: <input type="password" name="<%= ServletKey.PASSWORD%>"/>
-        <input type="submit" value="Sign Up"/></p>
-</form>
+    <div class="signup">
+        <div class="jumbotron">
+
+            <form action="SignUp" method="post">
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="First Name" required autofocus
+                           name="<%= ServletKey.FIRST_NAME%>"></div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Last Name" required autofocus
+                           name="<%= ServletKey.LAST_NAME%>">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required autofocus
+                           name="<%= ServletKey.USERNAME%>">
+                </div>
+
+
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required autofocus
+                           name="<%= ServletKey.PASSWORD%>">
+                </div>
+
+                <button type="submit" class="btn btn:primary form-control" value="signup">Signup</button>
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
 
 </body>
 </html>
