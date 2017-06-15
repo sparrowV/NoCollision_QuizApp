@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
 
 		if (manager.correctLogin(user)) {
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
-			request.getSession().setAttribute(ServletKey.USER, user);
+			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
 		}

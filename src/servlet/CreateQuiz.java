@@ -27,7 +27,7 @@ public class CreateQuiz extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        User user = (User) session.getAttribute(ServletKey.USER);
+        User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
         int userId = userManager.getUserId(user);
         String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
         quizManager.addQuiz(new Quiz(userId, quizTitle, new Date(), null)); // TODO
