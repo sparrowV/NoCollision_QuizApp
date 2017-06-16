@@ -27,11 +27,12 @@ CREATE TABLE quizzes (
 );
 
 DROP TABLE IF EXISTS questions;
+/*    Q   */
 CREATE TABLE questions (
-  question_id   INT AUTO_INCREMENT,
-  type_id       INT NOT NULL,
-  question_text VARCHAR(1000),
-  media         VARCHAR(1000),
+  question_id           INT AUTO_INCREMENT,
+  question_text         VARCHAR(1000),
+  skipped_question_text VARCHAR(1000),
+  media                 VARCHAR(1000),
 
   CONSTRAINT questions_pk PRIMARY KEY (question_id)
 );
