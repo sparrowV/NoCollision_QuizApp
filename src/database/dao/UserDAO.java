@@ -105,7 +105,8 @@ public class UserDAO {
 	}
 
 	/**
-	 * Returns given username's id from database.
+	 * Returns given username's id from database or -1
+	 * if there's no such username.
 	 *
 	 * @param username
 	 * @return id
@@ -135,6 +136,77 @@ public class UserDAO {
 		}
 
 		return userId;
+	}
+
+
+	public boolean usernameExists(String username) throws SQLException {
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT COUNT(*) FROM " + DBContract.UserTable.TABLE_NAME +
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + "=?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, username);
+
+			ResultSet resultset = preparedStatement.executeQuery();
+			resultset.next();
+
+			int count = resultset.getInt(1);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+			// returns true if query found given username
+			return (count > 0);
+
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from users table");
+		}
+
+		return false;
+	}
+
+	public boolean userExists(String username, String password) {
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT COUNT(*) FROM " + DBContract.UserTable.TABLE_NAME +
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + "=?" + " AND " +
+					DBContract.UserTable.COLUMN_NAME_PASSWORD + "=?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+
+			ResultSet resultset = preparedStatement.executeQuery();
+			resultset.next();
+
+			int count = resultset.getInt(1);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+			// returns true if query found given username
+			return (count > 0);
+
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from users table");
+		}
+
+		return false;
 	}
 
 

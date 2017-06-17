@@ -3,6 +3,7 @@ package model;
 import database.bean.User;
 import database.dao.UserDAO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public class UserManager {
 	}
 
 	public boolean correctLogin(User user) {
-		return dao.getUsers().contains(user);
+		return dao.userExists(user.getUsername(), user.getPassword());
 	}
 
 	public void addUser(User user) {
@@ -30,11 +31,14 @@ public class UserManager {
 	}
 
 	public boolean usernameTaken(String username) {
-		List<User> users = dao.getUsers();
-		for (User user : users) {
-			if (user.getUsername().equals(username))
-				return true;
+		boolean answer = false;
+		try {
+			answer = dao.usernameExists(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return false;
+
+		return answer;
 	}
+
 }
