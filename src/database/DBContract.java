@@ -31,20 +31,22 @@ public final class DBContract {
 	public static class QuestionTable {
 		public static final String TABLE_NAME = "questions";
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
-		public static final String COLUMN_NAME_TYPE_ID = "type_id";
 		public static final String COLUMN_NAME_QUESTION_TEXT = "question_text";
+		public static final String COLUMN_NAME_BLANK_TEXT = "blank_text";
 		public static final String COLUMN_NAME_MEDIA = "media";
 	}
 
 	public static class AnswerTable {
 		public static final String TABLE_NAME = "answers";
 		public static final String COLUMN_NAME_ANSWER_ID = "answer_id";
-		public static final String COLUMN_NAME_ANSWER_TEXT1 = "answer_text";
+		public static final String COLUMN_NAME_TYPE_ID = "type_id";
+		public static final String COLUMN_NAME_ANSWER_TEXT = "answer_text";
 		public static final String COLUMN_NAME_ANSWER_TEXT2 = "answer_text2";
 		public static final String COLUMN_NAME_IS_CORRECT = "is_correct";
-		public static final String COLUMN_NAME_MEDIA = "media";
-		public static final String COLUMN_NAME_MEDIA2 = "media2";
-		public static final String COLUMN_NAME_INDEX_ID = "index_id";
+		public static final String COLUMN_NAME_IS_TEXT = "is_text";
+		//public static final String COLUMN_NAME_MEDIA = "media";
+		//public static final String COLUMN_NAME_MEDIA2 = "media2";
+		//public static final String COLUMN_NAME_INDEX_ID = "index_id";
 
 	}
 

@@ -73,10 +73,17 @@ public class Quiz {
 
 	@Override
 	public String toString() {
-		return "Quiz{" +
+		StringBuilder builder = new StringBuilder();
+		builder.append("author: ").append(authorId).append(", title: ").append(title);
+		for (Question question : questions) {
+			builder.append("\n");
+			builder.append(question);
+		}
+		return builder.toString();
+	/*	return "Quiz{" +
 				"authorId='" + authorId + '\'' +
 				", title='" + title + '\'' +
 				", dateCreated=" + dateCreated.toString() +
-				'}';
+				'}';*/
 	}
 }

@@ -4,13 +4,14 @@ package database.dao;
 import database.DBContract;
 import database.DBInfo;
 import database.bean.Answer;
-import database.bean.AnswerFillBlank;
+import database.bean.AnswerMatch;
 import database.bean.AnswerMultipleChoice;
 import database.bean.AnswerPlain;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AnswerDAO {
@@ -20,8 +21,8 @@ public class AnswerDAO {
 		this.pool = pool;
 	}
 
-	public List<Answer> getAnswersByQuestionId(Integer questionId, Integer typeId) {
-		List<Answer> result = new ArrayList<>();
+	public Answer getAnswerByQuestionId(Integer questionId) {
+		Answer result = null;
 		Connection connection = null;
 		try {
 			// Get the connection from the pool.
@@ -41,7 +42,7 @@ public class AnswerDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, questionId);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			result = fetchAnswers(resultSet, typeId);
+			result = fetchAnswer(resultSet);
 
 			preparedStatement.close();
 			statement.close();
@@ -57,30 +58,43 @@ public class AnswerDAO {
 		return result;
 	}
 
-	private List<Answer> fetchAnswers(ResultSet resultSet, int typeId) throws SQLException {
-		List<Answer> res = new ArrayList<>();
+	private Answer fetchAnswer(ResultSet resultSet) throws SQLException {
+
+		resultSet.next();
+		int typeId = resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_TYPE_ID);
+		boolean isText = resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_TEXT);
+
 
 		switch (typeId) {
 			case AnswerPlain.TYPE:
-				while (resultSet.next()) {
-					res.add(new AnswerPlain(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1)));
-				}
-				return res;
-			case AnswerMultipleChoice.TYPE:
-				while (resultSet.next()) {
-					res.add(new AnswerMultipleChoice(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
-							resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT)));
-				}
-				return res;
-			case AnswerFillBlank.TYPE:
-				while (resultSet.next()) {
-					res.add(new AnswerFillBlank(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT1),
-							resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_INDEX_ID)));
-				}
-				return res;
-		}
+				ArrayList<String> answers = new ArrayList<String>();
 
-		return null;
+				do {
+					answers.add(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT));
+				} while (resultSet.next());
+				return new AnswerPlain(answers);
+
+			case AnswerMultipleChoice.TYPE:
+				HashMap<String, Boolean> choices = new HashMap<>();
+
+				do {
+					String str = resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT);
+					boolean bool = resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT);
+					choices.put(str, bool);
+				} while (resultSet.next());
+				return new AnswerMultipleChoice(choices, isText);
+			case AnswerMatch.TYPE:
+				HashMap<String, String> pairs = new HashMap<>();
+
+				do {
+					String str = resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT);
+					String str2 = resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT2);
+					pairs.put(str, str2);
+				} while (resultSet.next());
+				return new AnswerMatch(pairs, isText);
+			default:
+				return null;
+		}
 	}
 
 

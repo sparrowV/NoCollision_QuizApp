@@ -1,22 +1,32 @@
 package database.bean;
 
 
-public class AnswerMultipleChoice implements Answer {
+import java.util.HashMap;
+
+public class AnswerMultipleChoice implements Answer, HtmlSerializable {
+
 	public static final int TYPE = 2;
-	private String answer;
-	private boolean isCorrect;
+	private boolean isText;                                // ivar that indicates if answers are text or media
+	private HashMap<String, Boolean> choices;    // ivar containing choice and correct value pairs
 
-	public AnswerMultipleChoice(String answer, boolean isCorrect) {
-		this.answer = answer;
-		this.isCorrect = isCorrect;
+
+	public AnswerMultipleChoice(HashMap<String, Boolean> choices, boolean isText) {
+		this.choices = choices;
+		this.isText = isText;
 	}
 
-	String getAnswer() {
-		return answer;
+	public boolean isCorrect(Answer other) {
+		HashMap<String, Boolean> input = ((AnswerMultipleChoice) other).choices;
+
+		for (String str : choices.keySet()) {
+			if (input.get(str) != choices.get(str)) return false;
+		}
+		return true;
 	}
 
-	boolean isCorrect() {
-		return isCorrect;
+	@Override
+	public String toHtml() {
+		return null;
 	}
 
 	@Override
@@ -26,14 +36,22 @@ public class AnswerMultipleChoice implements Answer {
 
 		AnswerMultipleChoice that = (AnswerMultipleChoice) o;
 
-		if (isCorrect != that.isCorrect) return false;
-		return answer.equals(that.answer);
+		if (isText != that.isText) return false;
+		return choices.equals(that.choices);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = answer.hashCode();
-		result = 31 * result + (isCorrect ? 1 : 0);
+		int result = (isText ? 1 : 0);
+		result = 31 * result + choices.hashCode();
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "AnswerMultipleChoice{" +
+				"isText=" + isText +
+				", choices=" + choices +
+				'}';
 	}
 }

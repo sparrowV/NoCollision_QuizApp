@@ -29,10 +29,10 @@ CREATE TABLE quizzes (
 DROP TABLE IF EXISTS questions;
 /*    Q   */
 CREATE TABLE questions (
-  question_id           INT AUTO_INCREMENT,
-  question_text         VARCHAR(1000),
-  skipped_question_text VARCHAR(1000),
-  media                 VARCHAR(1000),
+  question_id   INT AUTO_INCREMENT,
+  question_text VARCHAR(1000),
+  blank_text    VARCHAR(1000),
+  media         VARCHAR(1000),
 
   CONSTRAINT questions_pk PRIMARY KEY (question_id)
 );
@@ -57,9 +57,7 @@ CREATE TABLE answers (
   answer_text  VARCHAR(500),
   answer_text2 VARCHAR(500),
   is_correct   BOOL,
-  media        VARCHAR(1000),
-  media2       VARCHAR(1000),
-  index_id     INT,
+  is_text      BOOL         DEFAULT TRUE,
 
   CONSTRAINT answers_pk PRIMARY KEY (answer_id)
 );

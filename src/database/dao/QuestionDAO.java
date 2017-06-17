@@ -3,10 +3,8 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
+import database.bean.Answer;
 import database.bean.Question;
-import database.bean.QuestionFillBlank;
-import database.bean.QuestionMultipleChoice;
-import database.bean.QuestionPlain;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -138,21 +136,13 @@ public class QuestionDAO {
 
 	*/
 	private Question fetchQuestion(ResultSet resultSet) throws SQLException {
-		int typeId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_TYPE_ID);
 		int questionId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID);
+		String questionText = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT);
+		String blankText = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_BLANK_TEXT);
+		String media = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_MEDIA);
+		Answer answer = answerDAO.getAnswerByQuestionId(questionId);
 
-		switch (typeId) {
-			case QuestionPlain.TYPE:
-				return new QuestionPlain(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-						answerDAO.getAnswersByQuestionId(questionId, typeId));
-			case QuestionMultipleChoice.TYPE:
-				return new QuestionMultipleChoice(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-						answerDAO.getAnswersByQuestionId(questionId, typeId));
-			case QuestionFillBlank.TYPE:
-				return new QuestionFillBlank(resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT),
-						answerDAO.getAnswersByQuestionId(questionId, typeId));
-		}
-		return null;
+		return new Question(questionId, questionText, blankText, media, answer);
 	}
 
 }

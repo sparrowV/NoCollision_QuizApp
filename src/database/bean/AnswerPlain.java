@@ -1,26 +1,64 @@
 package database.bean;
 
-public class AnswerPlain implements Answer {
-	public static final int TYPE = 1;
-	private String answer;
+import java.util.ArrayList;
+import java.util.List;
 
-	public AnswerPlain(String answer) {
-		this.answer = answer;
+public class AnswerPlain implements Answer, HtmlSerializable {
+	public static final int TYPE = 1;
+	private List<String> answers;
+
+	public AnswerPlain(List<String> answers) {
+		this.answers = new ArrayList<>(answers);
 	}
 
+	/*
+		Alternative constructor. used when constructing user-input answers.
+		Only one answer string allowed.
+	 */
+	public AnswerPlain(String answer) {
+		ArrayList<String> temp = new ArrayList<>();
+		temp.add(answer);
+		this.answers = temp;
+	}
+
+	public boolean isCorrect(Answer other) {
+		String input = ((AnswerPlain) other).getAnswer();
+		for (String str : answers) {
+			if (str.equals(input)) return true;
+		}
+		return false;
+	}
+
+	/*
+		method for obtaining user-input String from Answer object
+	 */
 	String getAnswer() {
-		return answer;
+		return answers.get(0);
+	}
+
+	public String toHtml() {
+		return "";
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (getClass() != o.getClass()) return false;
-		AnswerPlain answer = (AnswerPlain) o;
-		return this.answer.equals((answer.getAnswer()));
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AnswerPlain that = (AnswerPlain) o;
+
+		return answers.equals(that.answers);
 	}
 
 	@Override
 	public int hashCode() {
-		return answer.hashCode();
+		return answers.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "AnswerPlain{" +
+				"answers=" + answers +
+				'}';
 	}
 }
