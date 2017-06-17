@@ -5,6 +5,7 @@ import database.DBContract;
 import database.DBInfo;
 import database.bean.Answer;
 import database.bean.Question;
+import model.AnswerManager;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,12 +15,12 @@ import java.util.List;
 
 public class QuestionDAO {
 	private DataSource pool;
-	private AnswerDAO answerDAO;
+	private AnswerManager answerManager;
 	private HashMap<Integer, String> questionTypeMapping;
 
-	public QuestionDAO(DataSource pool, AnswerDAO answerDAO) {
+	public QuestionDAO(DataSource pool, AnswerManager answerManager) {
 		this.pool = pool;
-		this.answerDAO = answerDAO;
+		this.answerManager = answerManager;
 	}
 
 	public Question getQuestionById(Integer questionId) {
@@ -140,7 +141,7 @@ public class QuestionDAO {
 		String questionText = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT);
 		String blankText = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_BLANK_TEXT);
 		String media = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_MEDIA);
-		Answer answer = answerDAO.getAnswerByQuestionId(questionId);
+		Answer answer = answerManager.getAnswerByQuestionId(questionId);
 
 		return new Question(questionId, questionText, blankText, media, answer);
 	}

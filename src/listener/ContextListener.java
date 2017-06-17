@@ -5,6 +5,8 @@ import database.dao.AnswerDAO;
 import database.dao.QuestionDAO;
 import database.dao.QuizDAO;
 import database.dao.UserDAO;
+import model.AnswerManager;
+import model.QuestionManager;
 import model.QuizManager;
 import model.UserManager;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -33,18 +35,18 @@ public class ContextListener implements ServletContextListener {
 			pool.setPoolProperties(properties);
 
 			// Create DAOs
-			AnswerDAO answerDAO = new AnswerDAO(pool);
-			QuestionDAO questionDAO = new QuestionDAO(pool, answerDAO);
-			QuizDAO quizDAO = new QuizDAO(pool, questionDAO);
+			AnswerManager answerManager = new AnswerManager(new AnswerDAO(pool));
+			QuestionManager questionManager = new QuestionManager(new QuestionDAO(pool, answerManager));
+			QuizManager quizManager = new QuizManager(new QuizDAO(pool, questionManager));
 
 
 			// Save the database and UserDao in context.
 			context.setAttribute(ContextKey.CONNECTION_POOL, pool);
 			context.setAttribute(ContextKey.USER_MANAGER, new UserManager(new UserDAO(pool)));
-			context.setAttribute(ContextKey.QUIZ_MANAGER, new QuizManager(quizDAO));
-			context.setAttribute(ContextKey.ANSWER_DAO, answerDAO);
-			context.setAttribute(ContextKey.QUESTION_DAO, questionDAO);
-			context.setAttribute(ContextKey.QUIZ_DAO, quizDAO);
+			context.setAttribute(ContextKey.QUIZ_MANAGER, quizManager);
+			context.setAttribute(ContextKey.QUESTION_MANAGER, questionManager);
+			context.setAttribute(ContextKey.ANSWER_MANAGER, answerManager);
+
 		} catch (Exception ignored) {
 		}
 	}

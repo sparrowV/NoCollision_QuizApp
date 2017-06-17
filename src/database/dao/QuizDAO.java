@@ -4,6 +4,7 @@ package database.dao;
 import database.DBContract;
 import database.DBInfo;
 import database.bean.Quiz;
+import model.QuestionManager;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -12,11 +13,11 @@ import java.util.List;
 
 public class QuizDAO {
 	private DataSource pool;
-	private QuestionDAO questionDAO;
+	private QuestionManager questionManager;
 
-	public QuizDAO(DataSource pool, QuestionDAO questionDAO) {
+	public QuizDAO(DataSource pool, QuestionManager questionManager) {
 		this.pool = pool;
-		this.questionDAO = questionDAO;
+		this.questionManager = questionManager;
 	}
 
 	/**
@@ -123,7 +124,7 @@ public class QuizDAO {
 		quiz.setAuthorId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID));
 		quiz.setTitle(resultSet.getString(DBContract.QuizTable.COLUMN_NAME_TITLE));
 		quiz.setDateCreated(resultSet.getDate(DBContract.QuizTable.COLUMN_NAME_DATA_CREATED));
-		quiz.setQuestions(questionDAO.getQuestionsByQuiz(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_ID)));
+		quiz.setQuestions(questionManager.getQuestionsByQuiz(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_ID)));
 		return quiz;
 	}
 

@@ -4,6 +4,7 @@ import database.bean.Quiz;
 import database.dao.QuizDAO;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class QuizManager {
 	private QuizDAO dao;
@@ -18,5 +19,9 @@ public class QuizManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<Quiz> getQuizzesByAuthorId(int authorId) {
+		return dao.getQuizzes(authorId);
 	}
 }
