@@ -1,8 +1,6 @@
 package database.bean;
 
 
-import java.sql.PreparedStatement;
-
 public class Question implements HtmlSerializable {
 
 	private int id;

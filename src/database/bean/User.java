@@ -5,6 +5,7 @@ public class User {
 	private String lastName;
 	private String username;
 	private String password;
+	private int userId;
 
 	public User() {
 	}
@@ -86,5 +87,13 @@ public class User {
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				'}';
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

@@ -25,7 +25,7 @@ public class QuizDAO {
 	 *
 	 * @return list of quizzes.
 	 */
-	public List<Quiz> getQuizzes(Integer authorId) {
+	public List<Quiz> getQuizzes(int authorId) {
 		List<Quiz> quizzes = new ArrayList<>();
 		Connection connection = null;
 		try {

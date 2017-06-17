@@ -22,6 +22,7 @@ public class Login extends HttpServlet {
 		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
 		String username = request.getParameter(ServletKey.USERNAME);
+		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 
 		if (username == null) {
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
@@ -29,10 +30,9 @@ public class Login extends HttpServlet {
 			return;
 		}
 
-		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
-		User user = new User(username, hashedPassword);
+		User user = manager.getUser(username, hashedPassword);
 
-		if (manager.correctLogin(user)) {
+		if (user != null) {
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
 		} else {

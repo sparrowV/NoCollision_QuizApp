@@ -19,18 +19,14 @@ import java.util.Date;
 @WebServlet(name = "CreateQuiz", value = "/CreateQuiz")
 public class CreateQuiz extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//HttpServletContext context=request.getServletContext();
-		UserManager userManager = (UserManager) request.getServletContext().
-				getAttribute(ContextKey.USER_MANAGER);
 		QuizManager quizManager = (QuizManager) request.getServletContext()
 				.getAttribute(ContextKey.QUIZ_MANAGER);
 
 		HttpSession session = request.getSession();
 
 		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
-		int userId = userManager.getUserId(user);
 		String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
-		quizManager.addQuiz(new Quiz(userId, quizTitle, new Date(), null)); // TODO
+		quizManager.addQuiz(new Quiz(user.getUserId(), quizTitle, new Date(), null)); // TODO
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,5 +1,6 @@
 package servlet;
 
+import database.bean.User;
 import listener.ContextKey;
 import model.UserManager;
 import org.junit.Before;
@@ -59,7 +60,7 @@ public class LoginTest {
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("notPassword");
 
 		// UserManager.usernameTaken result.
-		when(userManagerMock.correctLogin(any())).thenReturn(false);
+		when(userManagerMock.getUser(any(), any())).thenReturn(null);
 
 		// Call both doPost and doGet methods.
 		login.doPost(requestMock, responseMock);
@@ -82,7 +83,7 @@ public class LoginTest {
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("notNotPassword");
 
 		// UserManager.usernameTaken result.
-		when(userManagerMock.correctLogin(any())).thenReturn(true);
+		when(userManagerMock.getUser(any(), any())).thenReturn(new User());
 
 		// Call both doPost and doGet methods.
 		login.doPost(requestMock, responseMock);
@@ -105,7 +106,7 @@ public class LoginTest {
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("");
 
 		// UserManager.usernameTaken result.
-		when(userManagerMock.correctLogin(any())).thenReturn(true);
+		when(userManagerMock.getUser(any(), any())).thenReturn(new User());
 
 		// Call both doPost and doGet methods.
 		login.doPost(requestMock, responseMock);
@@ -128,7 +129,7 @@ public class LoginTest {
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("");
 
 		// UserManager.usernameTaken result.
-		when(userManagerMock.correctLogin(any())).thenReturn(false);
+		when(userManagerMock.getUser(any(), any())).thenReturn(null);
 
 		// Call both doPost and doGet methods.
 		login.doPost(requestMock, responseMock);

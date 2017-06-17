@@ -21,7 +21,7 @@ public class AnswerDAO {
 		this.pool = pool;
 	}
 
-	public Answer getAnswerByQuestionId(Integer questionId) {
+	public Answer getAnswerByQuestionId(int questionId) {
 		Answer result = null;
 		Connection connection = null;
 		try {

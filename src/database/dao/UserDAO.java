@@ -19,7 +19,7 @@ public class UserDAO {
 	/**
 	 * Returns a list of users from database.
 	 *
-	 * @return list of products.
+	 * @return list of users.
 	 */
 	public List<User> getUsers() {
 		// Create a new empty list.
@@ -104,41 +104,6 @@ public class UserDAO {
 		}
 	}
 
-	/**
-	 * Returns given username's id from database or -1
-	 * if there's no such username.
-	 *
-	 * @param username
-	 * @return id
-	 */
-	public int getUserId(String username) {
-		int userId = -1;
-		Connection connection;
-
-		try {
-			connection = pool.getConnection();
-
-			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
-
-			String query = "SELECT " + DBContract.UserTable.COLUMN_NAME_ID + " FROM " +
-					DBContract.UserTable.TABLE_NAME + " WHERE " +
-					DBContract.UserTable.COLUMN_NAME_USERNAME + " = \"" + username + "\";";
-
-			ResultSet resultSet = statement.executeQuery(query);
-			resultSet.next();
-
-			userId = resultSet.getInt(DBContract.UserTable.COLUMN_NAME_ID);
-
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return userId;
-	}
-
-
 	public boolean usernameExists(String username) throws SQLException {
 		Connection connection;
 		try {
@@ -148,7 +113,7 @@ public class UserDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			String query = "SELECT COUNT(*) FROM " + DBContract.UserTable.TABLE_NAME +
-					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + "=?";
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
@@ -164,16 +129,15 @@ public class UserDAO {
 
 			// returns true if query found given username
 			return (count > 0);
-
-
-		} catch (SQLException e) {
-			System.out.println("Something wrong in select from users table");
+		} catch (SQLException ignored) {
 		}
 
 		return false;
 	}
 
-	public boolean userExists(String username, String password) {
+	public User getUser(String username, String password) {
+		User user = null;
+
 		Connection connection;
 		try {
 			connection = pool.getConnection();
@@ -181,32 +145,27 @@ public class UserDAO {
 			Statement statement = connection.createStatement();
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
-			String query = "SELECT COUNT(*) FROM " + DBContract.UserTable.TABLE_NAME +
-					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + "=?" + " AND " +
-					DBContract.UserTable.COLUMN_NAME_PASSWORD + "=?";
+			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?" + " AND " +
+					DBContract.UserTable.COLUMN_NAME_PASSWORD + " = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 
-			ResultSet resultset = preparedStatement.executeQuery();
-			resultset.next();
-
-			int count = resultset.getInt(1);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			user = fetchUser(resultSet);
 
 			statement.close();
 			preparedStatement.close();
 			connection.close();
 
-			// returns true if query found given username
-			return (count > 0);
-
-
 		} catch (SQLException e) {
 			System.out.println("Something wrong in select from users table");
 		}
 
-		return false;
+		return user;
 	}
 
 
@@ -221,6 +180,7 @@ public class UserDAO {
 		User user = new User();
 
 		// Set values.
+		user.setUserId(resultSet.getInt(DBContract.UserTable.COLUMN_NAME_ID));
 		user.setFirstName(resultSet.getString(DBContract.UserTable.COLUMN_NAME_FIRST_NAME));
 		user.setLastName(resultSet.getString(DBContract.UserTable.COLUMN_NAME_LAST_NAME));
 		user.setUsername(resultSet.getString(DBContract.UserTable.COLUMN_NAME_USERNAME));

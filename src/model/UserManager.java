@@ -14,8 +14,8 @@ public class UserManager {
 		this.dao = dao;
 	}
 
-	public boolean correctLogin(User user) {
-		return dao.userExists(user.getUsername(), user.getPassword());
+	public User getUser(String username, String password) {
+		return dao.getUser(username, password);
 	}
 
 	public void addUser(User user) {
@@ -24,10 +24,6 @@ public class UserManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public int getUserId(User user) {
-		return dao.getUserId(user.getUsername());
 	}
 
 	public boolean usernameTaken(String username) {
