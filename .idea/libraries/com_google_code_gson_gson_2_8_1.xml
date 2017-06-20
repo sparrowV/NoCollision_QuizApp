@@ -2,11 +2,9 @@
   <library name="com.google.code.gson:gson:2.8.1" type="repository">
     <properties maven-id="com.google.code.gson:gson:2.8.1" />
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.1/gson-2.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/gson-2.8.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/gson-2.8.1-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
