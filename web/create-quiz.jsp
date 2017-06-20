@@ -52,14 +52,11 @@
                 answer_type: document.getElementById("select").value,
                 answer: getAnswer()
             };
-            /*var jsonData = JSON.stringify(data);
-            var tst = {"email": "hey@mail.com", "password": "101010"};
-            var a = JSON.stringify(tst);
-            xhr.send(a);
-            console.log(a);
-            console.log(tst);
-            console.log(data);
-            console.log(jsonData);*/
+            var jsonData = JSON.stringify(data);
+            xhr.send(jsonData);
+
+            console.log(jsonData);
+
             return false;
         };
 
@@ -77,8 +74,18 @@
                 return {match_first: match_first, match_second: match_second};
 
             } else if (select_option === "MultipleChoice") {
+                var choicesResult = [];
+                var checkedResult = [];
 
+                var radios = document.getElementsByClassName("radio");
+                var choices = document.getElementsByClassName("choice");
 
+                for (var i = 0; i < choices.length; i++) {
+                    choicesResult[i] = choices[i].value;
+                    checkedResult[i] = radios[i].checked;
+                }
+
+                return {choices: choicesResult, checked: checkedResult};
             }
         };
 
@@ -125,11 +132,12 @@
                     var radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = "radio" + counter.toString();
-
+                    radio.className = "radio";
 
                     var choice = document.createElement('input');
                     choice.type = 'text';
                     choice.name = 'choice' + counter.toString();
+                    choice.className = "choice";
 
                     var br1 = document.createElement("br");
 
