@@ -2,21 +2,22 @@ package database.bean;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 
 	public static final int TYPE = 2;
 	private boolean isText;                                // ivar that indicates if answers are text or media
-	private HashMap<String, Boolean> choices;    // ivar containing choice and correct value pairs
+	private Map<String, Boolean> choices;    // ivar containing choice and correct value pairs
 
 
-	public AnswerMultipleChoice(HashMap<String, Boolean> choices, boolean isText) {
+	public AnswerMultipleChoice(Map<String, Boolean> choices, boolean isText) {
 		this.choices = choices;
 		this.isText = isText;
 	}
 
 	public boolean isCorrect(Answer other) {
-		HashMap<String, Boolean> input = ((AnswerMultipleChoice) other).choices;
+		Map<String, Boolean> input = ((AnswerMultipleChoice) other).choices;
 
 		for (String str : choices.keySet()) {
 			if (input.get(str) != choices.get(str)) return false;

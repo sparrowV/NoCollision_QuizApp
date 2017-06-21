@@ -62,8 +62,8 @@
 
                         var data = {
                             question_text: document.getElementById("question_text").value,
-                            picture_url: document.getElementById("picture_url").value,
-                            answer_type: document.getElementById("select").value,
+                            media: document.getElementById("picture_url").value,
+                            question_type: document.getElementById("select").value,
                             answer: getAnswer()
                         };
                         var jsonData = JSON.stringify(data);
@@ -85,22 +85,34 @@
                             var match_first = document.getElementsByClassName("match_first");
                             var match_second = document.getElementsByClassName("match_second");
 
-                            return {match_first: match_first, match_second: match_second};
+                            var matchFirstArray = getArray(match_first);
+                            var matchSecondArray = getArray(match_second);
+
+                            return {match_first: matchFirstArray, match_second: matchSecondArray};
 
                         } else if (select_option === "multipleChoice") {
-                            var choicesResult = [];
                             var checkedResult = [];
 
-                            var radios = document.getElementsByClassName("radio");
+                            var checkboxes = document.getElementsByClassName("checkbox");
                             var choices = document.getElementsByClassName("choice");
 
+                            var choicesResult = getArray(choices);
+
                             for (var i = 0; i < choices.length; i++) {
-                                choicesResult[i] = choices[i].value;
-                                checkedResult[i] = radios[i].checked;
+                                checkedResult[i] = checkboxes[i].checked;
                             }
 
                             return {choices: choicesResult, checked: checkedResult};
                         }
+                    };
+
+                    // gets values from dom element data
+                    var getArray = function (data) {
+                        var result = [];
+                        for (var i = 0; i < data.length; i++) {
+                            result[i] = data[i].value;
+                        }
+                        return result;
                     };
 
                     var container = document.createElement('div');
@@ -142,20 +154,20 @@
                             document.getElementById("answer_container").appendChild(container);
 
                             button.onclick = function (e) {
-                                var radio = document.createElement('input');
-                                radio.type = 'radio';
-                                radio.name = "radio" + counter.toString();
-                                radio.className = 'form-check';
+                                var checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.name = "checkbox" + counter.toString();
+                                checkbox.className = 'form-check checkbox';
 
                                 var choice = document.createElement('input');
                                 choice.type = 'text';
                                 choice.name = 'choice' + counter.toString();
-                                choice.className = 'form-control';
+                                choice.className = 'form-control choice';
 
 
                                 var br1 = document.createElement("br");
 
-                                container.appendChild(radio);
+                                container.appendChild(checkbox);
                                 container.appendChild(choice);
                                 container.appendChild(br1);
 
@@ -181,13 +193,13 @@
                                 var text1 = document.createElement('input');
                                 text1.type = "text";
                                 text1.name = "first_text" + counter_match.toString();
-                                text1.className = "form-control";
+                                text1.className = "form-control match_first";
                                 text1.placeholder = "First";
 
                                 var text2 = document.createElement('input');
                                 text2.type = "text";
                                 text2.name = "second_text" + counter_match.toString();
-                                text2.className = "form-control";
+                                text2.className = "form-control match_second";
                                 text2.placeholder = "Second";
 
                                 var span = document.createElement('span');

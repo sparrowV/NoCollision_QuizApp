@@ -67,7 +67,7 @@ public class Question implements HtmlSerializable {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Question : ").append(text);
+		builder.append("Question : ").append(text).append(". ");
 		if (fillText != null) {
 			builder.append("Fill in: ").append(fillText).append(". ");
 		}

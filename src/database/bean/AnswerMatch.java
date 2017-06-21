@@ -4,20 +4,21 @@ package database.bean;
 import org.w3c.dom.html.HTMLAnchorElement;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AnswerMatch implements Answer, HtmlSerializable {
 
 	public static final int TYPE = 3;
 	private boolean isText;
-	private HashMap<String, String> pairs;
+	private Map<String, String> pairs;
 
-	public AnswerMatch(HashMap<String, String> pairs, boolean isText) {
+	public AnswerMatch(Map<String, String> pairs, boolean isText) {
 		this.pairs = pairs;
 		this.isText = isText;
 	}
 
 	public boolean isCorrect(Answer other) {
-		HashMap<String, String> input = ((AnswerMatch) other).pairs;
+		Map<String, String> input = ((AnswerMatch) other).pairs;
 
 		for (String str : this.pairs.keySet()) {
 			if (!pairs.get(str).equals(input.get(str))) return false;
