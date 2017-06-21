@@ -41,7 +41,7 @@
                            name="<%= ServletKey.PASSWORD%>">
                 </div>
 
-                <button type="submit" class="btn btn:primary form-control" value="login">Login</button>
+                <button type="submit" class="btn btn-primary" value="login">Login</button>
             </form>
 
         </div>
