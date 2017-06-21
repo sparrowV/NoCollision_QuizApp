@@ -50,6 +50,7 @@ public class AddQuestion extends HttpServlet {
 				List<String> answers = new ArrayList<>();
 				answers.add(data.get("answer").getAsString());
 				answer = new AnswerPlain(answers);
+				break;
 			}
 			case "match": {
 				JsonArray matchFirstAnswers = data.getAsJsonObject("answer").getAsJsonArray("match_first");
@@ -64,6 +65,7 @@ public class AddQuestion extends HttpServlet {
 
 				// todo isText html part also
 				answer = new AnswerMatch(matchedAnswers, true);
+				break;
 			}
 
 			case "multipleChoice": {
@@ -78,6 +80,7 @@ public class AddQuestion extends HttpServlet {
 				}
 				// todo isText html part also
 				answer = new AnswerMultipleChoice(multipleChoice, true);
+				break;
 			}
 		}
 
