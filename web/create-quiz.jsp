@@ -1,3 +1,5 @@
+<%@ page import="database.bean.Quiz" %>
+<%@ page import="servlet.ServletKey" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,10 +26,23 @@
         </div>
 
         <!-- Create Quiz -->
+        <%
+            HttpSession s = request.getSession();
+            s.setAttribute(ServletKey.CURRENT_QUIZ, new Quiz());
+
+        %>
+
         <div class="create-quiz">
+            <form action="CreateQuiz" method="post">
+                Title: <input type="text" name="<%= ServletKey.QUIZ_TITLE%>"></input>
+                <button id="submit_quiz">Submit Quiz</button>
+
+
+            </form>
+
             <button id="add_question" class="btn btn-primary">Add Question</button>
-            <div id="questions"></div>
-            <div id="answers"></div>
+            <div id="questions" class="questions"></div>
+            <div id="answers" class="answers"></div>
 
             <script>
                 document.getElementById('add_question').onclick = function (event) {
@@ -70,6 +85,7 @@
                         xhr.send(jsonData);
 
                         console.log(jsonData);
+
 
                         return false;
                     };
