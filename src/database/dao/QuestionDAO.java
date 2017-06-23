@@ -23,7 +23,7 @@ public class QuestionDAO {
 		this.answerManager = answerManager;
 	}
 
-	public Question getQuestionById(Integer questionId) {
+	public Question getQuestionById(int questionId) {
 		Question question = null;
 		Connection connection = null;
 		try {

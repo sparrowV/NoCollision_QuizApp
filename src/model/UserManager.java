@@ -18,12 +18,23 @@ public class UserManager {
 		return dao.getUser(username, password);
 	}
 
-	public void addUser(User user) {
+	public User getUserById(int userId) {
 		try {
-			dao.addUser(user);
+			return dao.getUserById(userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	public User addUser(User user) {
+		try {
+			int id = dao.addUser(user);
+			return getUserById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public boolean usernameTaken(String username) {

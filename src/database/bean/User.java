@@ -15,6 +15,7 @@ public class User {
 		this.password = password;
 	}
 
+
 	public User(String firstName, String lastName, String username, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -82,7 +83,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" +
-				"firstName='" + firstName + '\'' +
+				"id='" + userId + "\'" +
+				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +

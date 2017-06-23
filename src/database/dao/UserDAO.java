@@ -67,8 +67,9 @@ public class UserDAO {
 	 * @param user
 	 * @throws SQLException
 	 */
-	public void addUser(User user) throws SQLException {
+	public int addUser(User user) throws SQLException {
 		Connection connection = null;
+		int id = 0;
 		try {
 			connection = pool.getConnection();
 
@@ -83,13 +84,17 @@ public class UserDAO {
 					DBContract.UserTable.COLUMN_NAME_PASSWORD + ") " +
 					"VALUES (?,?,?,?);";
 
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, user.getFirstName());
 			preparedStatement.setString(2, user.getLastName());
 			preparedStatement.setString(3, user.getUsername());
 			preparedStatement.setString(4, user.getPassword());
 
 			preparedStatement.executeUpdate();
+
+			ResultSet keys = preparedStatement.getGeneratedKeys();
+			keys.next();
+			id = keys.getInt(1);
 
 			preparedStatement.close();
 			statement.close();
@@ -102,6 +107,8 @@ public class UserDAO {
 			} catch (Exception ignored) {
 			}
 		}
+		assert id > 0;
+		return id;
 	}
 
 	public boolean usernameExists(String username) throws SQLException {
@@ -168,6 +175,36 @@ public class UserDAO {
 		return user;
 	}
 
+	public User getUserById(int userId) {
+		User user = null;
+
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_ID + " = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			user = fetchUser(resultSet);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from users table");
+		}
+
+		return user;
+	}
 
 	/**
 	 * Creates and returns user from result set.
