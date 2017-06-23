@@ -36,7 +36,7 @@ public class SignUp extends HttpServlet {
 			String hashedPassword = Hash.encode(password);
 			User newUser = new User(firstName, lastName, username, hashedPassword);
 			userManager.addUser(newUser);
-			session.setAttribute(ServletKey.CURRENT_USER, newUser);
+			session.setAttribute(ServletKey.CURRENT_USER, userManager.getUser(username,hashedPassword));
 
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 		} else {

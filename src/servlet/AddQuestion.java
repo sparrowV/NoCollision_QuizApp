@@ -22,6 +22,8 @@ public class AddQuestion extends HttpServlet {
 
 
 		Question question = generateQuestion(data);
+		Quiz quiz=(Quiz)request.getSession().getAttribute(ServletKey.CURRENT_QUIZ);
+		quiz.addQuestion(question);
 
 		System.out.println(question);
 

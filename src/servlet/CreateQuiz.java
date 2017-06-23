@@ -6,6 +6,7 @@ import listener.ContextKey;
 import model.QuizManager;
 import model.UserManager;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +27,17 @@ public class CreateQuiz extends HttpServlet {
 
 		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
 		String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
-		quizManager.addQuiz(new Quiz(user.getUserId(), quizTitle, new Date(), null)); // TODO
+		Date date = new Date();
+		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
+		quiz.setDateCreated(date);
+
+		quiz.setTitle(quizTitle);
+		quiz.setAuthorId(user.getUserId());
+		quizManager.addQuiz(quiz);
+		RequestDispatcher dispatcher;
+		//	System.out.println(user.getUserId() + " " + quizTitle+ " "+ date.toString()+quiz.getQuestions().size());
+		dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
+		dispatcher.forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

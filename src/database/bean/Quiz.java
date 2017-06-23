@@ -1,6 +1,7 @@
 package database.bean;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,5 +86,14 @@ public class Quiz {
 				", title='" + title + '\'' +
 				", dateCreated=" + dateCreated.toString() +
 				'}';*/
+	}
+
+	public void addQuestion(Question question) {
+
+		if (questions == null) {
+			questions = new ArrayList<Question>();
+
+		}
+		questions.add(question);
 	}
 }
