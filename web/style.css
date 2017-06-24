@@ -34,3 +34,11 @@
     text-align: center;
     width: 50%;
 }
+
+.questions {
+    display: none
+}
+
+.profile-info {
+    text-align: center;
+}

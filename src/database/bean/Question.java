@@ -47,9 +47,7 @@ public class Question implements HtmlSerializable {
 	 * @param answer Answer object that contains the answer to this type of the question
 	 * @return true if the answer is correct, false otherwise
 	 */
-
 	public boolean isCorrect(Answer answer) {
-
 		return this.answer.isCorrect(answer);
 	}
 

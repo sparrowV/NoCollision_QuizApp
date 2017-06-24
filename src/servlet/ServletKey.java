@@ -15,4 +15,5 @@ public final class ServletKey {
 	public static final String USERNAME_TAKEN_JSP = "username-taken.jsp";
 	public static final String SIGN_UP_JSP = "sign-up.jsp";
 	public static final String CREATE_QUIZ_JSP = "create-quiz.jsp";
+	public static final String PROFILE = "profile.jsp";
 }
