@@ -84,9 +84,10 @@ public class AnswerDAO {
 			String query = "INSERT INTO " + DBContract.AnswerTable.TABLE_NAME + " " + "(" +
 					DBContract.AnswerTable.COLUMN_NAME_TYPE_ID + ", " +
 					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT + ", " +
-					DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT + ") VALUES ";
-			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?, ?),";
-			query += "(?, ?, ?);";
+					DBContract.AnswerTable.COLUMN_NAME_IS_CORRECT + ", " +
+					DBContract.AnswerTable.COLUMN_NAME_IS_TEXT + ") VALUES ";
+			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?, ?, ?),";
+			query += "(?, ?, ?, ?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			int i = 0;
@@ -95,7 +96,8 @@ public class AnswerDAO {
 				preparedStatement.setInt(i + 1, AnswerMultipleChoice.TYPE);
 				preparedStatement.setString(i + 2, str);
 				preparedStatement.setBoolean(i + 3, answers.get(str));
-				i += 3;
+				preparedStatement.setBoolean(i + 4, answer.isText());
+				i += 4;
 			}
 			preparedStatement.executeUpdate();
 
@@ -137,9 +139,10 @@ public class AnswerDAO {
 			String query = "INSERT INTO " + DBContract.AnswerTable.TABLE_NAME + " " + "(" +
 					DBContract.AnswerTable.COLUMN_NAME_TYPE_ID + ", " +
 					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT + ", " +
-					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT2 + ") VALUES ";
-			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?, ?),";
-			query += "(?, ?, ?);";
+					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT2 + ", " +
+					DBContract.AnswerTable.COLUMN_NAME_IS_TEXT + ") VALUES ";
+			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?, ?, ?),";
+			query += "(?, ?, ?, ?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			int i = 0;
@@ -148,7 +151,8 @@ public class AnswerDAO {
 				preparedStatement.setInt(i + 1, AnswerMatch.TYPE);
 				preparedStatement.setString(i + 2, str);
 				preparedStatement.setString(i + 3, answers.get(str));
-				i += 3;
+				preparedStatement.setBoolean(i + 4, answer.isText());
+				i += 4;
 			}
 			preparedStatement.executeUpdate();
 

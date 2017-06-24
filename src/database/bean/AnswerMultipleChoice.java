@@ -33,6 +33,10 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 		return TYPE;
 	}
 
+	public boolean isText() {
+		return isText;
+	}
+
 	@Override
 	public String toHtml() {
 		return null;

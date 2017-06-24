@@ -38,6 +38,10 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 		return "";
 	}
 
+	public boolean isText() {
+		return isText;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
