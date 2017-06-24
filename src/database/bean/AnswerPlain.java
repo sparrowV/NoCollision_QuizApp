@@ -32,8 +32,16 @@ public class AnswerPlain implements Answer, HtmlSerializable {
 	/*
 		method for obtaining user-input String from Answer object
 	 */
-	String getAnswer() {
+	public String getAnswer() {
 		return answers.get(0);
+	}
+
+	public List<String> getAnswers() {
+		return answers;
+	}
+
+	public int getType() {
+		return TYPE;
 	}
 
 	public String toHtml() {

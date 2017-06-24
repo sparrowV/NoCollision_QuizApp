@@ -14,6 +14,19 @@ public class QuestionManager {
 		this.dao = dao;
 	}
 
+	public void addQuestionToQuiz(Question question, int quizId, int index) {
+		try {
+			int id = dao.addQuestion(question);
+			addQuestionQuizRelation(id, quizId, index);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addQuestionQuizRelation(int questionId, int quizId, int index) {
+		dao.addQuestionQuizRelation(questionId, quizId, index);
+	}
+
 	public Question getQuestionById(int questionId) {
 		return dao.getQuestionById(questionId);
 	}

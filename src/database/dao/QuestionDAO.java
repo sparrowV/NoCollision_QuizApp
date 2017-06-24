@@ -60,7 +60,6 @@ public class QuestionDAO {
 		return question;
 	}
 
-
 	public List<Question> getQuestionsByQuiz(int quizId) {
 		List<Question> res = new ArrayList<>();
 		Connection connection = null;
@@ -109,23 +108,77 @@ public class QuestionDAO {
 	 * @param question the question to be inserted
 	 * @throws SQLException if connection can't be established
 	 */
-	/*
-	public void addQuestion(Question question) throws SQLException {
+
+	public int addQuestion(Question question) throws SQLException {
+		Connection connection = null;
+		int id = 0;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// query inserting into users table
+			String query = "INSERT INTO " + DBContract.QuestionTable.TABLE_NAME + " " + "(" +
+					DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT + ", " +
+					DBContract.QuestionTable.COLUMN_NAME_BLANK_TEXT + ", " +
+					DBContract.QuestionTable.COLUMN_NAME_MEDIA + ") VALUES " +
+					"(?, ?, ?);";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+			preparedStatement.setString(1, question.getQuestion());
+			preparedStatement.setString(2, question.getFillText());
+			preparedStatement.setString(3, question.getMedia());
+			preparedStatement.executeUpdate();
+			ResultSet keys = preparedStatement.getGeneratedKeys();
+			keys.next();
+			id = keys.getInt(1);
+
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println("AddQuestionError");
+			System.out.println(e.getMessage());
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+		assert id > 0;
+		answerManager.addAnswerToQuestion(question.getAnswer(), id);
+		return id;
+	}
+
+	public void addQuestionQuizRelation(int questionId, int quizId, int index) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
-			statement.close();
 
-			PreparedStatement preparedStatement = question.toSql();
+			// query inserting into users table
+			String query = "INSERT INTO " + DBContract.QuestionQuizTable.TABLE_NAME + " " + "(" +
+					DBContract.QuestionQuizTable.COLUMN_NAME_QUESTION_ID + ", " +
+					DBContract.QuestionQuizTable.COLUMN_NAME_QUIZ_ID + ", " +
+					DBContract.QuestionQuizTable.COLUMN_NAME_INDEX_ID + ") " +
+					"VALUES (?, ?, ?);";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, questionId);
+			preparedStatement.setInt(2, quizId);
+			preparedStatement.setInt(3, index);
+
 			preparedStatement.executeUpdate();
 
-			statement.close();
 			preparedStatement.close();
+			statement.close();
 		} catch (SQLException e) {
-			e.getStackTrace();
+			System.out.println("AddQuestionQuizError");
+			System.out.println(e.getMessage());
 		} finally {
 			if (connection != null) try {
 				// Returns the connection to the pool.
@@ -135,7 +188,7 @@ public class QuestionDAO {
 		}
 	}
 
-	*/
+
 	private Question fetchQuestion(ResultSet resultSet) throws SQLException {
 		int questionId = resultSet.getInt(DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID);
 		String questionText = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_QUESTION_TEXT);

@@ -25,6 +25,14 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 		return true;
 	}
 
+	public Map<String, Boolean> getAnswers() {
+		return choices;
+	}
+
+	public int getType() {
+		return TYPE;
+	}
+
 	@Override
 	public String toHtml() {
 		return null;

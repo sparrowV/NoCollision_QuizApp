@@ -26,6 +26,14 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 		return true;
 	}
 
+	public int getType() {
+		return TYPE;
+	}
+
+	public Map<String, String> getAnswers() {
+		return pairs;
+	}
+
 	public String toHtml() {
 		return "";
 	}

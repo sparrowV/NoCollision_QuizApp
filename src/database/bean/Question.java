@@ -4,10 +4,17 @@ package database.bean;
 public class Question implements HtmlSerializable {
 
 	private int id;
-	private String text; // instance variable to store question text
-	private String media; // instance variable to store url to appropriate media file
-	private String fillText; // instance variable to store text with blank parts (may be null)
-	private Answer answer; // relevant answer object
+	private String text = null; // instance variable to store question text
+	private String media = null; // instance variable to store url to appropriate media file
+	private String fillText = null; // instance variable to store text with blank parts (may be null)
+	private Answer answer = null; // relevant answer object
+
+	public Question(String text, String media, String fillText, Answer answer) {
+		this.text = text;
+		this.media = media;
+		this.fillText = fillText;
+		this.answer = answer;
+	}
 
 	public Question(int id, String text, String media, String fillText, Answer answer) {
 		this.id = id;
@@ -20,6 +27,19 @@ public class Question implements HtmlSerializable {
 	public String getQuestion() {
 		return text;
 	}
+
+	public String getFillText() {
+		return fillText;
+	}
+
+	public String getMedia() {
+		return media;
+	}
+
+	public Answer getAnswer() {
+		return answer;
+	}
+
 
 	/**
 	 * Checks whether the user answered the question correctly

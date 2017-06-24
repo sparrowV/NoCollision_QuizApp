@@ -3,6 +3,7 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
+import database.bean.Question;
 import database.bean.Quiz;
 import model.QuestionManager;
 
@@ -74,8 +75,9 @@ public class QuizDAO {
 	 * @param quiz
 	 * @throws SQLException
 	 */
-	public void addQuiz(Quiz quiz) throws SQLException {
+	public int addQuiz(Quiz quiz) throws SQLException {
 		Connection connection = null;
+		int id = 0;
 		try {
 			connection = pool.getConnection();
 
@@ -90,11 +92,15 @@ public class QuizDAO {
 					"VALUES (?,?,?);";
 
 
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, quiz.getAuthorId());
 			preparedStatement.setString(2, quiz.getTitle());
 			preparedStatement.setDate(3, new java.sql.Date(quiz.getDateCreated().getTime()));  // Convert Java date to SQL date.
 			preparedStatement.executeUpdate();
+
+			ResultSet keys = preparedStatement.getGeneratedKeys();
+			keys.next();
+			id = keys.getInt(1);
 
 			preparedStatement.close();
 			statement.close();
@@ -107,6 +113,15 @@ public class QuizDAO {
 			} catch (Exception ignored) {
 			}
 		}
+
+		List<Question> questions = quiz.getQuestions();
+
+		for (int i = 0; i < questions.size(); i++) {
+			questionManager.addQuestionToQuiz(questions.get(i), id, i + 1);
+		}
+
+		assert id > 0;
+		return id;
 	}
 
 

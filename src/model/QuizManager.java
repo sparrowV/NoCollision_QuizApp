@@ -13,12 +13,15 @@ public class QuizManager {
 		this.dao = dao;
 	}
 
-	public void addQuiz(Quiz quiz) {
+	public int addQuiz(Quiz quiz) {
+		int id = 0;
 		try {
-			dao.addQuiz(quiz);
+			id = dao.addQuiz(quiz);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		assert id > 0;
+		return id;
 	}
 
 	public List<Quiz> getQuizzesByAuthorId(int authorId) {
