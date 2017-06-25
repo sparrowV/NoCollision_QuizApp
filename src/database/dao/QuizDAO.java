@@ -5,7 +5,6 @@ import database.DBContract;
 import database.DBInfo;
 import database.bean.Question;
 import database.bean.Quiz;
-import database.bean.User;
 import model.QuestionManager;
 
 import javax.sql.DataSource;
@@ -65,8 +64,6 @@ public class QuizDAO {
 		}
 
 		return quizzes;
-
-
 	}
 
 

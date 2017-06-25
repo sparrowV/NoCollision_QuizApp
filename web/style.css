@@ -35,7 +35,11 @@
     width: 50%;
 }
 
+.form-group {
+    margin: auto;
+    text-align: left;
 
+}
 
 .profile-info {
     text-align: center;

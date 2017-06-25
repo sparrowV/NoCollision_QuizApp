@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @WebServlet(name = "AddQuestion", value = "/AddQuestion")
@@ -22,9 +25,10 @@ public class AddQuestion extends HttpServlet {
 
 
 		Question question = generateQuestion(data);
-		Quiz quiz=(Quiz)request.getSession().getAttribute(ServletKey.CURRENT_QUIZ);
+		Quiz quiz = (Quiz) request.getSession().getAttribute(ServletKey.CURRENT_QUIZ);
 		quiz.addQuestion(question);
 
+		Answer answer = question.getAnswer();
 		System.out.println(question);
 
 	}

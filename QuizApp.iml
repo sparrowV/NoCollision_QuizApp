@@ -21,7 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.15" level="application_server_libraries" />
     <orderEntry type="library" name="mysql:mysql-connector-java:6.0.6" level="project" />
@@ -30,8 +30,8 @@
     <orderEntry type="library" name="org.mockito:mockito-core:2.8.9" level="project" />
     <orderEntry type="library" name="javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.8.1" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.11" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>

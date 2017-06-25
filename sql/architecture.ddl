@@ -6,11 +6,15 @@ USE quiz_app;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  user_id    INT AUTO_INCREMENT,
-  first_name VARCHAR(30)  NOT NULL,
-  last_name  VARCHAR(30)  NOT NULL,
-  username   VARCHAR(20)  NOT NULL UNIQUE,
-  password   VARCHAR(200) NOT NULL,
+  user_id       INT AUTO_INCREMENT,
+  first_name    VARCHAR(30)  NOT NULL,
+  last_name     VARCHAR(30)  NOT NULL,
+  username      VARCHAR(20)  NOT NULL UNIQUE,
+  password      VARCHAR(200) NOT NULL,
+  gender        VARCHAR(20)  NOT NULL,
+  country       VARCHAR(50)  NOT NULL,
+  picture       VARCHAR(1000),
+  date_of_birth DATE         NOT NULL,
 
   CONSTRAINT users_pk PRIMARY KEY (user_id)
 );

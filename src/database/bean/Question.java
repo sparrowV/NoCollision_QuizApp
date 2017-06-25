@@ -58,13 +58,9 @@ public class Question implements HtmlSerializable {
 	 */
 
 	public String toHtml() {
-		String toHtml="";
-		toHtml="<p>"+getQuestion()+"</p>"+
-				"<p>"+getMedia()+"</p>"+
-				"<p>"+getFillText()+"</p>";
-
-
-		return toHtml;
+		return "<p>" + getQuestion() + "</p>" +
+				"<p>" + getMedia() + "</p>" +
+				"<p>" + getFillText() + "</p>";
 	}
 
 	@Override

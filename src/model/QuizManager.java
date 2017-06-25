@@ -30,6 +30,5 @@ public class QuizManager {
 
 	public Quiz getQuizById(int id) {
 		return dao.getQuizById(id);
-
 	}
 }

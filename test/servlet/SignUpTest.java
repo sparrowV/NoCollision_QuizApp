@@ -25,6 +25,8 @@ public class SignUpTest {
 	private UserManager userManagerMock;
 	private SignUp signUp;
 
+
+	// TODO: Update sign-up tests.
 	@SuppressWarnings("Duplicates")
 	@Before
 	public void setUp() throws Exception {

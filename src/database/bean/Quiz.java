@@ -23,11 +23,12 @@ public class Quiz {
 		this.questions = questions;
 	}
 
-	public void setQuizId(int id){
-		quizId=id;
-	}
-	public int getQuizId(){
+	public int getQuizId() {
 		return quizId;
+	}
+
+	public void setQuizId(int id) {
+		quizId = id;
 	}
 
 	public int getAuthorId() {
@@ -45,7 +46,6 @@ public class Quiz {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 
 	public Date getDateCreated() {
@@ -101,16 +101,20 @@ public class Quiz {
 	public void addQuestion(Question question) {
 
 		if (questions == null) {
-			questions = new ArrayList<Question>();
+			questions = new ArrayList<>();
 
 		}
 		questions.add(question);
 	}
-	public String toHtml(){
 
-		String toHtml="<p>"+getTitle()+getDateCreated().toString()+"</p>";
-		return toHtml;
+	public String toHtml() {
 
-
+		return "<tr>\n" +
+				"      <th scope=\"row\">" + quizId + "</th>\n" +
+				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId + ">" + title + "</a>" + "</td>\n" +
+				"      <td>" + dateCreated + "</td>\n" +
+				"    </tr>";
 	}
+
+
 }

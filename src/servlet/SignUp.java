@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet(name = "SignUp", value = {"/SignUp", "/Signup"})
 public class SignUp extends HttpServlet {
@@ -25,6 +28,18 @@ public class SignUp extends HttpServlet {
 		String lastName = request.getParameter(ServletKey.LAST_NAME);
 		String username = request.getParameter(ServletKey.USERNAME);
 		String password = request.getParameter(ServletKey.PASSWORD);
+		String gender = request.getParameter(ServletKey.GENDER);
+		String picture = request.getParameter(ServletKey.PICTURE);
+		String country = request.getParameter(ServletKey.COUNTRY);
+
+		// Get date string and parse it.
+		String dateText = request.getParameter(ServletKey.DATE_OF_BIRTH);
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateText);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		if (username == null) {
 			dispatcher = request.getRequestDispatcher(ServletKey.SIGN_UP_JSP);
@@ -34,7 +49,9 @@ public class SignUp extends HttpServlet {
 
 		if (!userManager.usernameTaken(username)) {
 			String hashedPassword = Hash.encode(password);
-			User newUser = new User(firstName, lastName, username, hashedPassword);
+			User newUser = new User(firstName, lastName, username, hashedPassword, gender, picture, country, date);
+			System.out.println(newUser.toString());
+			System.out.println(newUser.getPicture());
 			newUser = userManager.addUser(newUser);
 			session.setAttribute(ServletKey.CURRENT_USER, newUser);
 

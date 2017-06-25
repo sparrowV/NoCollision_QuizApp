@@ -3,54 +3,54 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Create Quiz</title>
+	<title>Create Quiz</title>
 
-    <!-- Custom styles for this web-page -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Custom styles for this web-page -->
+	<link rel="stylesheet" type="text/css" href="style.css">
 
-    <!-- Bootstrap core JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-            crossorigin="anonymous"></script>
+	<!-- Bootstrap core JS -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+	        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+	        crossorigin="anonymous"></script>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+	      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
-        <!-- Header -->
-        <div class="page-header">
-            <h1>Create Quiz</h1>
-        </div>
+	<div class="jumbotron">
+		<!-- Header -->
+		<div class="page-header">
+			<h1>Create Quiz</h1>
+		</div>
 
-        <!-- Create Quiz -->
-        <%
-            HttpSession s = request.getSession();
-            s.setAttribute(ServletKey.CURRENT_QUIZ, new Quiz());
+		<!-- Create Quiz -->
+		<%
+			HttpSession s = request.getSession();
+			s.setAttribute(ServletKey.CURRENT_QUIZ, new Quiz());
 
-        %>
+		%>
 
-        <div class="create-quiz">
-            <form action="CreateQuiz" method="post">
-                Title: <input type="text" name="<%= ServletKey.QUIZ_TITLE%>"></input>
-                <button id="submit_quiz">Submit Quiz</button>
+		<div class="create-quiz">
+			<form action="CreateQuiz" method="post">
+				Title: <input type="text" name="<%= ServletKey.QUIZ_TITLE%>"/>
+				<button id="submit_quiz">Submit Quiz</button>
 
 
-            </form>
+			</form>
 
-            <button id="add_question" class="btn btn-primary">Add Question</button>
-            <div id="questions" class="questions"></div>
-            <div id="answers" class="answers"></div>
+			<button id="add_question" class="btn btn-primary">Add Question</button>
+			<div id="questions" class="questions"></div>
+			<div id="answers" class="answers"></div>
 
-            <script>
+			<script>
                 document.getElementById('add_question').onclick = function (event) {
                     var question_text = document.createElement('div');
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
-                    var fill_in_blank=document.createElement('div');
-                    fill_in_blank.innerHTML="<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='fill in blanks'>";
+                    var fill_in_blank = document.createElement('div');
+                    fill_in_blank.innerHTML = "<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='fill in blanks'>";
 
 
                     var picture_url = document.createElement('div');
@@ -81,7 +81,7 @@
 
                         var data = {
                             question_text: document.getElementById("question_text").value,
-                            fill_in_blank:document.getElementById("fill_in_blank").value,
+                            fill_in_blank: document.getElementById("fill_in_blank").value,
                             media: document.getElementById("picture_url").value,
                             question_type: document.getElementById("select").value,
                             answer: getAnswer()
@@ -263,9 +263,9 @@
                     document.getElementById("questions").appendChild(fill_in_blank);
                     document.getElementById("questions").appendChild(picture_url);
                 }
-            </script>
-        </div>
-    </div>
+			</script>
+		</div>
+	</div>
 </div>
 </body>
 </html>

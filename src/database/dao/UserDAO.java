@@ -81,14 +81,22 @@ public class UserDAO {
 					DBContract.UserTable.COLUMN_NAME_FIRST_NAME + ", " +
 					DBContract.UserTable.COLUMN_NAME_LAST_NAME + ", " +
 					DBContract.UserTable.COLUMN_NAME_USERNAME + ", " +
-					DBContract.UserTable.COLUMN_NAME_PASSWORD + ") " +
-					"VALUES (?,?,?,?);";
+					DBContract.UserTable.COLUMN_NAME_PASSWORD + ", " +
+					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
+					DBContract.UserTable.COLUMN_NAME_COUNTRY + ", " +
+					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
+					DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH + ") " +
+					"VALUES (?,?,?,?,?,?,?,?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, user.getFirstName());
 			preparedStatement.setString(2, user.getLastName());
 			preparedStatement.setString(3, user.getUsername());
 			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getGender());
+			preparedStatement.setString(6, user.getCountry());
+			preparedStatement.setString(7, user.getPicture());
+			preparedStatement.setDate(8, new java.sql.Date(user.getDateOfBirth().getTime()));
 
 			preparedStatement.executeUpdate();
 
@@ -222,6 +230,10 @@ public class UserDAO {
 		user.setLastName(resultSet.getString(DBContract.UserTable.COLUMN_NAME_LAST_NAME));
 		user.setUsername(resultSet.getString(DBContract.UserTable.COLUMN_NAME_USERNAME));
 		user.setPassword(resultSet.getString(DBContract.UserTable.COLUMN_NAME_PASSWORD));
+		user.setGender(resultSet.getString(DBContract.UserTable.COLUMN_NAME_GENDER));
+		user.setCountry(resultSet.getString(DBContract.UserTable.COLUMN_NAME_COUNTRY));
+		user.setPicture(resultSet.getString(DBContract.UserTable.COLUMN_NAME_PICTURE));
+		user.setDateOfBirth(resultSet.getDate(DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH));
 
 		return user;
 	}

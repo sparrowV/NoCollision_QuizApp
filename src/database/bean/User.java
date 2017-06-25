@@ -1,10 +1,16 @@
 package database.bean;
 
+import java.util.Date;
+
 public class User {
 	private String firstName;
 	private String lastName;
 	private String username;
 	private String password;
+	private String gender;
+	private String picture;
+	private String country;
+	private Date dateOfBirth;
 	private int userId;
 
 	public User() {
@@ -15,12 +21,15 @@ public class User {
 		this.password = password;
 	}
 
-
-	public User(String firstName, String lastName, String username, String password) {
+	public User(String firstName, String lastName, String username, String password, String gender, String picture, String country, Date dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
+		this.gender = gender;
+		this.picture = picture;
+		this.country = country;
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getFirstName() {
@@ -62,6 +71,38 @@ public class User {
 		setPassword(password);
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -83,11 +124,15 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" +
-				"id='" + userId + "\'" +
-				", firstName='" + firstName + '\'' +
+				"firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
+				", gender='" + gender + '\'' +
+				", picture='" + picture + '\'' +
+				", country='" + country + '\'' +
+				", dateOfBirth=" + dateOfBirth +
+				", userId=" + userId +
 				'}';
 	}
 
