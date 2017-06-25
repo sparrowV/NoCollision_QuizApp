@@ -1,8 +1,9 @@
-<%@ page import="database.bean.Quiz" %>
+<%@ page import="servlet.ServletKey" %>
 <%@ page import="database.bean.User" %>
+<%@ page import="database.bean.Quiz" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
-<%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -19,11 +20,10 @@
 <script>
 
 
-
 </script>
 
 <%
-    Integer counter = 1;
+    //displaying all quizes for given user
     User user = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
     int user_id = user.getUserId();
     QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
@@ -33,9 +33,7 @@
     for (int i = 0; i < quiz_list.size(); i++) {
 
         out.write(quiz_list.get(i).toHtml());
-        //  out.write("<form action="+"\"do-quiz.jsp?id=1\""+"1"+"\">");
-        System.out.println(quiz_list.get(i).getQuizId());
-        out.write("<a href=" + "do-quiz.jsp?id=" + quiz_list.get(i).getQuizId() + ">" + "Do Quiz" + "</a>");
+        out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz_list.get(i).getQuizId() + ">" + "Do Quiz" + "</a>");
         out.write("</form>");
 
 
@@ -45,7 +43,6 @@
 
 
 %>
-
 
 
 </body>
