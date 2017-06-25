@@ -26,19 +26,20 @@ public class CreateQuiz extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
+
+		//getting current quiz and setting fields
+		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
 		String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
 		Date date = new Date();
-		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
 		quiz.setDateCreated(date);
-
 		quiz.setTitle(quizTitle);
 		quiz.setAuthorId(user.getUserId());
 		System.out.println(quizManager);
 		int id = quizManager.addQuiz(quiz);
 		quiz.setQuizId(id);
-		System.out.println("quiz id is " + id);
+
+
 		RequestDispatcher dispatcher;
-		//	System.out.println(user.getUserId() + " " + quizTitle+ " "+ date.toString()+quiz.getQuestions().size());
 		dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 		dispatcher.forward(request, response);
 	}

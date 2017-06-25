@@ -21,9 +21,13 @@
 <body>
 <%
     QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
+
+    //getting quiz id from query
     String url = request.getQueryString();
     int index = url.indexOf("=");
     String quizId = url.substring(index + 1);
+
+
     Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));
     List<Question> questions = quiz.getQuestions();
     int counter = 1;
@@ -38,13 +42,8 @@
     }
 %>
 
-
+<input type="submit" value="Submit answers">
 </body>
-
-<footer>
-    <input type="submit" value="Submit answers" class="footer"> </input>
-
-</footer>
 
 
 </html>

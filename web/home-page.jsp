@@ -20,11 +20,10 @@
 <script>
 
 
-
 </script>
 
 <%
-    Integer counter = 1;
+    //displaying all quizes for given user
     User user = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
     int user_id = user.getUserId();
     QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
@@ -34,9 +33,7 @@
     for (int i = 0; i < quiz_list.size(); i++) {
 
         out.write(quiz_list.get(i).toHtml());
-      //  out.write("<form action="+"\"Do-Quiz.jsp?id=1\""+"1"+"\">");
-        System.out.println(quiz_list.get(i).getQuizId());
-        out.write("<a href="+"Do-Quiz.jsp?id="+quiz_list.get(i).getQuizId()+">"+"Do Quiz"+"</a>");
+        out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz_list.get(i).getQuizId() + ">" + "Do Quiz" + "</a>");
         out.write("</form>");
 
 
@@ -46,7 +43,6 @@
 
 
 %>
-
 
 
 </body>

@@ -108,7 +108,7 @@ public class Quiz {
 	}
 	public String toHtml(){
 
-		String toHtml="<p>"+getTitle()+getDateCreated().toString()+"</p>";
+		String toHtml="<p>"+getTitle()+"  "+getDateCreated().toString()+"</p>";
 		return toHtml;
 
 
