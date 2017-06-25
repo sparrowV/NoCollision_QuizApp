@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
 		User user = manager.getUser(username, hashedPassword);
 
 		if (user != null) {
-			dispatcher = request.getRequestDispatcher(ServletKey.PROFILE);
+			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);

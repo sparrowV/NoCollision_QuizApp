@@ -39,7 +39,18 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 
 	@Override
 	public String toHtml() {
-		return null;
+		String html="";
+		for(String choice:choices.keySet()){
+			html+=oneChoiceHtml(choice)+"<br />";
+
+		}
+
+		return html;
+	}
+
+	private String oneChoiceHtml(String choice){
+		String html="<input type=\"checkbox\"></input>"+"<span>"+choice+"</span>";
+		return html;
 	}
 
 	@Override

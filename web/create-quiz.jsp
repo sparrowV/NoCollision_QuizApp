@@ -49,6 +49,10 @@
                     var question_text = document.createElement('div');
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
+                    var fill_in_blank=document.createElement('div');
+                    fill_in_blank.innerHTML="<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='fill in blanks'>";
+
+
                     var picture_url = document.createElement('div');
                     picture_url.innerHTML = "<input type='text' class='form-control' id='picture_url' aria-describedby='urlHelp' placeholder='Enter picture url'><br>";
 
@@ -77,6 +81,7 @@
 
                         var data = {
                             question_text: document.getElementById("question_text").value,
+                            fill_in_blank:document.getElementById("fill_in_blank").value,
                             media: document.getElementById("picture_url").value,
                             question_type: document.getElementById("select").value,
                             answer: getAnswer()
@@ -255,6 +260,7 @@
 
 
                     document.getElementById("questions").appendChild(question_text);
+                    document.getElementById("questions").appendChild(fill_in_blank);
                     document.getElementById("questions").appendChild(picture_url);
                 }
             </script>

@@ -41,7 +41,8 @@ public class AddQuestion extends HttpServlet {
 		String media = data.get("media").getAsString();
 
 		// todo
-		String fillText = null;
+		String fillText = data.get("fill_in_blank").getAsString();
+
 
 		Answer answer = null;
 		Question question;

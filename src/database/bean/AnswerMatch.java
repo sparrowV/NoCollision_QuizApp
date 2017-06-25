@@ -35,7 +35,32 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 	}
 
 	public String toHtml() {
-		return "";
+		String htmlFormatch = ""; //html for author inserted mathces
+		String htmlForEmptyMatch = ""; //empty html where quiz taker inserts answers
+		for (String key : pairs.keySet()) {
+			htmlFormatch += oneMatchHtml(key, pairs.get(key));
+			htmlFormatch += "<br />";
+			htmlForEmptyMatch += emptyOneMatchHtml();
+			htmlForEmptyMatch += "<br />";
+
+
+		}
+
+		return htmlFormatch + htmlForEmptyMatch;
+	}
+
+	private String oneMatchHtml(String first, String second) {
+		String html = "<span>" + first + "-" + "</span>" +
+				"<span>" + second + "</span>";
+		return html;
+
+	}
+
+	private String emptyOneMatchHtml() {
+		String html = "<input type=\"text\"</input>" +
+				"<input type=\"text\"</input>";
+		return html;
+
 	}
 
 	public boolean isText() {

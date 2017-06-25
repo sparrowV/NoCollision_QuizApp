@@ -45,7 +45,16 @@ public class AnswerPlain implements Answer, HtmlSerializable {
 	}
 
 	public String toHtml() {
-		return "";
+		String toHtml = "<input type=\"text\" ></input>";
+
+
+		return toHtml;
+	}
+
+	private String oneAnswerHtml(String answer) {
+		String html = "<p>" + answer + "</p>";
+		return html;
+
 	}
 
 	@Override

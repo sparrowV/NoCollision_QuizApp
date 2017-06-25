@@ -5,6 +5,7 @@ import database.DBContract;
 import database.DBInfo;
 import database.bean.Question;
 import database.bean.Quiz;
+import database.bean.User;
 import model.QuestionManager;
 
 import javax.sql.DataSource;
@@ -124,6 +125,40 @@ public class QuizDAO {
 		return id;
 	}
 
+	public Quiz getQuizById(int id) {
+		Quiz quiz = null;
+
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME +
+					" WHERE " + DBContract.QuizTable.COLUMN_NAME_ID + " = ?";
+
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			quiz = fetchQuiz(resultSet);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from quiz table");
+		}
+
+		return quiz;
+
+
+	}
 
 	/**
 	 * Creates and returns user from result set.
@@ -136,6 +171,7 @@ public class QuizDAO {
 		Quiz quiz = new Quiz();
 
 		// Set values.
+		quiz.setQuizId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_ID));
 		quiz.setAuthorId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_AUTHOR_ID));
 		quiz.setTitle(resultSet.getString(DBContract.QuizTable.COLUMN_NAME_TITLE));
 		quiz.setDateCreated(resultSet.getDate(DBContract.QuizTable.COLUMN_NAME_DATA_CREATED));

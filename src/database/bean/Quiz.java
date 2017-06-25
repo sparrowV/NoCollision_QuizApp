@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Quiz {
 	private int authorId;
+	private int quizId;
 	private String title;
 	private Date dateCreated;
 	private List<Question> questions;
@@ -20,6 +21,13 @@ public class Quiz {
 		this.title = title;
 		this.dateCreated = dateCreated;
 		this.questions = questions;
+	}
+
+	public void setQuizId(int id){
+		quizId=id;
+	}
+	public int getQuizId(){
+		return quizId;
 	}
 
 	public int getAuthorId() {
@@ -37,6 +45,8 @@ public class Quiz {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -95,5 +105,12 @@ public class Quiz {
 
 		}
 		questions.add(question);
+	}
+	public String toHtml(){
+
+		String toHtml="<p>"+getTitle()+getDateCreated().toString()+"</p>";
+		return toHtml;
+
+
 	}
 }

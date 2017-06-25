@@ -7,7 +7,7 @@ public final class ServletKey {
 	public static final String PASSWORD = "password";
 	public static final String QUIZ_TITLE = "quiz_title";
 	public static final String CURRENT_QUIZ="current_quiz";
-
+	public static final String QUIZ_TODO="quiz_todo";
 	public static final String CURRENT_USER = "user";
 
 	public static final String HOME_PAGE_JSP = "home-page.jsp";

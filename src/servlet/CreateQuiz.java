@@ -33,7 +33,10 @@ public class CreateQuiz extends HttpServlet {
 
 		quiz.setTitle(quizTitle);
 		quiz.setAuthorId(user.getUserId());
-		quizManager.addQuiz(quiz);
+		System.out.println(quizManager);
+		int id = quizManager.addQuiz(quiz);
+		quiz.setQuizId(id);
+		System.out.println("quiz id is " + id);
 		RequestDispatcher dispatcher;
 		//	System.out.println(user.getUserId() + " " + quizTitle+ " "+ date.toString()+quiz.getQuestions().size());
 		dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);

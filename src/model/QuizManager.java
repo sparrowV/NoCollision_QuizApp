@@ -27,4 +27,9 @@ public class QuizManager {
 	public List<Quiz> getQuizzesByAuthorId(int authorId) {
 		return dao.getQuizzes(authorId);
 	}
+
+	public Quiz getQuizById(int id) {
+		return dao.getQuizById(id);
+
+	}
 }
