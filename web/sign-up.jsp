@@ -52,6 +52,7 @@
 				<div class="form-group">
 					<label for="<%= ServletKey.GENDER%>">Gender</label>
 					<select name="<%= ServletKey.GENDER%>" class="form-control">
+						<option value="apache_helicopter">Apache Helicopter</option>
 						<option value="male">Male</option>
 						<option value="female">Female</option>
 						<option value="agender">Agender</option>
