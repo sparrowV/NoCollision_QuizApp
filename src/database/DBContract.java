@@ -78,11 +78,11 @@ public final class DBContract {
 					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
 					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
 					DBContract.UserTable.COLUMN_NAME_USERNAME + " " +
-					" from " + DBContract.Friends.TABLE_NAME +
+					" from " + TABLE_NAME +
 					" left join " + DBContract.UserTable.TABLE_NAME + " on " +
-					DBContract.Friends.FRIEND_TWO + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
-					" where " + DBContract.Friends.FRIEND_ONE + " =? "
-					+ "and " + DBContract.Friends.STATUS + " =?;";
+					FRIEND_TWO + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
+					" where " + FRIEND_ONE + " =? "
+					+ "and " + STATUS + " =?;";
 
 			public static final String GET_FRIENDS_SECOND_QUERY = "select " +
 					DBContract.UserTable.COLUMN_NAME_ID + ", " +
@@ -93,11 +93,15 @@ public final class DBContract {
 					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
 					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
 					DBContract.UserTable.COLUMN_NAME_USERNAME + " " +
-					" from " + DBContract.Friends.TABLE_NAME +
+					" from " + TABLE_NAME +
 					" left join " + DBContract.UserTable.TABLE_NAME + " on " +
-					DBContract.Friends.FRIEND_ONE + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
-					" where " + DBContract.Friends.FRIEND_TWO + " =? "
-					+ "and " + DBContract.Friends.STATUS + " =?;";
+					FRIEND_ONE + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
+					" where " + FRIEND_TWO + " =? "
+					+ "and " + STATUS + " =?;";
+
+			public static final String CONFIRM_REQUEST_QUERY = "update " + TABLE_NAME +
+					" set " + STATUS + "=" + STATUS_ACTIVE +
+					" where " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=?;";
 		}
 	}
 

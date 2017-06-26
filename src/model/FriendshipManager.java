@@ -20,8 +20,8 @@ public class FriendshipManager {
 		return this.dao.getFriends(currentID);
 	}
 
-	public List<User> getRecievedFriendRequests(String currentID) {
-		return this.dao.getRecievedFriendRequests(currentID);
+	public List<User> getReceivedFriendRequests(String currentID) {
+		return this.dao.getReceivedFriendRequests(currentID);
 	}
 
 	public void sendFriendRequest(String currentID, String requestUserID) {

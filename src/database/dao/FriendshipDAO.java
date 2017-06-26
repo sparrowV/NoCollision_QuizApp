@@ -61,7 +61,7 @@ public class FriendshipDAO {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
-			String query = "INSERT INTO " + DBContract.Friends.TABLE_NAME+ " (" +
+			String query = "INSERT INTO " + DBContract.Friends.TABLE_NAME + " (" +
 					DBContract.Friends.FRIEND_ONE + ", " +
 					DBContract.Friends.FRIEND_TWO + ") " +
 					"VALUES (?,?);";
@@ -75,12 +75,39 @@ public class FriendshipDAO {
 		}
 	}
 
-	public List<User> getRecievedFriendRequests(String currentID) {
-		return null;
+	public List<User> getReceivedFriendRequests(String currentUserID) {
+		List<User> pandingRequests = new ArrayList<>();
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_SECOND_QUERY);
+			preparedStatement.setString(1, currentUserID);
+			preparedStatement.setString(2, String.valueOf(DBContract.Friends.STATUS_REQUEST));
+			getFriendsStatementResult(preparedStatement, pandingRequests);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return pandingRequests;
+		}
 	}
 
 	public void confirmRequest(String currentUserID, String requestUserID) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
+			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.CONFIRM_REQUEST_QUERY);
+			preparedStatement.setString(1, requestUserID);
+			preparedStatement.setString(2, currentUserID);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void getFriendsStatementResult(PreparedStatement preparedStatement, List<User> friends) {
