@@ -21,7 +21,7 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * returns list of the currentID user's friends
+	 * Returns list of the currentID user's friends
 	 */
 	public List<User> getFriends(String currentUserID) {
 		Connection connection = null;
@@ -75,6 +75,9 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * Returns all received friend request for the user (currentUserID)
+	 */
 	public List<User> getReceivedFriendRequests(String currentUserID) {
 		List<User> pandingRequests = new ArrayList<>();
 		Connection connection = null;
@@ -94,6 +97,9 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * Confirms sent friend request from requestUserID to currentUserID
+	 */
 	public void confirmRequest(String currentUserID, String requestUserID) {
 		Connection connection = null;
 		try {
@@ -110,6 +116,9 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * loads following selection to List
+	 */
 	private void getFriendsStatementResult(PreparedStatement preparedStatement, List<User> friends) {
 		ResultSet resultSet = null;
 		try {
