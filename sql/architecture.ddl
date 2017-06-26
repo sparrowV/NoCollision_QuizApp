@@ -90,7 +90,19 @@ CREATE TABLE users_quiz_history (
 );
 
 
-
+DROP TABLE IF EXISTS friends;
+CREATE TABLE friends (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  friend_one INT NOT NULL, # A friend
+  frined_two INT NOT NULL, # B friend
+  status     INT             DEFAULT FALSE, # A->B friendship status   (no duplications B->A row)
+  FOREIGN KEY (friend_one) REFERENCES users (user_id),
+  FOREIGN KEY (frined_two) REFERENCES users (user_id)
+);
+# if A sends friend request to B the following row would be like this:
+# A B 0
+# when B confirms the request status changes to 1
+# when this friendship is denied status goes to -1
 
 
 
