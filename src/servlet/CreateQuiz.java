@@ -22,7 +22,7 @@ public class CreateQuiz extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QuizManager quizManager = (QuizManager) request.getServletContext()
 				.getAttribute(ContextKey.QUIZ_MANAGER);
-
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
 		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
@@ -34,7 +34,7 @@ public class CreateQuiz extends HttpServlet {
 		quiz.setDateCreated(date);
 		quiz.setTitle(quizTitle);
 		quiz.setAuthorId(user.getUserId());
-		System.out.println(quizManager);
+	//	System.out.println(quizManager);
 		int id = quizManager.addQuiz(quiz);
 		quiz.setQuizId(id);
 
