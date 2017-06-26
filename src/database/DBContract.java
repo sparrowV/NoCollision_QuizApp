@@ -60,4 +60,45 @@ public final class DBContract {
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
 	}
 
+	public static class Friends {
+		public static final String TABLE_NAME = "friends";
+		public static final String FRIEND_ONE = "friend_one";
+		public static final String FRIEND_TWO = "friend_two";
+		public static final String STATUS = "status";
+		public static final int STATUS_ACTIVE = 1;
+		public static final int STATUS_REQUEST = 0;
+
+		public static class SQL {
+			public static final String GET_FRIENDS_FIRST_QUERY = "select " +
+					DBContract.UserTable.COLUMN_NAME_ID + ", " +
+					DBContract.UserTable.COLUMN_NAME_FIRST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_LAST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_COUNTRY + ", " +
+					DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH + ", " +
+					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
+					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
+					DBContract.UserTable.COLUMN_NAME_USERNAME + " " +
+					" from " + DBContract.Friends.TABLE_NAME +
+					" left join " + DBContract.UserTable.TABLE_NAME + " on " +
+					DBContract.Friends.FRIEND_TWO + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
+					" where " + DBContract.Friends.FRIEND_ONE + " =? "
+					+ "and " + DBContract.Friends.STATUS + " =?;";
+
+			public static final String GET_FRIENDS_SECOND_QUERY = "select " +
+					DBContract.UserTable.COLUMN_NAME_ID + ", " +
+					DBContract.UserTable.COLUMN_NAME_FIRST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_LAST_NAME + ", " +
+					DBContract.UserTable.COLUMN_NAME_COUNTRY + ", " +
+					DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH + ", " +
+					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
+					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
+					DBContract.UserTable.COLUMN_NAME_USERNAME + " " +
+					" from " + DBContract.Friends.TABLE_NAME +
+					" left join " + DBContract.UserTable.TABLE_NAME + " on " +
+					DBContract.Friends.FRIEND_ONE + "=" + DBContract.UserTable.TABLE_NAME + "." + DBContract.UserTable.COLUMN_NAME_ID +
+					" where " + DBContract.Friends.FRIEND_TWO + " =? "
+					+ "and " + DBContract.Friends.STATUS + " =?;";
+		}
+	}
+
 }

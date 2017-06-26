@@ -1,14 +1,8 @@
 package listener;
 
 import database.DBInfo;
-import database.dao.AnswerDAO;
-import database.dao.QuestionDAO;
-import database.dao.QuizDAO;
-import database.dao.UserDAO;
-import model.AnswerManager;
-import model.QuestionManager;
-import model.QuizManager;
-import model.UserManager;
+import database.dao.*;
+import model.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
@@ -46,6 +40,7 @@ public class ContextListener implements ServletContextListener {
 			context.setAttribute(ContextKey.QUIZ_MANAGER, quizManager);
 			context.setAttribute(ContextKey.QUESTION_MANAGER, questionManager);
 			context.setAttribute(ContextKey.ANSWER_MANAGER, answerManager);
+			context.setAttribute(ContextKey.FRIENDSHIP_MANAGER, new FriendshipManager(new FriendshipDAO(pool)));
 
 		} catch (Exception ignored) {
 		}

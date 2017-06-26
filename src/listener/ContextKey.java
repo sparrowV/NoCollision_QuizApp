@@ -6,4 +6,5 @@ public final class ContextKey {
 	public static final String QUIZ_MANAGER = "quiz_manager";
 	public static final String ANSWER_MANAGER = "answer_manager";
 	public static final String QUESTION_MANAGER = "question_manager";
+	public static final String FRIENDSHIP_MANAGER = "friendship_manager";
 }

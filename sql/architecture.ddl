@@ -11,10 +11,10 @@ CREATE TABLE users (
   last_name     VARCHAR(30)  NOT NULL,
   username      VARCHAR(20)  NOT NULL UNIQUE,
   password      VARCHAR(200) NOT NULL,
-  gender        VARCHAR(20)  NOT NULL,
-  country       VARCHAR(50)  NOT NULL,
+  gender        VARCHAR(20),
+  country       VARCHAR(50),
   picture       VARCHAR(1000),
-  date_of_birth DATE         NOT NULL,
+  date_of_birth DATE,
 
   CONSTRAINT users_pk PRIMARY KEY (user_id)
 );
@@ -94,15 +94,14 @@ DROP TABLE IF EXISTS friends;
 CREATE TABLE friends (
   id         INT PRIMARY KEY AUTO_INCREMENT,
   friend_one INT NOT NULL, # A friend
-  frined_two INT NOT NULL, # B friend
-  status     INT             DEFAULT FALSE, # A->B friendship status   (no duplications B->A row)
+  friend_two INT NOT NULL, # B friend
+  status     INT             DEFAULT 0, # A->B friendship status   (no duplications B->A row)
   FOREIGN KEY (friend_one) REFERENCES users (user_id),
-  FOREIGN KEY (frined_two) REFERENCES users (user_id)
+  FOREIGN KEY (friend_two) REFERENCES users (user_id)
 );
 # if A sends friend request to B the following row would be like this:
 # A B 0
 # when B confirms the request status changes to 1
-# when this friendship is denied status goes to -1
 
 
 
