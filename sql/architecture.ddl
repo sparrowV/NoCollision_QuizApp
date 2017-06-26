@@ -34,9 +34,9 @@ DROP TABLE IF EXISTS questions;
 /*    Q   */
 CREATE TABLE questions (
   question_id   INT AUTO_INCREMENT,
-  question_text VARCHAR(1000),
-  blank_text    VARCHAR(1000),
-  media         VARCHAR(1000),
+  question_text NVARCHAR(1000),
+  blank_text    NVARCHAR(1000),
+  media         NVARCHAR(1000),
 
   CONSTRAINT questions_pk PRIMARY KEY (question_id)
 );
@@ -58,8 +58,8 @@ DROP TABLE IF EXISTS answers;
 CREATE TABLE answers (
   answer_id    INT NOT NULL AUTO_INCREMENT,
   type_id      INT NOT NULL,
-  answer_text  VARCHAR(500),
-  answer_text2 VARCHAR(500),
+  answer_text  NVARCHAR(500),
+  answer_text2 NVARCHAR(500),
   is_correct   BOOL,
   is_text      BOOL         DEFAULT TRUE,
 
