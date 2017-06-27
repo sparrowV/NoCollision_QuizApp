@@ -34,7 +34,6 @@ public class CreateQuiz extends HttpServlet {
 		quiz.setDateCreated(date);
 		quiz.setTitle(quizTitle);
 		quiz.setAuthorId(user.getUserId());
-	//	System.out.println(quizManager);
 		int id = quizManager.addQuiz(quiz);
 		quiz.setQuizId(id);
 

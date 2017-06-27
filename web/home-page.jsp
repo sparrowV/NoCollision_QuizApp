@@ -34,7 +34,7 @@
 
         out.write(quiz_list.get(i).toHtml());
         out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz_list.get(i).getQuizId() + ">" + "Do Quiz" + "</a>");
-        out.write("</form>");
+
 
 
     }

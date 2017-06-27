@@ -28,8 +28,8 @@ public class AddQuestion extends HttpServlet {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(ServletKey.CURRENT_QUIZ);
 		quiz.addQuestion(question);
 
-		Answer answer = question.getAnswer();
-		System.out.println(question);
+
+
 
 	}
 

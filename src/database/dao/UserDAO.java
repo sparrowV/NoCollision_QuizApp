@@ -178,6 +178,7 @@ public class UserDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Something wrong in select from users table");
+			System.out.println(e.getCause());
 		}
 
 		return user;
