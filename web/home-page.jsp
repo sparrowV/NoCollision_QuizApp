@@ -73,13 +73,16 @@
 							for (int i = 0; i < friendRequests.size(); i++) {
 								out.write("<li> <a href='#'>" + friendRequests.get(i).getFirstName() + " " +
 										friendRequests.get(i).getLastName() + " " +
-										"<b>" + friendRequests.get(i).getUsername() + "</b></a></li>");
+										"<b>" + friendRequests.get(i).getUsername() +
+										"</b>  <a  href='#'>Accept</a>  <a href='#'>Reject</a>  </a>  </li>");
+								if (i != friendRequests.size() - 1)
+									out.write("<li role='separator' class='divider'></li>");
 							}%>
 
 						<%--		<li><a href="#">Action</a></li>
 								<li><a href="#">Another action</a></li>
 								<li><a href="#">Something else here</a></li>
-								<li role="separator" class="divider"></li>
+								<li role='separator' class='divider'></li>
 
 								<li class="dropdown-header">Nav header</li>
 								<li><a href="#">Separated link</a></li>
