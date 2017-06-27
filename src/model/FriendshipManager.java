@@ -27,8 +27,12 @@ public class FriendshipManager {
 		this.dao.sendFriendRequest(currentID, requestUserID);
 	}
 
-	public void confirmRequest(String currentID, String requestUserID) {
-		this.dao.confirmRequest(currentID, requestUserID);
+	public void acceptRequest(String currentID, String requestUserID) {
+		this.dao.acceptRequest(currentID, requestUserID);
+	}
+
+	public void rejectRequest(String currentID, String requestUserID) {
+		this.dao.rejectRequest(currentID, requestUserID);
 	}
 
 }

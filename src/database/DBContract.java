@@ -99,9 +99,11 @@ public final class DBContract {
 					" where " + FRIEND_TWO + " =? "
 					+ "and " + STATUS + " =?;";
 
-			public static final String CONFIRM_REQUEST_QUERY = "update " + TABLE_NAME +
+			public static final String ACCEPT_REQUEST_QUERY = "update " + TABLE_NAME +
 					" set " + STATUS + "=" + STATUS_ACTIVE +
 					" where " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=?;";
+			public static final String REJECT_REQUEST_QUERY = "delete from" + TABLE_NAME +
+					" where " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=?";
 		}
 	}
 
