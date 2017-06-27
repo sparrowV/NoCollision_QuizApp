@@ -2,7 +2,6 @@ package model;
 
 import database.bean.User;
 import database.dao.FriendshipDAO;
-import database.dao.UserDAO;
 
 import java.util.List;
 

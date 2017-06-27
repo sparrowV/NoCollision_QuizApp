@@ -29,13 +29,12 @@
 		<%
 			HttpSession s = request.getSession();
 			s.setAttribute(ServletKey.CURRENT_QUIZ, new Quiz());
-
 		%>
 
 		<div class="create-quiz">
 			<form action="CreateQuiz" method="post">
-				Title: <input type="text" name="<%= ServletKey.QUIZ_TITLE%>"/>
-				<button id="submit_quiz">Submit Quiz</button>
+				<input type="text" placeholder="Title" class='form-control' name="<%= ServletKey.QUIZ_TITLE%>"/>
+				<button class="btn btn-primary" id="submit_quiz">Submit Quiz</button>
 
 
 			</form>
@@ -50,8 +49,7 @@
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
                     var fill_in_blank = document.createElement('div');
-                    fill_in_blank.innerHTML = "<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='fill in blanks'>";
-
+                    fill_in_blank.innerHTML = "<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='Fill in blank'>";
 
                     var picture_url = document.createElement('div');
                     picture_url.innerHTML = "<input type='text' class='form-control' id='picture_url' aria-describedby='urlHelp' placeholder='Enter picture url'><br>";
@@ -152,7 +150,6 @@
                     select.onchange = function (e) {
                         e = e || window.event;
 
-
                         if (select.value === "plain") {
                             document.getElementById("answer_container").innerHTML = "";
                             document.getElementById("answer_container").appendChild(answer_plain);
@@ -160,10 +157,8 @@
                             counter_match = 0;
                         }
 
-
                         if (select.value === "multipleChoice") {
                             document.getElementById("answer_container").innerHTML = "";
-
 
                             var button = document.createElement('button');
                             button.id = "add_choice";
@@ -184,7 +179,6 @@
                                 choice.type = 'text';
                                 choice.name = 'choice' + counter.toString();
                                 choice.className = 'form-control choice';
-
 
                                 var br1 = document.createElement("br");
 

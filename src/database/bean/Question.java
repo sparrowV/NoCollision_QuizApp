@@ -58,10 +58,10 @@ public class Question implements HtmlSerializable {
 	 */
 
 	public String toHtml() {
-		return "<div id="+ Integer.toString(id)+">"+
+		return "<div id=" + Integer.toString(id) + ">" +
 				"<p>" + getQuestion() + "</p>" +
 				"<p>" + getMedia() + "</p>" +
-				"<p>" + getFillText() + "</p>"+
+				"<p>" + getFillText() + "</p>" +
 				"</div>";
 	}
 

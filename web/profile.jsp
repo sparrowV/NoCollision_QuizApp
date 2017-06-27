@@ -13,12 +13,15 @@
 		QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
 		List<Quiz> quizzes = manager.getQuizzesByAuthorId(user.getUserId());
 		String pictureUrl = user.getPicture();
-		if (pictureUrl == null) {
+		if (pictureUrl == null || pictureUrl.isEmpty()) {
 			pictureUrl = "resources/profile.PNG";
 		}
 	%>
 	<title><%=user.getFirstName() + " " + user.getLastName()%>
 	</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Custom styles for this web-page -->
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -33,6 +36,7 @@
 	        crossorigin="anonymous"></script>
 </head>
 <body>
+
 <div class="container">
 	<div class="profile">
 		<div class="jumbotron">

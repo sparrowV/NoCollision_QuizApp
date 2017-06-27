@@ -1,9 +1,6 @@
 package database.bean;
 
 
-import org.w3c.dom.html.HTMLAnchorElement;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class AnswerMatch implements Answer, HtmlSerializable {
@@ -36,9 +33,9 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 
 	public String toHtml() {
 		String htmlFormatch = ""; //html for author inserted mathces
-		htmlFormatch+="<div>";
+		htmlFormatch += "<div>";
 		String htmlForEmptyMatch = ""; //empty html where quiz taker inserts answers
-		htmlForEmptyMatch+="<div>";
+		htmlForEmptyMatch += "<div>";
 		for (String key : pairs.keySet()) {
 			htmlFormatch += oneMatchHtml(key, pairs.get(key));
 			htmlFormatch += "<br />";
@@ -47,25 +44,25 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 
 
 		}
-		htmlFormatch+="</div>";
-		htmlForEmptyMatch+="</div>";
-		String finalHtml="<div id=\"match\">"+htmlFormatch+htmlForEmptyMatch+"</div>";
+		htmlFormatch += "</div>";
+		htmlForEmptyMatch += "</div>";
+		String finalHtml = "<div id=\"match\">" + htmlFormatch + htmlForEmptyMatch + "</div>";
 		return finalHtml;
 	}
 
 	private String oneMatchHtml(String first, String second) {
-		String html ="<div>"+
+		String html = "<div>" +
 				"<span>" + first + "-" + "</span>" +
-				"<span>" + second + "</span>"+
+				"<span>" + second + "</span>" +
 				"</div>";
 		return html;
 
 	}
 
 	private String emptyOneMatchHtml() {
-		String html ="<div>"+
+		String html = "<div>" +
 				"<input type=\"text\" class=\"first_match\"</input>" +
-				"<input type=\"text\" class=\"second_match\"</input>"+
+				"<input type=\"text\" class=\"second_match\"</input>" +
 				"</div>";
 
 		return html;

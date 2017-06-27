@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import database.bean.*;
 import listener.ContextKey;
 import model.QuestionManager;
-import model.QuizManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +37,8 @@ public class CheckAnswers extends HttpServlet {
 
 	/**
 	 * gives result base on quiz-takers inserted answers
-	 * @param data Json object
+	 *
+	 * @param data    Json object
 	 * @param manager QuestionManager
 	 * @return returns the ration of correctAnswers/wholeAnswers
 	 */
@@ -59,7 +59,8 @@ public class CheckAnswers extends HttpServlet {
 
 	/**
 	 * evaluate if specific answer is correct or not
-	 * @param data Json object  for specific answer
+	 *
+	 * @param data    Json object  for specific answer
 	 * @param manager QuestionManager
 	 * @return true or false
 	 */

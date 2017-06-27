@@ -45,8 +45,8 @@ public class AnswerPlain implements Answer, HtmlSerializable {
 	}
 
 	public String toHtml() {
-		String toHtml ="<div id=\"plain\">"+
-				"<input type=\"text\" ></input>"+
+		String toHtml = "<div id=\"plain\">" +
+				"<input type=\"text\" ></input>" +
 				"</div>";
 
 

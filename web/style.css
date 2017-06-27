@@ -44,3 +44,12 @@
 .profile-info {
     text-align: center;
 }
+
+.navbar {
+    margin-bottom: 20%;
+}
+
+body {
+    min-height: 2000px;
+    padding-top: 70px;
+}

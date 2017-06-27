@@ -9,7 +9,6 @@ import database.bean.AnswerMultipleChoice;
 import database.bean.AnswerPlain;
 
 import javax.sql.DataSource;
-import javax.swing.text.html.HTMLDocument;
 import java.sql.*;
 import java.util.*;
 

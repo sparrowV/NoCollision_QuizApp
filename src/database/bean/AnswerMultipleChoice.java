@@ -1,7 +1,6 @@
 package database.bean;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AnswerMultipleChoice implements Answer, HtmlSerializable {
@@ -39,19 +38,19 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 
 	@Override
 	public String toHtml() {
-		String html="";
-		html+="<div id=\"multipleChoice\">";
-		for(String choice:choices.keySet()){
-			html+=oneChoiceHtml(choice)+"<br />";
+		String html = "";
+		html += "<div id=\"multipleChoice\">";
+		for (String choice : choices.keySet()) {
+			html += oneChoiceHtml(choice) + "<br />";
 
 		}
-		html+="</div>";
+		html += "</div>";
 		return html;
 	}
 
-	private String oneChoiceHtml(String choice){
-		String html="<div>"+
-				"<input type=\"checkbox\" class=\"checkbox\"></input>"+"<span class=\"choice\">"+choice+"</span>"+
+	private String oneChoiceHtml(String choice) {
+		String html = "<div>" +
+				"<input type=\"checkbox\" class=\"checkbox\"></input>" + "<span class=\"choice\">" + choice + "</span>" +
 				"</div>";
 		return html;
 	}
