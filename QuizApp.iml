@@ -33,5 +33,6 @@
     <orderEntry type="library" exported="" name="bootstrap" level="application" />
     <orderEntry type="library" exported="" name="bootstrap" level="application" />
     <orderEntry type="library" exported="" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>
