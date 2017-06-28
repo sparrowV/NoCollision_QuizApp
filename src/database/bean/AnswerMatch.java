@@ -52,44 +52,6 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 		return html.toString();
 	}
 
-	public String toHtml1() {
-		String htmlFormatch = ""; //html for author inserted mathces
-		htmlFormatch+="<div>";
-		String htmlForEmptyMatch = ""; //empty html where quiz taker inserts answers
-		htmlForEmptyMatch+="<div>";
-		for (String key : pairs.keySet()) {
-			htmlFormatch += oneMatchHtml(key, pairs.get(key));
-			htmlFormatch += "<br />";
-			htmlForEmptyMatch += emptyOneMatchHtml();
-			htmlForEmptyMatch += "<br />";
-
-
-		}
-		htmlFormatch+="</div>";
-		htmlForEmptyMatch+="</div>";
-		String finalHtml="<div id=\"match\">"+htmlFormatch+htmlForEmptyMatch+"</div>";
-		return finalHtml;
-	}
-
-	private String oneMatchHtml(String first, String second) {
-		String html ="<div>"+
-				"<span>" + first + "-" + "</span>" +
-				"<span>" + second + "</span>"+
-				"</div>";
-		return html;
-
-	}
-
-	private String emptyOneMatchHtml() {
-		String html ="<div>"+
-				"<input type=\"text\" class=\"first_match\"</input>" +
-				"<input type=\"text\" class=\"second_match\"</input>"+
-				"</div>";
-
-		return html;
-
-	}
-
 	public boolean isText() {
 		return isText;
 	}
