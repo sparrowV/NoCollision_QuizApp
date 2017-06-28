@@ -3,8 +3,7 @@ package database.bean;
 
 import org.w3c.dom.html.HTMLAnchorElement;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AnswerMatch implements Answer, HtmlSerializable {
 
@@ -35,6 +34,25 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 	}
 
 	public String toHtml() {
+		ArrayList<String> leftValues = new ArrayList(pairs.keySet());
+		ArrayList<String> rightValues = new ArrayList(pairs.values());
+		Collections.shuffle(leftValues);
+		Collections.shuffle(rightValues);
+
+		StringBuilder html = new StringBuilder();
+		html.append("<div class=\"answer\" data-type=\"match\">").append("<ul id = \"left\" class=\"sortable\">");
+		for (String str : leftValues) {
+			html.append("<li>").append(str).append("</li>");
+		}
+		html.append("</ul>").append("<ul id=\"right\" class=\"sortable\">");
+		for (String str : rightValues) {
+			html.append("<li>").append(str).append("</li>");
+		}
+		html.append("</ul>").append("</div>");
+		return html.toString();
+	}
+
+	public String toHtml1() {
 		String htmlFormatch = ""; //html for author inserted mathces
 		htmlFormatch+="<div>";
 		String htmlForEmptyMatch = ""; //empty html where quiz taker inserts answers

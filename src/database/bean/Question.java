@@ -58,11 +58,16 @@ public class Question implements HtmlSerializable {
 	 */
 
 	public String toHtml() {
-		return "<div id="+ Integer.toString(id)+">"+
-				"<p>" + getQuestion() + "</p>" +
-				"<p>" + getMedia() + "</p>" +
-				"<p>" + getFillText() + "</p>"+
-				"</div>";
+		StringBuilder html = new StringBuilder();
+
+		html.append("<div class=\"question\" data-question-id=\"").append(Integer.toString(id)).append("\">");
+		html.append("<p>").append(getQuestion()).append("</p>");
+		if (media != null)
+			html.append("<p>").append(getMedia()).append("</p>");
+		if (fillText != null)
+			html.append("<p>").append(getFillText()).append("</p>");
+		html.append("</div>");
+		return html.toString();
 	}
 
 	@Override

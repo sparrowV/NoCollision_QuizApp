@@ -44,3 +44,33 @@
 .profile-info {
     text-align: center;
 }
+
+.answer {
+    width: 40%;
+    clear: both;
+}
+
+.question p {
+    font-weight: bold;
+}
+
+.question_container {
+    clear: both;
+}
+
+ul.sortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    float: left;
+}
+
+ul.sortable li {
+    background-color: yellow;
+    border: solid;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 1px;
+    text-align: center;
+}

@@ -1,8 +1,7 @@
 package servlet;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.mysql.cj.xdevapi.JsonNumber;
 import database.bean.*;
 import listener.ContextKey;
 import model.QuestionManager;
@@ -23,13 +22,15 @@ import java.util.Map;
 public class CheckAnswers extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-
 		QuestionManager manager = (QuestionManager) request.getServletContext()
 				.getAttribute(ContextKey.QUESTION_MANAGER);
+		int res = checkAnswers(data, manager);
 
-		//getting result of inserted answers,
-		String res = checkAnswers(data, manager);
-		System.out.println(res);
+		JsonObject json = new JsonObject();
+		json.add("correct", new JsonPrimitive(res));
+		json.add("total", new JsonPrimitive(data.size()));
+		response.getWriter().print(json);
+		response.getWriter().flush();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,21 +41,18 @@ public class CheckAnswers extends HttpServlet {
 	 * gives result base on quiz-takers inserted answers
 	 * @param data Json object
 	 * @param manager QuestionManager
-	 * @return returns the ration of correctAnswers/wholeAnswers
+	 * @return returns the number of correct answers
 	 */
 
-	private String checkAnswers(JsonObject data, QuestionManager manager) {
-		int counter = 0;
+	private int checkAnswers(JsonObject data, QuestionManager manager) {
+		int result = 0;
 
 		//iterate over all answers
-		for (String answer : data.keySet()) {
-			boolean value = checkSpecificAnswer(data.get(answer).getAsJsonObject(), manager);
-			if (value) counter++;
-
-
+		for (String answerIndex : data.keySet()) {
+			if (checkSpecificAnswer(data.get(answerIndex).getAsJsonObject(), manager))
+				result++;
 		}
-		String res = "your score is " + counter + "/" + data.keySet().size();
-		return res;
+		return result;
 	}
 
 	/**
@@ -65,55 +63,46 @@ public class CheckAnswers extends HttpServlet {
 	 */
 
 	private boolean checkSpecificAnswer(JsonObject data, QuestionManager manager) {
-
 		String questionId = data.get("question_id").getAsString();
 		String questionType = data.get("question_type").getAsString();
-
 
 		Question question = manager.getQuestionById(Integer.parseInt(questionId));
 
 		Answer answer = null;
 
 		if (questionType.equals("plain")) {
-			List<String> answers = new ArrayList<>();
-			answers.add(data.get("answer").getAsString());
-
-			answer = new AnswerPlain(answers);
-			return question.getAnswer().equals(answer);
-
-		}
-
-		if (questionType.equals("match")) {
-			JsonArray matchFirstAnswers = data.getAsJsonObject("answer").getAsJsonArray("first_match");
-			JsonArray matchSecondAnswers = data.getAsJsonObject("answer").getAsJsonArray("second_match");
+			answer = new AnswerPlain(data.get("answer").getAsString());
+			return question.isCorrect(answer);
+		} else if (questionType.equals("match")) {
+			JsonArray leftValues = data.getAsJsonObject("answer").getAsJsonArray("left");
+			JsonArray rightValues = data.getAsJsonObject("answer").getAsJsonArray("right");
 
 			Map<String, String> matchedAnswers = new HashMap<>();
-			for (int i = 0; i < matchFirstAnswers.size(); i++) {
-				String key = matchFirstAnswers.get(i).getAsString();
-				String value = matchSecondAnswers.get(i).getAsString();
+			for (int i = 0; i < leftValues.size(); i++) {
+				String key = leftValues.get(i).getAsString();
+				String value = rightValues.get(i).getAsString();
 				matchedAnswers.put(key, value);
 			}
 
-
 			answer = new AnswerMatch(matchedAnswers, true);
-			return question.getAnswer().equals(answer);
-		}
-		if (questionType.equals("multipleChoice")) {
-			JsonArray choices = data.getAsJsonObject("answer").getAsJsonArray("choices");
-			JsonArray checkedArray = data.getAsJsonObject("answer").getAsJsonArray("checked");
+			return question.isCorrect(answer);
+		} else if (questionType.equals("multipleChoice")) {
+			JsonArray checked = data.getAsJsonObject("answer").getAsJsonArray("checked");
+			JsonArray unchecked = data.getAsJsonObject("answer").getAsJsonArray("unchecked");
 
-			Map<String, Boolean> multipleChoice = new HashMap<>();
-			for (int i = 0; i < choices.size(); i++) {
-				String key = choices.get(i).getAsString();
-				Boolean value = checkedArray.get(i).getAsBoolean();
-				multipleChoice.put(key, value);
+			Map<String, Boolean> choices = new HashMap<>();
+			for (JsonElement elem : checked) {
+				choices.put(elem.getAsString(), true);
 			}
 
-			answer = new AnswerMultipleChoice(multipleChoice, true);
-			return question.getAnswer().equals(answer);
+			for (JsonElement elem : unchecked) {
+				choices.put(elem.getAsString(), false);
+			}
+
+			answer = new AnswerMultipleChoice(choices, true);
+			return question.isCorrect(answer);
 		}
 
-		//never reach this part
 		return false;
 	}
 }

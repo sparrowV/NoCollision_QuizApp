@@ -2,6 +2,7 @@ package database.bean;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AnswerMultipleChoice implements Answer, HtmlSerializable {
@@ -40,10 +41,9 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 	@Override
 	public String toHtml() {
 		String html="";
-		html+="<div id=\"multipleChoice\">";
+		html += "<div class = \"answer\" data-type=\"multipleChoice\">";
 		for(String choice:choices.keySet()){
 			html+=oneChoiceHtml(choice)+"<br />";
-
 		}
 		html+="</div>";
 		return html;
