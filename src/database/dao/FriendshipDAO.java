@@ -100,14 +100,30 @@ public class FriendshipDAO {
 	/**
 	 * Confirms sent friend request from requestUserID to currentUserID
 	 */
-	public void confirmRequest(String currentUserID, String requestUserID) {
+	public void acceptRequest(String currentUserID, String requestUserID) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
-			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.CONFIRM_REQUEST_QUERY);
+			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.ACCEPT_REQUEST_QUERY);
+			preparedStatement.setString(1, requestUserID);
+			preparedStatement.setString(2, currentUserID);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void rejectRequest(String currentUserID, String requestUserID) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.REJECT_REQUEST_QUERY);
 			preparedStatement.setString(1, requestUserID);
 			preparedStatement.setString(2, currentUserID);
 			preparedStatement.executeUpdate();

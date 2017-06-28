@@ -7,13 +7,13 @@ USE quiz_app;
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   user_id       INT AUTO_INCREMENT,
-  first_name    VARCHAR(30)  NOT NULL,
-  last_name     VARCHAR(30)  NOT NULL,
-  username      VARCHAR(20)  NOT NULL UNIQUE,
-  password      VARCHAR(200) NOT NULL,
-  gender        VARCHAR(20),
-  country       VARCHAR(50),
-  picture       VARCHAR(1000),
+  first_name    VARCHAR(30)   NOT NULL,
+  last_name     NVARCHAR(30)  NOT NULL,
+  username      NVARCHAR(20)  NOT NULL UNIQUE,
+  password      NVARCHAR(200) NOT NULL,
+  gender        NVARCHAR(20),
+  country       NVARCHAR(50),
+  picture       NVARCHAR(1000),
   date_of_birth DATE,
 
   CONSTRAINT users_pk PRIMARY KEY (user_id)
@@ -22,9 +22,9 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS quizzes;
 CREATE TABLE quizzes (
   quiz_id      INT AUTO_INCREMENT,
-  author_id    INT          NOT NULL,
-  title        VARCHAR(100) NOT NULL,
-  date_created DATE         NOT NULL,
+  author_id    INT           NOT NULL,
+  title        NVARCHAR(100) NOT NULL,
+  date_created DATE          NOT NULL,
 
   CONSTRAINT quizzes_pk PRIMARY KEY (quiz_id),
   CONSTRAINT quizzes_fk FOREIGN KEY (author_id) REFERENCES users (user_id)

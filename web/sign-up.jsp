@@ -30,16 +30,6 @@
 			<form action="SignUp" method="post">
 
 				<div class="form-group">
-					<label for="<%= ServletKey.FIRST_NAME%>">First Name</label>
-					<input type="text" class="form-control" required autofocus name="<%= ServletKey.FIRST_NAME%>">
-				</div>
-
-				<div class="form-group">
-					<label for="<%= ServletKey.LAST_NAME%>">Last Name</label>
-					<input type="text" class="form-control" required name="<%= ServletKey.LAST_NAME%>">
-				</div>
-
-				<div class="form-group">
 					<label for="<%= ServletKey.USERNAME%>">Username</label>
 					<input type="text" class="form-control" required name="<%= ServletKey.USERNAME%>">
 				</div>
@@ -50,9 +40,18 @@
 				</div>
 
 				<div class="form-group">
+					<label for="<%= ServletKey.FIRST_NAME%>">First Name</label>
+					<input type="text" class="form-control" required autofocus name="<%= ServletKey.FIRST_NAME%>">
+				</div>
+
+				<div class="form-group">
+					<label for="<%= ServletKey.LAST_NAME%>">Last Name</label>
+					<input type="text" class="form-control" required name="<%= ServletKey.LAST_NAME%>">
+				</div>
+
+				<div class="form-group">
 					<label for="<%= ServletKey.GENDER%>">Gender</label>
 					<select name="<%= ServletKey.GENDER%>" class="form-control">
-						<option value="apache_helicopter">Apache Helicopter</option>
 						<option value="male">Male</option>
 						<option value="female">Female</option>
 						<option value="agender">Agender</option>
@@ -70,6 +69,7 @@
 						<option value="transfeminine">Transfeminine</option>
 						<option value="trigender">Trigender</option>
 						<option value="two_spirit">Two-Spirit</option>
+						<option value="apache_helicopter">Apache Helicopter</option>
 					</select>
 				</div>
 

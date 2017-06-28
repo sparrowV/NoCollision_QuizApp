@@ -13,7 +13,7 @@ public final class DBContract {
 		public static final String COLUMN_NAME_PASSWORD = "password";
 		public static final String COLUMN_NAME_GENDER = "gender";
 		public static final String COLUMN_NAME_COUNTRY = "country";
-		public static final String COLUMN_NAME_PICTURE = "PICTURE";
+		public static final String COLUMN_NAME_PICTURE = "picture";
 		public static final String COLUMN_NAME_DATE_OF_BIRTH = "date_of_birth";
 	}
 
@@ -99,9 +99,11 @@ public final class DBContract {
 					" where " + FRIEND_TWO + " =? "
 					+ "and " + STATUS + " =?;";
 
-			public static final String CONFIRM_REQUEST_QUERY = "update " + TABLE_NAME +
+			public static final String ACCEPT_REQUEST_QUERY = "update " + TABLE_NAME +
 					" set " + STATUS + "=" + STATUS_ACTIVE +
 					" where " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=?;";
+			public static final String REJECT_REQUEST_QUERY = "delete from" + TABLE_NAME +
+					" where " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=?";
 		}
 	}
 

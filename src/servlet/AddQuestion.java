@@ -29,8 +29,6 @@ public class AddQuestion extends HttpServlet {
 		quiz.addQuestion(question);
 
 
-
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

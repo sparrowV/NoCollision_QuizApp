@@ -4,7 +4,6 @@ import database.bean.Quiz;
 import database.bean.User;
 import listener.ContextKey;
 import model.QuizManager;
-import model.UserManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
