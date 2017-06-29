@@ -4,11 +4,20 @@
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
+<%@ page import="javax.jws.soap.SOAPBinding" %>
+<%@ page import="model.UserManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 	<%
-		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
+		// temporary code for filtering
+		int userId = Integer.parseInt((String) request.getAttribute("id"));
+		UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
+		userManager.getUserById(userId);
+		User user = userManager.getUserById(userId);
+		// end of temporary code
+		if (user == null)
+			user = (User) session.getAttribute(ServletKey.CURRENT_USER);
 		System.out.println(user.toString());
 		QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
 		List<Quiz> quizzes = manager.getQuizzesByAuthorId(user.getUserId());
