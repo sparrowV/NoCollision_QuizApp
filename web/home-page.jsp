@@ -20,10 +20,7 @@
 
 	<script language="javascript">
         function DoPost() {
-            $.post("Logout", {;
-            <%= ServletKey.LOGOUT%> :
-            'true'
-        } )
+            $.post("Logout", {"logout": "logout"})
         }
 	</script>
 
