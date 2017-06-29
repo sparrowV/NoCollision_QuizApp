@@ -91,7 +91,8 @@
 					   aria-expanded="false"><%= currentUser.getFirstName() + " " + currentUser.getLastName()%><span
 							class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="${pageContext.request.contextPath}/profile.jsp">Profile</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/<%= currentUser.getUserId()%>">Profile</a>
+						</li>
 						<li><a href="javascript:DoPost()">Log out</a></li>
 					</ul>
 				</li>

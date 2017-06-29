@@ -2,10 +2,9 @@
 <%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
+<%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
-<%@ page import="javax.jws.soap.SOAPBinding" %>
-<%@ page import="model.UserManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
