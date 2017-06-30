@@ -15,24 +15,24 @@ public class FriendshipManager {
 		this.dao = dao;
 	}
 
-	public List<User> getFriends(String currentID) {
-		return this.dao.getFriends(currentID);
+	public List<User> getFriends(int currentId) {
+		return this.dao.getFriends(currentId);
 	}
 
-	public List<User> getReceivedFriendRequests(String currentID) {
-		return this.dao.getReceivedFriendRequests(currentID);
+	public List<User> getReceivedFriendRequests(int currentId) {
+		return this.dao.getReceivedFriendRequests(currentId);
 	}
 
-	public void sendFriendRequest(String currentID, String requestUserID) {
-		this.dao.sendFriendRequest(currentID, requestUserID);
+	public void sendFriendRequest(int currentId, int requestUserId) {
+		this.dao.sendFriendRequest(currentId, requestUserId);
 	}
 
-	public void acceptRequest(String currentID, String requestUserID) {
-		this.dao.acceptRequest(currentID, requestUserID);
+	public void acceptRequest(int currentId, int requestUserId) {
+		this.dao.acceptRequest(currentId, requestUserId);
 	}
 
-	public void rejectRequest(String currentID, String requestUserID) {
-		this.dao.rejectRequest(currentID, requestUserID);
+	public void rejectRequest(int currentId, int requestUserId) {
+		this.dao.rejectRequest(currentId, requestUserId);
 	}
 
 }

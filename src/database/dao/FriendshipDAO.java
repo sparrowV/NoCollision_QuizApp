@@ -23,7 +23,7 @@ public class FriendshipDAO {
 	/**
 	 * Returns list of the currentID user's friends
 	 */
-	public List<User> getFriends(String currentUserID) {
+	public List<User> getFriends(int currentUserId) {
 		Connection connection = null;
 		List<User> friends = new ArrayList<>();
 		try {
@@ -34,12 +34,12 @@ public class FriendshipDAO {
 
 			// this query selects A->B friendship where A are we and the status of this relationship is 1 (active, friends)
 			PreparedStatement preparedStatement1 = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_FIRST_QUERY);
-			preparedStatement1.setString(1, currentUserID);
+			preparedStatement1.setString(1, Integer.toString(currentUserId));
 			preparedStatement1.setString(2, String.valueOf(DBContract.Friends.STATUS_ACTIVE));
 
 			// B->A friendship where A are we and relationship status is 1/0 (active or pending)
 			PreparedStatement preparedStatement2 = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_SECOND_QUERY);
-			preparedStatement2.setString(1, currentUserID);
+			preparedStatement2.setString(1, Integer.toString(currentUserId));
 			preparedStatement2.setString(2, String.valueOf(DBContract.Friends.STATUS_ACTIVE));
 
 			getFriendsStatementResult(preparedStatement1, friends);
@@ -53,9 +53,9 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * Sends friend request from currentUserID  to requestUserID
+	 * Sends friend request from currentUserId  to requestUserId
 	 */
-	public void sendFriendRequest(String currentUserID, String requestUserID) {
+	public void sendFriendRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
@@ -66,8 +66,8 @@ public class FriendshipDAO {
 					DBContract.Friends.FRIEND_TWO + ") " +
 					"VALUES (?,?);";
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, currentUserID);
-			preparedStatement.setString(2, requestUserID);
+			preparedStatement.setString(1, Integer.toString(currentUserId));
+			preparedStatement.setString(2, Integer.toString(currentUserId));
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -76,10 +76,10 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * Returns all received friend request for the user (currentUserID)
+	 * Returns all received friend request for the user (currentUserId)
 	 */
-	public List<User> getReceivedFriendRequests(String currentUserID) {
-		List<User> pandingRequests = new ArrayList<>();
+	public List<User> getReceivedFriendRequests(int currentUserId) {
+		List<User> pendingRequests = new ArrayList<>();
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
@@ -87,20 +87,19 @@ public class FriendshipDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_SECOND_QUERY);
-			preparedStatement.setString(1, currentUserID);
+			preparedStatement.setString(1, Integer.toString(currentUserId));
 			preparedStatement.setString(2, String.valueOf(DBContract.Friends.STATUS_REQUEST));
-			getFriendsStatementResult(preparedStatement, pandingRequests);
+			getFriendsStatementResult(preparedStatement, pendingRequests);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			return pandingRequests;
 		}
+		return pendingRequests;
 	}
 
 	/**
-	 * Confirms sent friend request from requestUserID to currentUserID
+	 * Confirms sent friend request from requestUserId to currentUserId
 	 */
-	public void acceptRequest(String currentUserID, String requestUserID) {
+	public void acceptRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
@@ -108,15 +107,15 @@ public class FriendshipDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.ACCEPT_REQUEST_QUERY);
-			preparedStatement.setString(1, requestUserID);
-			preparedStatement.setString(2, currentUserID);
+			preparedStatement.setString(1, Integer.toString(currentUserId));
+			preparedStatement.setString(2, Integer.toString(requestUserId));
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void rejectRequest(String currentUserID, String requestUserID) {
+	public void rejectRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
@@ -124,8 +123,8 @@ public class FriendshipDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.REJECT_REQUEST_QUERY);
-			preparedStatement.setString(1, requestUserID);
-			preparedStatement.setString(2, currentUserID);
+			preparedStatement.setString(1, Integer.toString(currentUserId));
+			preparedStatement.setString(2, Integer.toString(requestUserId));
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

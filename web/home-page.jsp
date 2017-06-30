@@ -15,11 +15,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- JQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 	<script language="javascript">
-        function DoPost() {
+        function doPost() {
             $('<form>', {
                 'action': 'Logout',
                 'method': 'post'
@@ -37,9 +34,13 @@
 
 	<% FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
-		List<User> friendRequests = friendshipManager.getReceivedFriendRequests(String.valueOf(currentUser.getUserId()));
+		if (currentUser == null) {
+			response.sendRedirect("/index.jsp");
+			return;
+		}
+		List<User> friendRequests = friendshipManager.getReceivedFriendRequests(currentUser.getUserId());
 		String friendRequestNotification = "";
-		if (friendRequests.size() != 0) {
+		if (!friendRequests.isEmpty()) {
 			friendRequestNotification = " (" + friendRequests.size() + ")";
 		}%>
 </head>
@@ -68,8 +69,6 @@
 					   aria-expanded="false">Friend Requests<%=friendRequestNotification%> <span
 							class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<%--href is missing
-						 profile?id=profile_id --%>
 						<%
 							if (friendRequests.size() == 0) {
 								out.write("<li class=\"dropdown-header\">No friend requests</li>");
@@ -114,7 +113,7 @@
 				out.write("<div id='quizzes'>");
 				for (Quiz quiz : quizzes) {
 					out.write(quiz.toHtml());
-					out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz.getQuizId() + ">" + "Do Quiz" + "</a>");
+					out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz.getQuizId() + "></a>");
 				}
 				out.write("</div>");
 			%>
