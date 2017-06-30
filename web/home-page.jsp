@@ -20,7 +20,10 @@
 
 	<script language="javascript">
         function DoPost() {
-            $.post("Logout", {"logout": "logout"})
+            $('<form>', {
+                'action': 'Logout',
+                'method': 'post'
+            }).appendTo(document.body).submit().remove();
         }
 	</script>
 

@@ -33,13 +33,11 @@ public class Login extends HttpServlet {
 		User user = manager.getUser(username, hashedPassword);
 
 		if (user != null) {
-			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
+			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 		} else {
-			dispatcher = request.getRequestDispatcher(ServletKey.INCORRECT_JSP);
+			response.sendRedirect(ServletKey.INCORRECT_JSP);
 		}
-
-		dispatcher.forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
