@@ -26,6 +26,7 @@ public final class ServletKey {
 	public static final String DO_QUIZ_JSP = "do-quiz.jsp";
 	public static final String INDEX_JSP = "index.jsp";
 	public static final String PROFILE_JSP = "profile.jsp";
+	public static final String MY_FRIENDS_JSP="my-friends.jsp";
 
 	private static final Map<Integer, String> GENDERS;
 
