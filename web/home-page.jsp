@@ -76,13 +76,62 @@
 								out.write("<li class=\"dropdown-header\">No friend requests</li>");
 							}
 							for (int i = 0; i < friendRequests.size(); i++) {
-								out.write("<li> <a href='#'>" + friendRequests.get(i).getFirstName() + " " +
+								out.write("<li> " + friendRequests.get(i).getFirstName() + " " +
 										friendRequests.get(i).getLastName() + " " +
-										"<b>" + friendRequests.get(i).getUsername() +
-										"</b>  <a  href='#'>Accept</a>  <a href='#'>Reject</a>  </a>  </li>");
+										"<b>" + friendRequests.get(i).getUsername() + "</b>\n" +
+										"<form action=\"/FreindRequestResponse\" method=\"post\" onsubmit=\"acceptRequest(1); return false;\">\n" +
+										"   <input id=\"accept\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>" +
+										" <input type=\"submit\" value=\"Accept\"/>\n" +
+										"</form>\n" +
+										"" +
+										"" +
+										"" +
+										"<form action=\"/FreindRequestResponse\" method=\"post\" onsubmit=\"acceptRequest(0); return false;\">\n" +
+										"   <input id=\"reject\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>" +
+										" <input type=\"submit\" value=\"Reject\"/>\n" +
+										"</form>\n" +
+										"" +
+										"" +
+										"  </li>\n");
 								if (i != friendRequests.size() - 1)
-									out.write("<li role='separator' class='divider'></li>");
+									out.write("<li role='separator' class='divider'></li>\n");
 							}%>
+
+						<script> function acceptRequest(control) {
+                            try {
+                                xhr = new XMLHttpRequest();
+                            } catch (e) {
+                                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+                            if (xhr == null) {
+                                alert("Ajax not supported by your browser!");
+                                return;
+                            }
+                            if (control === 1) {
+                                var url = "FreindRequestResponse?status=1&friend_id=" + document.getElementById("accept").value;
+                            }
+                            if (control === 0) {
+                                var url = "FreindRequestResponse?status=0&friend_id=" + document.getElementById("reject").value;
+                            }
+
+                            xhr.onreadystatechange = handler;
+                            xhr.open("POST", url, true);
+                            xhr.send(null);
+                        }
+
+
+                        function handler() {
+                            if (xhr.readyState == 4) {
+                                if (xhr.status == 200) {
+                                    console.log("successful");
+                                    location.reload();
+                                } else {
+                                    alert("EEROR");
+                                }
+                            }
+                        }
+						</script>
+
 					</ul>
 				</li>
 			</ul>
