@@ -17,6 +17,10 @@ public class UserManager {
 		return dao.getUser(username, password);
 	}
 
+	public User getUser(String username) {
+		return dao.getUserByUsername(username);
+	}
+
 	public User getUserById(int userId) {
 		try {
 			return dao.getUserById(userId);

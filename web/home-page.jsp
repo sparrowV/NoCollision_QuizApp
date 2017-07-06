@@ -31,6 +31,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type='text/javascript'>
+        $(document).ready(function () {
+            $("[data-toggle=tooltip]").tooltip();
+        });
+	</script>
 
 	<% FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
@@ -62,8 +67,6 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#about">About</a></li>
-				<li><a href="#contact">Contact</a></li>
 				<li><a href="/MyFriends">My Friends</a></li>
 
 				<li class="dropdown">
@@ -103,7 +106,7 @@
                             } catch (e) {
                                 xhr = new ActiveXObject("Microsoft.XMLHTTP");
                             }
-                            if (xhr == null) {
+                            if (xhr === null) {
                                 alert("Ajax not supported by your browser!");
                                 return;
                             }
@@ -121,12 +124,12 @@
 
 
                         function handler() {
-                            if (xhr.readyState == 4) {
-                                if (xhr.status == 200) {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 200) {
                                     console.log("successful");
                                     location.reload();
                                 } else {
-                                    alert("EEROR");
+                                    alert("ERROR");
                                 }
                             }
                         }
@@ -134,6 +137,17 @@
 
 					</ul>
 				</li>
+
+				<form class="navbar-form navbar-left" action="search.jsp" method="post">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" name="<%= ServletKey.SEARCH%>">>
+					</div>
+					<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+					        data-html="true" title="user:<i>username</i> for users<br>quiz:<i>title</i> for quizzes">
+						Submit
+					</button>
+				</form>
+
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
@@ -143,7 +157,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/user/<%= currentUser.getUserId()%>">Profile</a>
 						</li>
-						<li><a href="javascript:DoPost()">Log out</a></li>
+						<li><a href="javascript:doPost()">Log out</a></li>
 					</ul>
 				</li>
 			</ul>

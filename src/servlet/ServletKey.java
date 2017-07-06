@@ -17,6 +17,7 @@ public final class ServletKey {
 	public static final String CURRENT_QUIZ = "current_quiz";
 	public static final String CURRENT_USER = "user";
 	public static final String LOGOUT = "logout";
+	public static final String SEARCH = "search";
 
 	public static final String HOME_PAGE_JSP = "home-page.jsp";
 	public static final String INCORRECT_JSP = "incorrect.jsp";
@@ -26,7 +27,10 @@ public final class ServletKey {
 	public static final String DO_QUIZ_JSP = "do-quiz.jsp";
 	public static final String INDEX_JSP = "index.jsp";
 	public static final String PROFILE_JSP = "profile.jsp";
-	public static final String MY_FRIENDS_JSP="my-friends.jsp";
+	public static final String MY_FRIENDS_JSP = "my-friends.jsp";
+
+	public static final String SEARCH_PREFIX_USER = "user:";
+	public static final String SEARCH_PREFIX_QUIZ = "quiz:";
 
 	private static final Map<Integer, String> GENDERS;
 

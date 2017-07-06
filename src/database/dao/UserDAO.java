@@ -184,6 +184,37 @@ public class UserDAO {
 		return user;
 	}
 
+	public User getUserByUsername(String username) {
+		User user = null;
+
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
+					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, username);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			user = fetchUser(resultSet);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from users table");
+		}
+
+		return user;
+	}
+
 	public User getUserById(int userId) {
 		User user = null;
 
