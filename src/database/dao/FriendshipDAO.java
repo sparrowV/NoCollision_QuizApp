@@ -131,6 +131,30 @@ public class FriendshipDAO {
 		}
 	}
 
+	public boolean areFriends(int currentUserId, int friendUserId) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.ARE_FRIENDS_QUERY);
+			preparedStatement.setString(1, Integer.toString(currentUserId));
+			preparedStatement.setString(2, Integer.toString(friendUserId));
+			preparedStatement.setString(3, Integer.toString(currentUserId));
+			preparedStatement.setString(4, Integer.toString(friendUserId));
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	/**
 	 * loads following selection to List
 	 */

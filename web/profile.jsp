@@ -5,6 +5,7 @@
 <%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.FriendshipManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -15,6 +16,10 @@
 
 		UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 		userManager.getUserById(userId);
+		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
+		boolean isFriendAlready = false;
+		if (friendshipManager.areFriends(currentUser.getUserId(), userId))
+			isFriendAlready = true;
 		User user = userManager.getUserById(userId);
 		// end of temporary code
 		if (user == null)
@@ -68,7 +73,7 @@
 				</p>
 				<p><strong>Date of Birth: </strong><%=user.getDateOfBirth().toString()%>
 				</p>
-				<% if (currentUser.getUserId() != userId) {
+				<% if (currentUser.getUserId() != userId && (!isFriendAlready)) {
 					out.println("<button onclick=\"sendRequest(" + userId + ")\">Add Friend</button>\n");
 				}%>
 				<script>

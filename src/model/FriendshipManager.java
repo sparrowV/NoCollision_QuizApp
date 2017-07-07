@@ -27,6 +27,10 @@ public class FriendshipManager {
 		this.dao.sendFriendRequest(currentId, requestUserId);
 	}
 
+	public boolean areFriends(int currentID, int friendID) {
+		return this.dao.areFriends(currentID, friendID);
+	}
+
 	public void acceptRequest(int currentId, int requestUserId) {
 		this.dao.acceptRequest(currentId, requestUserId);
 	}

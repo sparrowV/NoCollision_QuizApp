@@ -71,8 +71,6 @@ public final class DBContract {
 	}
 
 
-
-
 	public static class Friends {
 		public static final String TABLE_NAME = "friends";
 		public static final String FRIEND_ONE = "friend_one";
@@ -117,6 +115,10 @@ public final class DBContract {
 					" where " + FRIEND_TWO + "=? and " + FRIEND_ONE + "=?;";
 			public static final String REJECT_REQUEST_QUERY = "delete from " + TABLE_NAME +
 					" where " + FRIEND_TWO + "=? and " + FRIEND_ONE + "=?;";
+
+			public static final String ARE_FRIENDS_QUERY = "select * from " + TABLE_NAME + " "
+					+ "where ( " + FRIEND_ONE + "=? and " + FRIEND_TWO + "=? and " + STATUS + "=" + STATUS_ACTIVE +
+					" ) or ( " + FRIEND_TWO + "=? and " + FRIEND_ONE + "=? and " + STATUS + "=" + STATUS_ACTIVE + " );";
 		}
 	}
 
