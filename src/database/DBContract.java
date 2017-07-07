@@ -60,6 +60,19 @@ public final class DBContract {
 		public static final String COLUMN_NAME_QUESTION_ID = "question_id";
 	}
 
+	public static class UserQuizHistoryTable {
+		public static final String TABLE_NAME = "users_quiz_history";
+		public static final String COLUMN_NAME_USER_ID = "user_id";
+		public static final String COLUMN_NAME_QUIZ_ID = "quiz_id";
+		public static final String COLUMN_NAME_STATUS = "status";
+		public static final String COLUMN_NAME_DURATION = "duration";
+		public static final String COLUMN_NAME_SCORE = "score";
+
+	}
+
+
+
+
 	public static class Friends {
 		public static final String TABLE_NAME = "friends";
 		public static final String FRIEND_ONE = "friend_one";

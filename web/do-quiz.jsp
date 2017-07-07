@@ -3,6 +3,7 @@
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
+<%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -21,9 +22,14 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 </head>
 <body>
+<h1 id="stopwatch">
+	<time>00:00:00</time>
+</h1>
 <%
 	QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
 	String quizId = request.getParameter("id");
+	HttpSession s = request.getSession();
+	s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
 
 	Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));
 	List<Question> questions = quiz.getQuestions();
@@ -36,8 +42,11 @@
 	}
 	out.write("</div>");
 %>
+
 <input type="submit" id="submit_btn" value="Submit answers">
 <div id="result"></div>
+
+
 <script>
 
     var questionIdList = [];
@@ -56,14 +65,19 @@
     });
 
     $("#submit_btn").click(function () {
-        var answers = {};
+        var time = $("#stopwatch")[0].innerHTML
+        clearTimeout(t); //stop stopwatch
+        var results = {}
+
+        results.time = time
+        results.answers = {}
         //answers["quizId"] = $("#quiz_container").attr("data-quiz-id");
-        var counter = 0;
+        var counter = 1;
         $(".question_container .answer").each(function (index) {
-            answers[counter++] = getInsertedAnswer(this, index);
+            results.answers[counter++] = getInsertedAnswer(this, index);
         });
 
-        $.post("/CheckAnswers", JSON.stringify((answers)), function (data) {
+        $.post("/CheckAnswers", JSON.stringify((results)), function (data) {
             $("#result").html(data["correct"] + "/" + data["total"]);
         }, "json")
 
@@ -123,6 +137,35 @@
 
         }
     };
+
+    //setting up timer
+    var h1 = document.getElementsByTagName('h1')[0],
+        seconds = 0, minutes = 0, hours = 0,
+        t;
+
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00")
+            + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00")
+            + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+        timer();
+    }
+    function timer() {
+        t = setTimeout(add, 1000);
+    }
+    timer();
+
+
 </script>
 
 

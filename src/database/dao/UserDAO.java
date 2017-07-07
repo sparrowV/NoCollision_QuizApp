@@ -246,6 +246,53 @@ public class UserDAO {
 		return user;
 	}
 
+
+	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
+		Connection connection = null;
+
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// query inserting into userQuizHistoryTable table
+			String query = "INSERT INTO " + DBContract.UserQuizHistoryTable.TABLE_NAME + " " + "(" +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_USER_ID + ", " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_QUIZ_ID + ", " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_STATUS + ", " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_DURATION + ", " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_SCORE + ") " +
+					"VALUES (?,?,?,?,?);";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setInt(2, quizId);
+			preparedStatement.setInt(3, status);
+			preparedStatement.setString(4, duration);
+			preparedStatement.setDouble(5, score);
+
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+
+	}
+
+
+
+
+
+
 	/**
 	 * Creates and returns user from result set.
 	 *

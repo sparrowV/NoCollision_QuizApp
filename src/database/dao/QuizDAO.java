@@ -157,6 +157,7 @@ public class QuizDAO {
 
 	}
 
+
 	/**
 	 * Creates and returns user from result set.
 	 *

@@ -1,20 +1,19 @@
 package servlet;
 
 import com.google.gson.*;
-import com.mysql.cj.xdevapi.JsonNumber;
 import database.bean.*;
 import listener.ContextKey;
 import model.QuestionManager;
+import model.UserManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "CheckAnswers", value = "/CheckAnswers")
@@ -23,11 +22,28 @@ public class CheckAnswers extends HttpServlet {
 		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
 		QuestionManager manager = (QuestionManager) request.getServletContext()
 				.getAttribute(ContextKey.QUESTION_MANAGER);
-		int res = checkAnswers(data, manager);
+
+		UserManager userManager = (UserManager) request.getServletContext()
+				.getAttribute(ContextKey.USER_MANAGER);
+
+
+		int res = checkAnswers(data.get("answers").getAsJsonObject(), manager);
+
+		HttpSession s = request.getSession();
+		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
+
+		User user = (User) s.getAttribute(ServletKey.CURRENT_USER);
+		int userId = user.getUserId();
+
+		String duration = (data.get("time").getAsString());
+
+		double score = (double) res / (data.get("answers").getAsJsonObject().size());
+
+		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
 
 		JsonObject json = new JsonObject();
 		json.add("correct", new JsonPrimitive(res));
-		json.add("total", new JsonPrimitive(data.size()));
+		json.add("total", new JsonPrimitive(data.get("answers").getAsJsonObject().size()));
 		response.getWriter().print(json);
 		response.getWriter().flush();
 	}
@@ -46,7 +62,7 @@ public class CheckAnswers extends HttpServlet {
 
 	private int checkAnswers(JsonObject data, QuestionManager manager) {
 		int result = 0;
-
+		System.out.println(data);
 		//iterate over all answers
 		for (String answerIndex : data.keySet()) {
 			if (checkSpecificAnswer(data.get(answerIndex).getAsJsonObject(), manager))

@@ -15,6 +15,7 @@ public final class ServletKey {
 
 	public static final String QUIZ_TITLE = "quiz_title";
 	public static final String CURRENT_QUIZ = "current_quiz";
+	public static final String DONE_QUIZ_ID = "done_quiz_id";
 	public static final String CURRENT_USER = "user";
 	public static final String LOGOUT = "logout";
 	public static final String SEARCH = "search";

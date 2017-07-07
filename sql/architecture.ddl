@@ -82,7 +82,7 @@ CREATE TABLE users_quiz_history (
   user_id  INT NOT NULL,
   quiz_id  INT NOT NULL,
   status   INT NOT NULL,
-  duration DOUBLE,
+  duration NVARCHAR(100),
   score    DOUBLE,
 
   CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id),

@@ -16,6 +16,8 @@
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -40,10 +42,15 @@
 			</form>
 
 			<button id="add_question" class="btn btn-primary">Add Question</button>
+			<br/>
+			<span id="questions_added">Questions added :0</span>
 			<div id="questions" class="questions"></div>
 			<div id="answers" class="answers"></div>
 
 			<script>
+                var questionCounter = 0
+                var questionsHtml = $('#questions').html()
+                var answersHtml = $('#answers').html()
                 document.getElementById('add_question').onclick = function (event) {
                     var question_text = document.createElement('div');
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
@@ -73,6 +80,7 @@
                     submit_question.id = "submit_question";
                     submit_question.innerHTML = "Submit Question";
                     submit_question.onclick = function (event) {
+
                         var xhr = new XMLHttpRequest();
                         xhr.open("POST", "AddQuestion", true);
                         xhr.setRequestHeader("Content-type", "application/json");
@@ -88,7 +96,12 @@
                         xhr.send(jsonData);
 
                         console.log(jsonData);
+                        questionCounter++
+                        document.getElementById("questions_added").innerHTML = "Questions added :" + questionCounter
 
+                        //reset questions and answers
+                        $('#questions').html(questionsHtml)
+                        $('#answers').html(answersHtml)
 
                         return false;
                     };

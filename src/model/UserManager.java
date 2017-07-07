@@ -40,6 +40,17 @@ public class UserManager {
 		return null;
 	}
 
+	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
+		try {
+
+			dao.addUserQuizHistory(userId, quizId, status, duration, score);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
 	public boolean usernameTaken(String username) {
 		boolean answer = false;
 		try {
