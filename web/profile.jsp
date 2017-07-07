@@ -11,6 +11,8 @@
 	<%
 		// temporary code for filtering
 		int userId = Integer.parseInt((String) request.getAttribute("id"));
+		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
+
 		UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 		userManager.getUserById(userId);
 		User user = userManager.getUserById(userId);
@@ -66,6 +68,39 @@
 				</p>
 				<p><strong>Date of Birth: </strong><%=user.getDateOfBirth().toString()%>
 				</p>
+				<% if (currentUser.getUserId() != userId) {
+					out.println("<button onclick=\"sendRequest(" + userId + ")\">Add Friend</button>\n");
+				}%>
+				<script>
+                    function sendRequest(id) {
+                        try {
+                            xhr = new XMLHttpRequest();
+                        } catch (e) {
+                            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        if (xhr == null) {
+                            alert("Ajax not supported by your browser!");
+                            return;
+                        }
+                        var url = "/FreindRequestResponse?status=2&friend_id=" + id;
+
+                        xhr.onreadystatechange = handler;
+                        xhr.open("POST", url, true);
+                        xhr.send(null);
+                    }
+
+
+                    function handler() {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status == 200) {
+                                console.log("successful");
+                                alert("Friend Request sent")
+                            } else {
+                                alert("ERROR");
+                            }
+                        }
+                    }
+				</script>
 			</div>
 
 			<%

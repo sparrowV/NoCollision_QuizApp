@@ -28,6 +28,8 @@ public class FreindRequestResponse extends HttpServlet {
 				friendshipManager.acceptRequest(currentUserID, friend_id);
 			} else if (status.equals("0")) {
 				friendshipManager.rejectRequest(currentUserID, friend_id);
+			} else if (status.equals("2")) {
+				friendshipManager.sendFriendRequest(currentUserID, friend_id);
 			}
 		}
 	}

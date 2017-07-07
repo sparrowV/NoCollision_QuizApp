@@ -67,7 +67,7 @@ public class FriendshipDAO {
 					"VALUES (?,?);";
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, Integer.toString(currentUserId));
-			preparedStatement.setString(2, Integer.toString(currentUserId));
+			preparedStatement.setString(2, Integer.toString(requestUserId));
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
