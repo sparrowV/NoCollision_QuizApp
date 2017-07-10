@@ -15,8 +15,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<title>Doing quiz</title>
+	<title>Write quiz</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
@@ -25,28 +33,61 @@
 <h1 id="stopwatch">
 	<time>00:00:00</time>
 </h1>
-<%
-	QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
-	String quizId = request.getParameter("id");
-	HttpSession s = request.getSession();
-	s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
 
-	Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));
-	List<Question> questions = quiz.getQuestions();
-	out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">");
-	for (Question question : questions) {
-		out.write("<div class =\"question_container\">");
-		out.write(question.toHtml());
-		out.write(((HtmlSerializable) question.getAnswer()).toHtml());
-		out.write("</div>");
+<style>
+	.myHeader {
+		padding-left: 5%;
+		padding-top: 3%;
+		font-weight: bold;
+		background-color: #4CAF50;
 	}
-	out.write("</div>");
-%>
 
-<input type="submit" id="submit_btn" value="Submit answers">
-<div id="result"></div>
+	#question_text {
+		text-align: center;
+	}
 
+</style>
 
+<div class="page">
+	<%
+
+		QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+		String quizId = request.getParameter("id");
+		HttpSession s = request.getSession();
+		s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
+
+		Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));
+		List<Question> questions = quiz.getQuestions();
+		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
+		for (int i = 1; i <= questions.size(); i++) {
+			Question question = questions.get(i - 1);
+			out.write("<div class=\"w3-card-4\" style=\"width:70%\">\n");
+
+			out.write("<div class =\"question_container\">\n");
+
+			out.write("<h1  class=\"myHeader\">№" + i + "</h1>\n");
+
+			out.write(question.toHtml());
+
+			out.write("<br/>\n");
+			out.write("<br/>\n");
+
+			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
+			out.write("<br/>\n");
+			out.write("<br/>\n");
+
+			out.write("</div>\n");
+			out.write("</div>\n");
+		}
+		out.write("</div>\n");
+	%>
+
+	<br/>
+	<br/>
+	<button type="submit" id="submit_btn" class="btn btn-success">Submit answers</button>
+
+	<div id="result"></div>
+</div>
 <script>
 
     var questionIdList = [];
@@ -170,6 +211,4 @@
 
 
 </body>
-
-
 </html>

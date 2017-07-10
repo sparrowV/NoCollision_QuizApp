@@ -20,6 +20,7 @@ import java.util.Map;
 @WebServlet(name = "AddQuestion", value = "/AddQuestion")
 public class AddQuestion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 
 		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
 

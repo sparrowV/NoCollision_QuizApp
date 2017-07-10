@@ -59,14 +59,28 @@ public class Question implements HtmlSerializable {
 
 	public String toHtml() {
 		StringBuilder html = new StringBuilder();
+/*
+		html.append("  <div class=\"w3-card-4\" style=\"width:70%\">\n");
+*/
 
 		html.append("<div class=\"question\" data-question-id=\"").append(Integer.toString(id)).append("\">");
-		html.append("<p>").append(getQuestion()).append("</p>");
-		if (media != null)
-			html.append("<img src=\"" + getMedia() + "\">");
-		if (fillText != null)
-			html.append("<p>").append(getFillText()).append("</p>");
+		html.append("<div class=\"w3-container\">\n");
+		html.append("  <h1 class=\"question_text\">" + getQuestion() + "</h1>\n");
+		html.append("<h3></h3>\n");
+		if (fillText != null && !fillText.equals(""))
+			html.append(" <div class=\"w3-container w3-center\">\n" +
+					"      <h2>" + getFillText() + "</h2>\n" +
+					"    </div>");
+		if (media != null && !media.equals(""))
+			html.append("<img src=\"" + getMedia() + "\"style=\"width:100%\">");
+
+
+		html.append(" </div>\n" +
+				"</div>\n");
+
+/*
 		html.append("</div>");
+*/
 		return html.toString();
 	}
 
