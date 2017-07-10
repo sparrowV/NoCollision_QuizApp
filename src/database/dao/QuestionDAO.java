@@ -138,8 +138,8 @@ public class QuestionDAO {
 			preparedStatement.close();
 			statement.close();
 		} catch (SQLException e) {
-			System.out.println("AddQuestionError");
-			System.out.println(e.getMessage());
+			//	System.out.println("AddQuestionError");
+			//	System.out.println(e.getMessage());
 		} finally {
 			if (connection != null) try {
 				// Returns the connection to the pool.
@@ -177,8 +177,8 @@ public class QuestionDAO {
 			preparedStatement.close();
 			statement.close();
 		} catch (SQLException e) {
-			System.out.println("AddQuestionQuizError");
-			System.out.println(e.getMessage());
+			//	System.out.println("AddQuestionQuizError");
+			//	System.out.println(e.getMessage());
 		} finally {
 			if (connection != null) try {
 				// Returns the connection to the pool.
@@ -196,7 +196,7 @@ public class QuestionDAO {
 		String media = resultSet.getString(DBContract.QuestionTable.COLUMN_NAME_MEDIA);
 		Answer answer = answerManager.getAnswerByQuestionId(questionId);
 
-		return new Question(questionId, questionText, blankText, media, answer);
+		return new Question(questionId, questionText, media, blankText, answer);
 	}
 
 }

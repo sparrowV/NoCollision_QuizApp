@@ -63,7 +63,7 @@ public class Question implements HtmlSerializable {
 		html.append("<div class=\"question\" data-question-id=\"").append(Integer.toString(id)).append("\">");
 		html.append("<p>").append(getQuestion()).append("</p>");
 		if (media != null)
-			html.append("<p>").append(getMedia()).append("</p>");
+			html.append("<img src=\"" + getMedia() + "\">");
 		if (fillText != null)
 			html.append("<p>").append(getFillText()).append("</p>");
 		html.append("</div>");
