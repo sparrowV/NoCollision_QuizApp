@@ -41,7 +41,6 @@
 
 			</form>
 
-			<button id="add_question" class="btn btn-primary">Add Question</button>
 			<br/>
 			<span id="questions_added">Questions added :0</span>
 			<div id="questions" class="questions"></div>
@@ -49,10 +48,9 @@
 
 			<script>
                 var questionCounter = 0
-                var questionsHtml = $('#questions').html()
-                var answersHtml = $('#answers').html()
-                document.getElementById('add_question').onclick = function (event) {
-                    var question_text = document.createElement('div');
+
+
+                var question_text = document.createElement('div');
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
                     var fill_in_blank = document.createElement('div');
@@ -74,7 +72,7 @@
                     answer_plain.appendChild(br);
 
 
-                    var submit_question = document.createElement('button');
+                var submit_question = document.createElement('button');
                     submit_question.className = "btn btn-primary";
                     submit_question.type = "submit";
                     submit_question.id = "submit_question";
@@ -101,7 +99,9 @@
 
                         //reset questions and answers
                         $('#questions').html(questionsHtml)
-                        $('#answers').html(answersHtml)
+                        $('#answer_container').html(answersHtml)
+
+
 
                         return false;
                     };
@@ -158,6 +158,7 @@
                     container.appendChild(answer_plain);
 
 
+
                     var counter = 1;
                     var counter_match = 1;
                     select.onchange = function (e) {
@@ -165,7 +166,9 @@
 
                         if (select.value === "plain") {
                             document.getElementById("answer_container").innerHTML = "";
+
                             document.getElementById("answer_container").appendChild(answer_plain);
+                            $('#answer_plain').val('')
                             counter = 0;
                             counter_match = 0;
                         }
@@ -261,7 +264,7 @@
                     option3.innerHTML = "Multiple choice";
 
 
-                    select.appendChild(option1);
+                select.appendChild(option1);
                     select.appendChild(option2);
                     select.appendChild(option3);
 
@@ -269,7 +272,14 @@
                     document.getElementById("questions").appendChild(question_text);
                     document.getElementById("questions").appendChild(fill_in_blank);
                     document.getElementById("questions").appendChild(picture_url);
-                }
+
+
+                //remember questions/answers html to reset
+                var questionsHtml = $('#questions').html()
+                var answersHtml = $('#answer_container').html()
+
+
+
 			</script>
 		</div>
 	</div>
