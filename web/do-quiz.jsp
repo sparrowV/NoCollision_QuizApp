@@ -97,9 +97,35 @@
 
 	<br/>
 	<br/>
-	<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-green">Finish Quiz</button>
 
-	<div id="result"></div>
+<%--
+	used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4
+--%>
+	<div class="w3-container">
+
+		<button type="submit" id="submit_btn" onclick="document.getElementById('id01').style.display='block'"
+		        class="w3-button w3-block w3-light-green">Finish Quiz
+		</button>
+		<div id="id01" class="w3-modal">
+			<div class="w3-modal-content w3-animate-top w3-card-4">
+				<header class="w3-container w3-khaki" bor>
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+					<h1>Quiz "<%=quiz.getTitle()%>" Finished
+					</h1>
+				</header>
+				<div class="w3-container">
+					<h2>Your score is: <snap id="result"></snap></h2>
+					<h2>Time: <snap id="duration"></snap></h2>
+				</div>
+				<footer class="w3-container w3-khaki">
+					<a href="/home-page.jsp">Go To Home Page</a>
+				</footer>
+			</div>
+		</div>
+	</div>
+
+
 </div>
 <script>
 
@@ -133,6 +159,7 @@
 
         $.post("/CheckAnswers", JSON.stringify((results)), function (data) {
             $("#result").html(data["correct"] + "/" + data["total"]);
+            $("#duration").html(time);
         }, "json")
 
     });
