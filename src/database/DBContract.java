@@ -122,4 +122,16 @@ public final class DBContract {
 		}
 	}
 
+	public static class Messages {
+		public static final String TABLE_NAME = "messages";
+		public static final String FRIEND_ONE = "friend_one";
+		public static final String FRIEND_TWO = "friend_two";
+		public static final String MESSAGE = "message";
+
+		public static class SQL {
+			public static final String SEND_MESSAGE_QUERY = "insert into " + TABLE_NAME + " (" + FRIEND_ONE + ", " + FRIEND_TWO + ", " + MESSAGE + ")"
+					+ " values(?,?,?);";
+		}
+	}
+
 }

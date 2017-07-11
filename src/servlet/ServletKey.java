@@ -55,4 +55,7 @@ public final class ServletKey {
 		GENDERS.put(16, "Trigender");
 		GENDERS.put(17, "Two-Spirit");
 	}
+
+	public static final String FRIEND_ID = "friend_id";
+	public static final String MESSAGE = "message";
 }

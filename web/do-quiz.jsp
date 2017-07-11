@@ -111,7 +111,7 @@
 				<header class="w3-container w3-khaki" bor>
         <span onclick="document.getElementById('id01').style.display='none'"
               class="w3-button w3-display-topright">&times;</span>
-					<h1>Quiz "<%=quiz.getTitle()%>" Finished
+					<h1>Quiz  Finished
 					</h1>
 				</header>
 				<div class="w3-container">

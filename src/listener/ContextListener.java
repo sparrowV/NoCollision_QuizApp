@@ -41,7 +41,7 @@ public class ContextListener implements ServletContextListener {
 			context.setAttribute(ContextKey.QUESTION_MANAGER, questionManager);
 			context.setAttribute(ContextKey.ANSWER_MANAGER, answerManager);
 			context.setAttribute(ContextKey.FRIENDSHIP_MANAGER, new FriendshipManager(new FriendshipDAO(pool)));
-
+			context.setAttribute(ContextKey.MESSAGE_MANAGER, new MessageManager(new MessageDAO(pool)));
 		} catch (Exception ignored) {
 		}
 	}

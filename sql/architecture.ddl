@@ -103,6 +103,16 @@ CREATE TABLE friends (
 # A B 0
 # when B confirms the request status changes to 1
 
+DROP TABLE IF EXISTS messages;
+CREATE TABLE messages (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  friend_one INT  NOT NULL,
+  friend_two INT  NOT NULL,
+  message    NVARCHAR(200),
+  status     INT             DEFAULT 0,
+  FOREIGN KEY (friend_one) REFERENCES users (user_id),
+  FOREIGN KEY (friend_two) REFERENCES users (user_id)
+);
 
 
 
