@@ -28,8 +28,19 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+	<% QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+		String quizId = request.getParameter("id");
+		HttpSession s = request.getSession();
+		s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
+
+		Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));%>
 </head>
-<body>
+<body class="w3-content">
+
+<% out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>\n");
+	out.write("<br></br>\n");
+	out.write("<br></br>\n");
+%>
 <h1 id="stopwatch">
 	<time>00:00:00</time>
 </h1>
@@ -50,13 +61,6 @@
 
 <div class="page">
 	<%
-
-		QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
-		String quizId = request.getParameter("id");
-		HttpSession s = request.getSession();
-		s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
-
-		Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));
 		List<Question> questions = quiz.getQuestions();
 		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
 		for (int i = 1; i <= questions.size(); i++) {
@@ -71,6 +75,8 @@
 
 			out.write("<br/>\n");
 			out.write("<br/>\n");
+			out.write("<hr>\n");
+			out.write("<br/>\n");
 
 			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
 			out.write("<br/>\n");
@@ -84,7 +90,7 @@
 
 	<br/>
 	<br/>
-	<button type="submit" id="submit_btn" class="btn btn-success">Submit answers</button>
+	<button type="submit" id="submit_btn" class="btn btn-success center">Submit answers</button>
 
 	<div id="result"></div>
 </div>
