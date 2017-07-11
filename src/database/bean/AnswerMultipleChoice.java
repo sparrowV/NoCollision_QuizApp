@@ -40,18 +40,19 @@ public class AnswerMultipleChoice implements Answer, HtmlSerializable {
 
 	@Override
 	public String toHtml() {
-		String html="";
-		html += "<div class = \"answer\" data-type=\"multipleChoice\">";
-		for(String choice:choices.keySet()){
-			html+=oneChoiceHtml(choice)+"<br />";
+		String html = "";
+		html += "<div class = \"answer\" data-type=\"multipleChoice\" style=\"width:100%\">";
+		for (String choice : choices.keySet()) {
+			html += oneChoiceHtml(choice) + "<br />";
+			html += ("<hr>\n");
 		}
-		html+="</div>";
+		html += "</div>";
 		return html;
 	}
 
-	private String oneChoiceHtml(String choice){
-		String html="<div>"+
-				"<input type=\"checkbox\" class=\"checkbox\"></input>"+"<span class=\"choice\">"+choice+"</span>"+
+	private String oneChoiceHtml(String choice) {
+		String html = "<div>" +
+				"<input type=\"checkbox\" class=\"checkbox\"></input>" + "<span class=\"choice\">" + choice + "</span>" +
 				"</div>";
 		return html;
 	}

@@ -57,6 +57,10 @@
 		text-align: center;
 	}
 
+	.answer {
+		text-align: center;
+	}
+
 </style>
 
 <div class="page">
@@ -66,20 +70,20 @@
 		for (int i = 1; i <= questions.size(); i++) {
 			Question question = questions.get(i - 1);
 			out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
-
 			out.write("<div class =\"question_container\">\n");
-
 			out.write("<header class=\"w3-container w3-light-green\">\n");
 			out.write("<h3>№" + i + "</h3>\n");
 			out.write("</header>\n");
 			out.write(question.toHtml());
-
 			out.write("<br/>\n");
 			out.write("<br/>\n");
 			out.write("<hr>\n");
 			out.write("<br/>\n");
 
+			out.write("<div class=\"w3-container\">\n");
 			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
+			out.write("</div>\n");
+
 			out.write("<br/>\n");
 			out.write("<br/>\n");
 
@@ -93,7 +97,7 @@
 
 	<br/>
 	<br/>
-	<button type="submit" id="submit_btn" class="btn btn-success center">Submit answers</button>
+	<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-green">Finish Quiz</button>
 
 	<div id="result"></div>
 </div>

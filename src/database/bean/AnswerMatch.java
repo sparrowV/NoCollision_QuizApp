@@ -40,7 +40,7 @@ public class AnswerMatch implements Answer, HtmlSerializable {
 		Collections.shuffle(rightValues);
 
 		StringBuilder html = new StringBuilder();
-		html.append("<div class=\"answer\" data-type=\"match\">").append("<ul id = \"left\" class=\"sortable\">");
+		html.append("<div class=\"answer\" data-type=\"match\" style=\"width:100%\">").append("<ul id = \"left\" class=\"sortable\" >");
 		for (String str : leftValues) {
 			html.append("<li>").append(str).append("</li>");
 		}
