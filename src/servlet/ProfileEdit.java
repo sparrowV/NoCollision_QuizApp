@@ -14,6 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "ProfileEdit", value = "/ProfileEdit")
 public class ProfileEdit extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
 		User currentUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
 
