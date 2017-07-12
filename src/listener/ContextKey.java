@@ -8,4 +8,5 @@ public final class ContextKey {
 	public static final String QUESTION_MANAGER = "question_manager";
 	public static final String FRIENDSHIP_MANAGER = "friendship_manager";
 	public static final String MESSAGE_MANAGER = "message_manager";
+	public static final String ANNOUNCEMENT_MANAGER = "announcement_manager";
 }

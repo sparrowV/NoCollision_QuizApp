@@ -15,6 +15,7 @@ public final class DBContract {
 		public static final String COLUMN_NAME_COUNTRY = "country";
 		public static final String COLUMN_NAME_PICTURE = "picture";
 		public static final String COLUMN_NAME_DATE_OF_BIRTH = "date_of_birth";
+		public static final String COLUMN_NAME_STATUS = "status";
 	}
 
 	public static class QuizTable {
@@ -70,6 +71,11 @@ public final class DBContract {
 
 	}
 
+	public static class AnnouncementTable {
+		public static final String TABLE_NAME = "announcements";
+		public static final String COLUMN_NAME_TEXT = "text";
+		public static final String COLUMN_NAME_USER_ID = "user_id";
+	}
 
 	public static class Friends {
 		public static final String TABLE_NAME = "friends";

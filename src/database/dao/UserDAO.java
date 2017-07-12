@@ -85,8 +85,9 @@ public class UserDAO {
 					DBContract.UserTable.COLUMN_NAME_GENDER + ", " +
 					DBContract.UserTable.COLUMN_NAME_COUNTRY + ", " +
 					DBContract.UserTable.COLUMN_NAME_PICTURE + ", " +
-					DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH + ") " +
-					"VALUES (?,?,?,?,?,?,?,?);";
+					DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH + ", " +
+					DBContract.UserTable.COLUMN_NAME_STATUS + ") " +
+					"VALUES (?,?,?,?,?,?,?,?,?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, user.getFirstName());
@@ -97,6 +98,7 @@ public class UserDAO {
 			preparedStatement.setString(6, user.getCountry());
 			preparedStatement.setString(7, user.getPicture());
 			preparedStatement.setDate(8, new java.sql.Date(user.getDateOfBirth().getTime()));
+			preparedStatement.setInt(9, user.getStatus());
 
 			preparedStatement.executeUpdate();
 

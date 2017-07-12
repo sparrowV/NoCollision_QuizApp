@@ -12,6 +12,8 @@ public class User {
 	private String country;
 	private Date dateOfBirth;
 	private int userId;
+	private int status;
+
 
 	public User() {
 	}
@@ -21,7 +23,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String firstName, String lastName, String username, String password, String gender, String picture, String country, Date dateOfBirth) {
+	public User(String firstName, String lastName, String username, String password, String gender, String picture, String country, Date dateOfBirth, int status) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
@@ -29,6 +31,7 @@ public class User {
 		this.gender = gender;
 		this.picture = picture;
 		this.country = country;
+		this.status = status;
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -103,6 +106,10 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public int getStatus() { return this.status; }
+
+	public void setStatus(int status) { this.status = status; }
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -132,6 +139,7 @@ public class User {
 				", picture='" + picture + '\'' +
 				", country='" + country + '\'' +
 				", dateOfBirth=" + dateOfBirth +
+				", status=" + status +
 				", userId=" + userId +
 				'}';
 	}
