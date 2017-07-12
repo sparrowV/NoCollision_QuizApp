@@ -91,14 +91,8 @@
 
 				<button type="submit" class="btn btn-primary" value="sign-up">Sign up</button>
 			</form>
-
-
 		</div>
-
-
 	</div>
-
-
 </div>
 
 </body>

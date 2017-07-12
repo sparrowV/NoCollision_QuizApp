@@ -34,7 +34,7 @@ public class SignUp extends HttpServlet {
 
 		// Get date string and parse it.
 		String dateText = request.getParameter(ServletKey.DATE_OF_BIRTH);
-		Date date = null;
+		Date date = new Date();
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateText);
 		} catch (ParseException e) {

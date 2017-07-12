@@ -41,16 +41,19 @@
 	<!-- Custom styles for this web-page -->
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-	      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-	<!-- Bootstrap core JS -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-	        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-	        crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="javascript:history.back()">Back</a>
+		</div>
+	</div>
+</nav>
 
 <div class="container">
 	<div class="profile">
@@ -74,7 +77,10 @@
 				<p><strong>Date of Birth: </strong><%=user.getDateOfBirth().toString()%>
 				</p>
 				<% if (currentUser.getUserId() != userId && (!isFriendAlready)) {
-					out.println("<button onclick=\"sendRequest(" + userId + ")\">Add Friend</button>\n");
+					out.println("<button class=\"btn btn-default\" onclick=\"sendRequest(" + userId +
+							")\">Add Friend</button>\n");
+				} else if (currentUser.getUserId() == userId) {
+					out.println("<button class=\"btn btn-default\"  onclick=\"window.location = '/profile-edit.jsp';\">Edit Profile</button>\n");
 				}%>
 				<script>
                     function sendRequest(id) {
@@ -83,7 +89,7 @@
                         } catch (e) {
                             xhr = new ActiveXObject("Microsoft.XMLHTTP");
                         }
-                        if (xhr == null) {
+                        if (xhr === null) {
                             alert("Ajax not supported by your browser!");
                             return;
                         }
@@ -96,8 +102,8 @@
 
 
                     function handler() {
-                        if (xhr.readyState == 4) {
-                            if (xhr.status == 200) {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
                                 console.log("successful");
                                 alert("Friend Request sent")
                             } else {

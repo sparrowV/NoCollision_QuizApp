@@ -37,7 +37,8 @@
         });
     </script>
 
-    <% FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
+	<%
+		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
         User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
         if (currentUser == null) {
             response.sendRedirect("/index.jsp");
@@ -47,7 +48,8 @@
         String friendRequestNotification = "";
         if (!friendRequests.isEmpty()) {
             friendRequestNotification = " (" + friendRequests.size() + ")";
-        }%>
+        }
+	%>
 </head>
 <body>
 

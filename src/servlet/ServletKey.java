@@ -12,6 +12,7 @@ public final class ServletKey {
 	public static final String COUNTRY = "country";
 	public static final String PICTURE = "picture";
 	public static final String DATE_OF_BIRTH = "date_of_birth";
+	public static final String FILE = "file";
 
 	public static final String QUIZ_TITLE = "quiz_title";
 	public static final String CURRENT_QUIZ = "current_quiz";
@@ -32,7 +33,8 @@ public final class ServletKey {
 
 	public static final String SEARCH_PREFIX_USER = "user:";
 	public static final String SEARCH_PREFIX_QUIZ = "quiz:";
-
+	public static final String FRIEND_ID = "friend_id";
+	public static final String MESSAGE = "message";
 	private static final Map<Integer, String> GENDERS;
 
 	static {
@@ -55,7 +57,4 @@ public final class ServletKey {
 		GENDERS.put(16, "Trigender");
 		GENDERS.put(17, "Two-Spirit");
 	}
-
-	public static final String FRIEND_ID = "friend_id";
-	public static final String MESSAGE = "message";
 }

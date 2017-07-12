@@ -99,7 +99,6 @@ public class UserDAO {
 			preparedStatement.setString(7, user.getPicture());
 			preparedStatement.setDate(8, new java.sql.Date(user.getDateOfBirth().getTime()));
 			preparedStatement.setInt(9, user.getStatus());
-
 			preparedStatement.executeUpdate();
 
 			ResultSet keys = preparedStatement.getGeneratedKeys();
@@ -249,6 +248,43 @@ public class UserDAO {
 	}
 
 
+	public void updateUser(User user, String firstName, String lastName, String pictureUrl, String country) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// query inserting into users table
+			String query = "UPDATE " + DBContract.UserTable.TABLE_NAME + " SET "
+					+ DBContract.UserTable.COLUMN_NAME_FIRST_NAME + " = ?, "
+					+ DBContract.UserTable.COLUMN_NAME_LAST_NAME + " = ?, "
+					+ DBContract.UserTable.COLUMN_NAME_PICTURE + " = ?, "
+					+ DBContract.UserTable.COLUMN_NAME_COUNTRY + " = ? "
+					+ " WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, firstName);
+			preparedStatement.setString(2, lastName);
+			preparedStatement.setString(3, pictureUrl);
+			preparedStatement.setString(4, country);
+			preparedStatement.setString(5, user.getUsername());
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+	}
+
 	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
 		Connection connection = null;
 
@@ -289,10 +325,6 @@ public class UserDAO {
 		}
 
 	}
-
-
-
-
 
 
 	/**
