@@ -7,7 +7,7 @@ USE quiz_app;
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   user_id       INT AUTO_INCREMENT,
-  first_name    VARCHAR(30)   NOT NULL,
+  first_name    NVARCHAR(30)  NOT NULL,
   last_name     NVARCHAR(30)  NOT NULL,
   username      NVARCHAR(20)  NOT NULL UNIQUE,
   password      NVARCHAR(200) NOT NULL,

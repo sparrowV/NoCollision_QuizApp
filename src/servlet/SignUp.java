@@ -20,6 +20,7 @@ import java.util.Date;
 @WebServlet(name = "SignUp", value = {"/SignUp", "/Signup"})
 public class SignUp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
 		RequestDispatcher dispatcher;
 		HttpSession session = request.getSession();
