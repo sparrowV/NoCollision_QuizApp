@@ -84,7 +84,7 @@
 
                     "<form action=\"/SendMessage\" method=\"post\" onsubmit=\"sendMessage(); return false;\">\n" +
                     "       <input id=\"friend_id\" type=\"hidden\" value=\"" + currUser.getUserId() + "\"/>\n" +
-                    "      <input size=\"45\" id=\"message\" type=\"text\"/>\n" +
+                    "      <textarea id=\"message\"  rows=\"4\" cols=\"50\"></textarea>\n" +
                     "<br/>\n" +
                     "<br/>\n" +
                     "     <input type=\"submit\" value=\"Send\"/>\n" +
