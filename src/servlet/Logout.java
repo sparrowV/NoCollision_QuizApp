@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		response.sendRedirect("/index.jsp");
+		response.sendRedirect(ServletKey.INDEX_JSP);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

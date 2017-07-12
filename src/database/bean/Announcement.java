@@ -10,8 +10,12 @@ public class Announcement {
 		this.announcement = announcement;
 	}
 
-	public String getAnnouncement() { return announcement; }
+	public String getAnnouncement() {
+		return announcement;
+	}
 
-	public int getAdminId() { return adminId; }
+	public int getAdminId() {
+		return adminId;
+	}
 
 }

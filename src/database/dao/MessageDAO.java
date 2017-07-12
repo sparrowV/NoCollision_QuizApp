@@ -2,11 +2,9 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.Date;
 
 /**
  * Created by m1sho on 12.07.2017.

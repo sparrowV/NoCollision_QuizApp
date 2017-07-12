@@ -98,9 +98,9 @@
 	<br/>
 	<br/>
 
-<%--
-	used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4
---%>
+	<%--
+		used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4
+	--%>
 	<div class="w3-container">
 
 		<button type="submit" id="submit_btn" onclick="document.getElementById('id01').style.display='block'"
@@ -111,12 +111,16 @@
 				<header class="w3-container w3-khaki" bor>
         <span onclick="document.getElementById('id01').style.display='none'"
               class="w3-button w3-display-topright">&times;</span>
-					<h1>Quiz  Finished
+					<h1>Quiz Finished
 					</h1>
 				</header>
 				<div class="w3-container">
-					<h2>Your score is: <snap id="result"></snap></h2>
-					<h2>Time: <snap id="duration"></snap></h2>
+					<h2>Your score is:
+						<snap id="result"></snap>
+					</h2>
+					<h2>Time:
+						<snap id="duration"></snap>
+					</h2>
 				</div>
 				<footer class="w3-container w3-khaki">
 					<a href="/home-page.jsp">Go To Home Page</a>
@@ -129,122 +133,122 @@
 </div>
 <script>
 
-    var questionIdList = [];
+	var questionIdList = [];
 
-    $(document).ready(function () {
-        $(".sortable").sortable({axis: "y"});
+	$(document).ready(function () {
+		$(".sortable").sortable({axis: "y"});
 
-        $("ul.sortable li").hover(function () {
-            $(this).css('cursor', 'pointer');
-        });
+		$("ul.sortable li").hover(function () {
+			$(this).css('cursor', 'pointer');
+		});
 
-        $(".question_container .question").each(function (index) {
-            questionIdList.push($(this).attr("data-question-id"));
-        })
+		$(".question_container .question").each(function (index) {
+			questionIdList.push($(this).attr("data-question-id"));
+		})
 
-    });
+	});
 
-    $("#submit_btn").click(function () {
-        var time = $("#stopwatch")[0].innerHTML
-        clearTimeout(t); //stop stopwatch
-        var results = {}
+	$("#submit_btn").click(function () {
+		var time = $("#stopwatch")[0].innerHTML;
+		clearTimeout(t); //stop stopwatch
+		var results = {};
 
-        results.time = time
-        results.answers = {}
-        //answers["quizId"] = $("#quiz_container").attr("data-quiz-id");
-        var counter = 1;
-        $(".question_container .answer").each(function (index) {
-            results.answers[counter++] = getInsertedAnswer(this, index);
-        });
+		results.time = time;
+		results.answers = {};
+		//answers["quizId"] = $("#quiz_container").attr("data-quiz-id");
+		var counter = 1;
+		$(".question_container .answer").each(function (index) {
+			results.answers[counter++] = getInsertedAnswer(this, index);
+		});
 
-        $.post("/CheckAnswers", JSON.stringify((results)), function (data) {
-            $("#result").html(data["correct"] + "/" + data["total"]);
-            $("#duration").html(time);
-        }, "json")
+		$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
+			$("#result").html(data["correct"] + "/" + data["total"]);
+			$("#duration").html(time);
+		}, "json")
 
-    });
+	});
 
-    //get answer for specific question
-    var getInsertedAnswer = function (obj, index) {
-        var question_type = $(obj).attr("data-type");
+	//get answer for specific question
+	var getInsertedAnswer = function (obj, index) {
+		var question_type = $(obj).attr("data-type");
 
-        if (question_type === "plain") {
-            var answer = $(obj).find("input").val();
-            return {
-                question_id: questionIdList[index],
-                question_type: question_type,
-                answer: answer
-            };
+		if (question_type === "plain") {
+			var answer = $(obj).find("input").val();
+			return {
+				question_id: questionIdList[index],
+				question_type: question_type,
+				answer: answer
+			};
 
-        }
+		}
 
-        if (question_type === "multipleChoice") {
-            var checkedResult = [];
-            var uncheckedResult = [];
-            $(obj).find("div input").each(function () {
-                if ($(this).is(":checked")) {
-                    checkedResult.push($(this).next().html());
-                } else {
-                    uncheckedResult.push($(this).next().html());
-                }
-            });
+		if (question_type === "multipleChoice") {
+			var checkedResult = [];
+			var uncheckedResult = [];
+			$(obj).find("div input").each(function () {
+				if ($(this).is(":checked")) {
+					checkedResult.push($(this).next().html());
+				} else {
+					uncheckedResult.push($(this).next().html());
+				}
+			});
 
-            return {
-                question_id: questionIdList[index],
-                question_type: question_type,
-                answer: {
-                    "checked": checkedResult,
-                    "unchecked": uncheckedResult
-                }
-            };
-        }
+			return {
+				question_id: questionIdList[index],
+				question_type: question_type,
+				answer: {
+					"checked": checkedResult,
+					"unchecked": uncheckedResult
+				}
+			};
+		}
 
-        if (question_type === "match") {
-            var leftValues = [];
-            var rightValues = [];
-            $(obj).find("#left li").each(function () {
-                leftValues.push($(this).html());
-            });
+		if (question_type === "match") {
+			var leftValues = [];
+			var rightValues = [];
+			$(obj).find("#left li").each(function () {
+				leftValues.push($(this).html());
+			});
 
-            $(obj).find("#right li").each(function () {
-                rightValues.push($(this).html());
-            });
+			$(obj).find("#right li").each(function () {
+				rightValues.push($(this).html());
+			});
 
-            return {
-                question_id: questionIdList[index],
-                question_type: question_type,
-                answer: {left: leftValues, right: rightValues}
-            };
+			return {
+				question_id: questionIdList[index],
+				question_type: question_type,
+				answer: {left: leftValues, right: rightValues}
+			};
 
-        }
-    };
+		}
+	};
 
-    //setting up timer
-    var h1 = document.getElementsByTagName('h1')[0],
-        seconds = 0, minutes = 0, hours = 0,
-        t;
+	//setting up timer
+	var h1 = document.getElementsByTagName('h1')[0],
+		seconds = 0, minutes = 0, hours = 0,
+		t;
 
-    function add() {
-        seconds++;
-        if (seconds >= 60) {
-            seconds = 0;
-            minutes++;
-            if (minutes >= 60) {
-                minutes = 0;
-                hours++;
-            }
-        }
+	function add() {
+		seconds++;
+		if (seconds >= 60) {
+			seconds = 0;
+			minutes++;
+			if (minutes >= 60) {
+				minutes = 0;
+				hours++;
+			}
+		}
 
-        h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00")
-            + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00")
-            + ":" + (seconds > 9 ? seconds : "0" + seconds);
+		h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00")
+			+ ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00")
+			+ ":" + (seconds > 9 ? seconds : "0" + seconds);
 
-        timer();
-    }
-    function timer() {
-        t = setTimeout(add, 1000);
-    }
-    timer();
+		timer();
+	}
+	function timer() {
+		t = setTimeout(add, 1000);
+	}
+	timer();
 
 
 </script>

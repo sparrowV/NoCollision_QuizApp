@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,20 +25,16 @@ public class SignUpTest {
 	private SignUp signUp;
 
 
-	// TODO: Update sign-up tests.
 	@SuppressWarnings("Duplicates")
 	@Before
 	public void setUp() throws Exception {
 		// Create mocks.
-		RequestDispatcher requestDispatcherMock = mock(RequestDispatcher.class);
 		HttpSession sessionMock = mock(HttpSession.class);
 		requestMock = mock(HttpServletRequest.class);
 		responseMock = mock(HttpServletResponse.class);
 		servletContextMock = mock(ServletContext.class);
 		userManagerMock = mock(UserManager.class);
 
-		// Setup dispatcher.
-		when(requestMock.getRequestDispatcher(anyString())).thenReturn(requestDispatcherMock);
 		when(requestMock.getSession()).thenReturn(sessionMock);
 
 		// Setup ServletContext.
@@ -60,6 +55,11 @@ public class SignUpTest {
 		when(requestMock.getParameter(ServletKey.LAST_NAME)).thenReturn("testLastName");
 		when(requestMock.getParameter(ServletKey.USERNAME)).thenReturn("testUsername");
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("testPassword");
+		when(requestMock.getParameter(ServletKey.GENDER)).thenReturn("testGender");
+		when(requestMock.getParameter(ServletKey.PICTURE)).thenReturn("www.test.com/test.jpg");
+		when(requestMock.getParameter(ServletKey.COUNTRY)).thenReturn("testCountry");
+		when(requestMock.getParameter(ServletKey.DATE_OF_BIRTH)).thenReturn("this-is-not-a-real-date");
+
 
 		// UserManager.usernameTaken result.
 		when(userManagerMock.usernameTaken(anyString())).thenReturn(true);
@@ -68,9 +68,9 @@ public class SignUpTest {
 		signUp.doPost(requestMock, responseMock);
 		signUp.doGet(requestMock, responseMock);
 
-		// Capture RequestDispatcher's answer.
+		// Capture redirects's answer.
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		verify(requestMock, times(2)).getRequestDispatcher(captor.capture());
+		verify(responseMock, times(2)).sendRedirect(captor.capture());
 		List<String> values = captor.getAllValues();
 
 		// Verify results.
@@ -85,6 +85,11 @@ public class SignUpTest {
 		when(requestMock.getParameter(ServletKey.LAST_NAME)).thenReturn("testLastName");
 		when(requestMock.getParameter(ServletKey.USERNAME)).thenReturn("testUsername");
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("testPassword");
+		when(requestMock.getParameter(ServletKey.GENDER)).thenReturn("testGender");
+		when(requestMock.getParameter(ServletKey.PICTURE)).thenReturn("www.test.com/test.jpg");
+		when(requestMock.getParameter(ServletKey.COUNTRY)).thenReturn("testCountry");
+		when(requestMock.getParameter(ServletKey.DATE_OF_BIRTH)).thenReturn("this-is-not-a-real-date");
+
 
 		// UserManager.usernameTaken result.
 		when(userManagerMock.usernameTaken(anyString())).thenReturn(false);
@@ -93,9 +98,9 @@ public class SignUpTest {
 		signUp.doPost(requestMock, responseMock);
 		signUp.doGet(requestMock, responseMock);
 
-		// Capture RequestDispatcher's answer.
+		// Capture redirect's answer.
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		verify(requestMock, times(2)).getRequestDispatcher(captor.capture());
+		verify(responseMock, times(2)).sendRedirect(captor.capture());
 		List<String> values = captor.getAllValues();
 
 		// Verify results.
@@ -110,6 +115,10 @@ public class SignUpTest {
 		when(requestMock.getParameter(ServletKey.LAST_NAME)).thenReturn("");
 		when(requestMock.getParameter(ServletKey.USERNAME)).thenReturn("");
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.GENDER)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.PICTURE)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.COUNTRY)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.DATE_OF_BIRTH)).thenReturn("");
 
 		// UserManager.usernameTaken result.
 		when(userManagerMock.usernameTaken(anyString())).thenReturn(true);
@@ -118,9 +127,9 @@ public class SignUpTest {
 		signUp.doPost(requestMock, responseMock);
 		signUp.doGet(requestMock, responseMock);
 
-		// Capture RequestDispatcher's answer.
+		// Capture redirect's answer.
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		verify(requestMock, times(2)).getRequestDispatcher(captor.capture());
+		verify(responseMock, times(2)).sendRedirect(captor.capture());
 		List<String> values = captor.getAllValues();
 
 		// Verify results.
@@ -135,6 +144,11 @@ public class SignUpTest {
 		when(requestMock.getParameter(ServletKey.LAST_NAME)).thenReturn("");
 		when(requestMock.getParameter(ServletKey.USERNAME)).thenReturn("");
 		when(requestMock.getParameter(ServletKey.PASSWORD)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.GENDER)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.PICTURE)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.COUNTRY)).thenReturn("");
+		when(requestMock.getParameter(ServletKey.DATE_OF_BIRTH)).thenReturn("");
+
 
 		// UserManager.usernameTaken result.
 		when(userManagerMock.usernameTaken(anyString())).thenReturn(false);
@@ -143,9 +157,9 @@ public class SignUpTest {
 		signUp.doPost(requestMock, responseMock);
 		signUp.doGet(requestMock, responseMock);
 
-		// Capture RequestDispatcher's answer.
+		// Capture redirect's answer.
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		verify(requestMock, times(2)).getRequestDispatcher(captor.capture());
+		verify(responseMock, times(2)).sendRedirect(captor.capture());
 		List<String> values = captor.getAllValues();
 
 		// Verify results.

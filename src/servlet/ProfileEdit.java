@@ -14,6 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "ProfileEdit", value = "/ProfileEdit")
 public class ProfileEdit extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
 		User currentUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
 
@@ -27,7 +28,7 @@ public class ProfileEdit extends HttpServlet {
 		request.getSession().setAttribute(ServletKey.CURRENT_USER, userManager.getUserByUsername(currentUser
 				.getUsername()));
 
-		response.sendRedirect("/home-page.jsp");
+		response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

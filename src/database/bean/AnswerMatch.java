@@ -1,9 +1,9 @@
 package database.bean;
 
 
-import org.w3c.dom.html.HTMLAnchorElement;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class AnswerMatch implements Answer, HtmlSerializable {
 

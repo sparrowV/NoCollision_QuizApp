@@ -29,16 +29,15 @@ public class AnnouncementDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			String query = "INSERT INTO " + DBContract.AnnouncementTable.TABLE_NAME + " (" +
-							DBContract.AnnouncementTable.COLUMN_NAME_TEXT + ", " +
-							DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + ") " +
-							"VALUES(?,?);" ;
+					DBContract.AnnouncementTable.COLUMN_NAME_TEXT + ", " +
+					DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + ") " +
+					"VALUES(?,?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, announcement.getAnnouncement());
 			preparedStatement.setInt(2, announcement.getAdminId());
 
 			preparedStatement.executeUpdate();
-
 
 
 		} catch (SQLException e) {

@@ -5,7 +5,6 @@ import listener.ContextKey;
 import model.UserManager;
 import util.Hash;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +21,6 @@ public class SignUp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		UserManager userManager = (UserManager) getServletContext().getAttribute(ContextKey.USER_MANAGER);
-		RequestDispatcher dispatcher;
 		HttpSession session = request.getSession();
 
 		String firstName = request.getParameter(ServletKey.FIRST_NAME);
@@ -38,30 +36,24 @@ public class SignUp extends HttpServlet {
 		Date date = new Date();
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateText);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ignored) {
 		}
 
 		if (username == null) {
-			dispatcher = request.getRequestDispatcher(ServletKey.SIGN_UP_JSP);
-			dispatcher.forward(request, response);
+			response.sendRedirect(ServletKey.SIGN_UP_JSP);
 			return;
 		}
 
 		if (!userManager.usernameTaken(username)) {
 			String hashedPassword = Hash.encode(password);
 			User newUser = new User(firstName, lastName, username, hashedPassword, gender, picture, country, date, 0);
-			System.out.println(newUser.toString());
-			System.out.println(newUser.getPicture());
 			newUser = userManager.addUser(newUser);
 			session.setAttribute(ServletKey.CURRENT_USER, newUser);
 
-
-			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
+			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 		} else {
-			dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);
+			response.sendRedirect(ServletKey.USERNAME_TAKEN_JSP);
 		}
-		dispatcher.forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
