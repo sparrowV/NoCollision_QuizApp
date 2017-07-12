@@ -49,7 +49,7 @@ public class SignUp extends HttpServlet {
 
 		if (!userManager.usernameTaken(username)) {
 			String hashedPassword = Hash.encode(password);
-			User newUser = new User(firstName, lastName, username, hashedPassword, gender, picture, country, date);
+			User newUser = new User(firstName, lastName, username, hashedPassword, gender, picture, country, date, 0);
 			System.out.println(newUser.toString());
 			System.out.println(newUser.getPicture());
 			newUser = userManager.addUser(newUser);
