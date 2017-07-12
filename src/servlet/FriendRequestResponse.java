@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * Created by m1sho on 05.07.2017.
  */
-@WebServlet(name = "FreindRequestResponse", value = "/FreindRequestResponse")
-public class FreindRequestResponse extends HttpServlet {
+@WebServlet(name = "FriendRequestResponse", value = "/FriendRequestResponse")
+public class FriendRequestResponse extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int friend_id = Integer.parseInt(request.getParameter("friend_id"));
 		String status = request.getParameter("status"); // accept or reject

@@ -1,11 +1,11 @@
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
+<%@ page import="model.FriendshipManager" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.FriendshipManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -87,7 +87,7 @@
                             alert("Ajax not supported by your browser!");
                             return;
                         }
-                        var url = "/FreindRequestResponse?status=2&friend_id=" + id;
+                        var url = "/FriendRequestResponse?status=2&friend_id=" + id;
 
                         xhr.onreadystatechange = handler;
                         xhr.open("POST", url, true);

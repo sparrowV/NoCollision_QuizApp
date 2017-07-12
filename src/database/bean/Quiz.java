@@ -108,7 +108,6 @@ public class Quiz {
 	}
 
 	public String toHtml() {
-
 		return "<tr>\n" +
 				"      <th scope=\"row\">" + quizId + "</th>\n" +
 				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId + ">" + title + "</a>" + "</td>\n" +

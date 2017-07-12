@@ -153,8 +153,40 @@ public class QuizDAO {
 		}
 
 		return quiz;
+	}
 
 
+	public Quiz getQuizByTitle(String title) {
+		Quiz quiz = null;
+
+		Connection connection;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME +
+					" WHERE " + DBContract.QuizTable.COLUMN_NAME_TITLE + " = ?";
+
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, title);
+
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			quiz = fetchQuiz(resultSet);
+
+			statement.close();
+			preparedStatement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			System.out.println("Something wrong in select from quiz table");
+		}
+
+		return quiz;
 	}
 
 
@@ -176,5 +208,4 @@ public class QuizDAO {
 		quiz.setQuestions(questionManager.getQuestionsByQuiz(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_ID)));
 		return quiz;
 	}
-
 }
