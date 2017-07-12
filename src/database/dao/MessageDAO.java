@@ -52,7 +52,7 @@ public class MessageDAO {
 			preparedStatement.setString(4, String.valueOf(friendUserID));
 
 			ResultSet resultSet = preparedStatement.executeQuery();
-			html += "<div class=\"chat\">\n";
+			html += "";
 			while (resultSet.next()) {
 
 
@@ -67,12 +67,12 @@ public class MessageDAO {
 				System.out.println("friend1 " + friend1);
 				System.out.println("frined2 " + friend2);*/
 
-				html += "<div class=\"single_message\">\n";
-				html += "<h3>" + message + "</h3>\n";
-				html += "<hr>\n";
-				html += "</div>\n";
+				html += "  " + message + "\n";
+				html += "\n";
+				html += "\n";
+				html += "\n";
+
 			}
-			html += "</div>\n";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
