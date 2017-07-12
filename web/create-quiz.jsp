@@ -47,237 +47,234 @@
 			<div id="answers" class="answers"></div>
 
 			<script>
-                var questionCounter = 0
+				var questionCounter = 0;
 
 
-                var question_text = document.createElement('div');
-                    question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
+				var question_text = document.createElement('div');
+				question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
-                    var fill_in_blank = document.createElement('div');
-                    fill_in_blank.innerHTML = "<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='Fill in blank'>";
+				var fill_in_blank = document.createElement('div');
+				fill_in_blank.innerHTML = "<br> <input type='text' class='form-control' id='fill_in_blank' aria-describedby='urlHelp' placeholder='Fill in blank'>";
 
-                    var picture_url = document.createElement('div');
-                    picture_url.innerHTML = "<input type='text' class='form-control' id='picture_url' aria-describedby='urlHelp' placeholder='Enter picture url'><br>";
+				var picture_url = document.createElement('div');
+				picture_url.innerHTML = "<input type='text' class='form-control' id='picture_url' aria-describedby='urlHelp' placeholder='Enter picture url'><br>";
 
-                    var select = document.createElement('select');
-                    document.getElementById("answers").innerHTML = "<label for='answerTypes'> Answer Types:</label><br>";
-                    select.id = "select";
-                    select.className = 'form-control';
-                    var br = document.createElement("br");
+				var select = document.createElement('select');
+				document.getElementById("answers").innerHTML = "<label for='answerTypes'> Answer Types:</label><br>";
+				select.id = "select";
+				select.className = 'form-control';
+				var br = document.createElement("br");
 
-                    var answer_plain = document.createElement('input');
-                    answer_plain.type = 'text';
-                    answer_plain.id = "answer_plain";
-                    answer_plain.className = 'form-control';
-                    answer_plain.appendChild(br);
+				var answer_plain = document.createElement('input');
+				answer_plain.type = 'text';
+				answer_plain.id = "answer_plain";
+				answer_plain.className = 'form-control';
+				answer_plain.appendChild(br);
 
 
-                var submit_question = document.createElement('button');
-                    submit_question.className = "btn btn-primary";
-                    submit_question.type = "submit";
-                    submit_question.id = "submit_question";
-                    submit_question.innerHTML = "Submit Question";
-                    submit_question.onclick = function (event) {
+				var submit_question = document.createElement('button');
+				submit_question.className = "btn btn-primary";
+				submit_question.type = "submit";
+				submit_question.id = "submit_question";
+				submit_question.innerHTML = "Submit Question";
+				submit_question.onclick = function (event) {
 
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "AddQuestion", true);
-                        xhr.setRequestHeader("Content-type", "application/json");
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", "AddQuestion", true);
+					xhr.setRequestHeader("Content-type", "application/json");
 
-                        var data = {
-                            question_text: document.getElementById("question_text").value,
-                            fill_in_blank: document.getElementById("fill_in_blank").value,
-                            media: document.getElementById("picture_url").value,
-                            question_type: document.getElementById("select").value,
-                            answer: getAnswer()
-                        };
-                        var jsonData = JSON.stringify(data);
-                        xhr.send(jsonData);
+					var data = {
+						question_text: document.getElementById("question_text").value,
+						fill_in_blank: document.getElementById("fill_in_blank").value,
+						media: document.getElementById("picture_url").value,
+						question_type: document.getElementById("select").value,
+						answer: getAnswer()
+					};
+					var jsonData = JSON.stringify(data);
+					xhr.send(jsonData);
 
-                        console.log(jsonData);
-                        questionCounter++
-                        document.getElementById("questions_added").innerHTML = "Questions added :" + questionCounter
+					console.log(jsonData);
+					questionCounter++;
+					document.getElementById("questions_added").innerHTML = "Questions added :" + questionCounter;
 
-                        //reset questions and answers
-                        $('#questions').html(questionsHtml)
-                        $('#answer_container').html(answersHtml)
+					//reset questions and answers
+					$('#questions').html(questionsHtml);
+					$('#answer_container').html(answersHtml);
 
 
+					return false;
+				};
 
-                        return false;
-                    };
+				var getAnswer = function () {
+					var select_option = document.getElementById("select").value;
+					if (select_option === "plain") {
 
-                    var getAnswer = function () {
-                        var select_option = document.getElementById("select").value;
-                        if (select_option === "plain") {
+						return document.getElementById("answer_plain").value;
 
-                            return document.getElementById("answer_plain").value;
+					} else if (select_option === "match") {
 
-                        } else if (select_option === "match") {
+						var match_first = document.getElementsByClassName("match_first");
+						var match_second = document.getElementsByClassName("match_second");
 
-                            var match_first = document.getElementsByClassName("match_first");
-                            var match_second = document.getElementsByClassName("match_second");
+						var matchFirstArray = getArray(match_first);
+						var matchSecondArray = getArray(match_second);
 
-                            var matchFirstArray = getArray(match_first);
-                            var matchSecondArray = getArray(match_second);
+						return {match_first: matchFirstArray, match_second: matchSecondArray};
 
-                            return {match_first: matchFirstArray, match_second: matchSecondArray};
+					} else if (select_option === "multipleChoice") {
+						var checkedResult = [];
 
-                        } else if (select_option === "multipleChoice") {
-                            var checkedResult = [];
+						var checkboxes = document.getElementsByClassName("checkbox");
+						var choices = document.getElementsByClassName("choice");
 
-                            var checkboxes = document.getElementsByClassName("checkbox");
-                            var choices = document.getElementsByClassName("choice");
+						var choicesResult = getArray(choices);
 
-                            var choicesResult = getArray(choices);
+						for (var i = 0; i < choices.length; i++) {
+							checkedResult[i] = checkboxes[i].checked;
+						}
 
-                            for (var i = 0; i < choices.length; i++) {
-                                checkedResult[i] = checkboxes[i].checked;
-                            }
+						return {choices: choicesResult, checked: checkedResult};
+					}
+				};
 
-                            return {choices: choicesResult, checked: checkedResult};
-                        }
-                    };
+				// gets values from dom element data
+				var getArray = function (data) {
+					var result = [];
+					for (var i = 0; i < data.length; i++) {
+						result[i] = data[i].value;
+					}
+					return result;
+				};
 
-                    // gets values from dom element data
-                    var getArray = function (data) {
-                        var result = [];
-                        for (var i = 0; i < data.length; i++) {
-                            result[i] = data[i].value;
-                        }
-                        return result;
-                    };
+				var container = document.createElement('div');
+				container.id = "answer_container";
+
 
-                    var container = document.createElement('div');
-                    container.id = "answer_container";
-
+				document.getElementById("answers").appendChild(select);
+				document.getElementById("answers").appendChild(container);
+				document.getElementById("answers").appendChild(submit_question);
+				document.getElementById("answers").appendChild(br);
+				container.appendChild(answer_plain);
 
-                    document.getElementById("answers").appendChild(select);
-                    document.getElementById("answers").appendChild(container);
-                    document.getElementById("answers").appendChild(submit_question);
-                    document.getElementById("answers").appendChild(br);
-                    container.appendChild(answer_plain);
+
+				var counter = 1;
+				var counter_match = 1;
+				select.onchange = function (e) {
+					e = e || window.event;
 
+					if (select.value === "plain") {
+						document.getElementById("answer_container").innerHTML = "";
 
+						document.getElementById("answer_container").appendChild(answer_plain);
+						$('#answer_plain').val('');
+						counter = 0;
+						counter_match = 0;
+					}
 
-                    var counter = 1;
-                    var counter_match = 1;
-                    select.onchange = function (e) {
-                        e = e || window.event;
+					if (select.value === "multipleChoice") {
+						document.getElementById("answer_container").innerHTML = "";
 
-                        if (select.value === "plain") {
-                            document.getElementById("answer_container").innerHTML = "";
+						var button = document.createElement('button');
+						button.id = "add_choice";
+						button.className = "btn btn-secondary";
+						button.innerHTML = "Add choice";
+						document.getElementById("answer_container").appendChild(button);
+						var container = document.createElement('div');
+						container.id = "choice_container";
+						document.getElementById("answer_container").appendChild(container);
 
-                            document.getElementById("answer_container").appendChild(answer_plain);
-                            $('#answer_plain').val('')
-                            counter = 0;
-                            counter_match = 0;
-                        }
+						button.onclick = function (e) {
+							var checkbox = document.createElement('input');
+							checkbox.type = 'checkbox';
+							checkbox.name = "checkbox" + counter.toString();
+							checkbox.className = 'form-check checkbox';
 
-                        if (select.value === "multipleChoice") {
-                            document.getElementById("answer_container").innerHTML = "";
+							var choice = document.createElement('input');
+							choice.type = 'text';
+							choice.name = 'choice' + counter.toString();
+							choice.className = 'form-control choice';
 
-                            var button = document.createElement('button');
-                            button.id = "add_choice";
-                            button.className = "btn btn-secondary";
-                            button.innerHTML = "Add choice";
-                            document.getElementById("answer_container").appendChild(button);
-                            var container = document.createElement('div');
-                            container.id = "choice_container";
-                            document.getElementById("answer_container").appendChild(container);
+							var br1 = document.createElement("br");
 
-                            button.onclick = function (e) {
-                                var checkbox = document.createElement('input');
-                                checkbox.type = 'checkbox';
-                                checkbox.name = "checkbox" + counter.toString();
-                                checkbox.className = 'form-check checkbox';
+							container.appendChild(checkbox);
+							container.appendChild(choice);
+							container.appendChild(br1);
 
-                                var choice = document.createElement('input');
-                                choice.type = 'text';
-                                choice.name = 'choice' + counter.toString();
-                                choice.className = 'form-control choice';
+							counter += 1;
+							counter_match = 0;
 
-                                var br1 = document.createElement("br");
+						};
+					}
 
-                                container.appendChild(checkbox);
-                                container.appendChild(choice);
-                                container.appendChild(br1);
+					if (select.value === "match") {
+						var cont = document.getElementById("answer_container");
+						cont.innerHTML = "";
 
-                                counter += 1;
-                                counter_match = 0;
+						var add = document.createElement("button");
+						add.name = "add_choice_multiple";
+						add.className = "btn btn-secondary";
+						add.innerHTML = "Add choice";
 
-                            };
-                        }
+						cont.appendChild(add);
+						add.onclick = function (e) {
+							var input_group = document.createElement('input-group');
 
-                        if (select.value === "match") {
-                            var cont = document.getElementById("answer_container");
-                            cont.innerHTML = "";
+							var text1 = document.createElement('input');
+							text1.type = "text";
+							text1.name = "first_text" + counter_match.toString();
+							text1.className = "form-control match_first";
+							text1.placeholder = "First";
 
-                            var add = document.createElement("button");
-                            add.name = "add_choice_multiple";
-                            add.className = "btn btn-secondary";
-                            add.innerHTML = "Add choice";
+							var text2 = document.createElement('input');
+							text2.type = "text";
+							text2.name = "second_text" + counter_match.toString();
+							text2.className = "form-control match_second";
+							text2.placeholder = "Second";
 
-                            cont.appendChild(add);
-                            add.onclick = function (e) {
-                                var input_group = document.createElement('input-group');
+							var span = document.createElement('span');
+							span.className = "input-group-addon";
+							span.innerHTML = "-";
 
-                                var text1 = document.createElement('input');
-                                text1.type = "text";
-                                text1.name = "first_text" + counter_match.toString();
-                                text1.className = "form-control match_first";
-                                text1.placeholder = "First";
+							input_group.appendChild(text1);
+							input_group.appendChild(span);
+							input_group.appendChild(text2);
+							input_group.appendChild(document.createElement("br"));
+							cont.appendChild(input_group);
+							counter_match += 1;
+						}
 
-                                var text2 = document.createElement('input');
-                                text2.type = "text";
-                                text2.name = "second_text" + counter_match.toString();
-                                text2.className = "form-control match_second";
-                                text2.placeholder = "Second";
 
-                                var span = document.createElement('span');
-                                span.className = "input-group-addon";
-                                span.innerHTML = "-";
+					}
 
-                                input_group.appendChild(text1);
-                                input_group.appendChild(span);
-                                input_group.appendChild(text2);
-                                input_group.appendChild(document.createElement("br"));
-                                cont.appendChild(input_group);
-                                counter_match += 1;
-                            }
+				};
 
 
-                        }
+				var option1 = document.createElement('option');
+				option1.value = "plain";
+				option1.innerHTML = "Plain";
 
-                    };
+				var option2 = document.createElement('option');
+				option2.value = "match";
+				option2.innerHTML = "Match";
 
+				var option3 = document.createElement('option');
+				option3.value = "multipleChoice";
+				option3.innerHTML = "Multiple choice";
 
-                    var option1 = document.createElement('option');
-                    option1.value = "plain";
-                    option1.innerHTML = "Plain";
 
-                    var option2 = document.createElement('option');
-                    option2.value = "match";
-                    option2.innerHTML = "Match";
+				select.appendChild(option1);
+				select.appendChild(option2);
+				select.appendChild(option3);
 
-                    var option3 = document.createElement('option');
-                    option3.value = "multipleChoice";
-                    option3.innerHTML = "Multiple choice";
 
+				document.getElementById("questions").appendChild(question_text);
+				document.getElementById("questions").appendChild(fill_in_blank);
+				document.getElementById("questions").appendChild(picture_url);
 
-                select.appendChild(option1);
-                    select.appendChild(option2);
-                    select.appendChild(option3);
 
-
-                    document.getElementById("questions").appendChild(question_text);
-                    document.getElementById("questions").appendChild(fill_in_blank);
-                    document.getElementById("questions").appendChild(picture_url);
-
-
-                //remember questions/answers html to reset
-                var questionsHtml = $('#questions').html()
-                var answersHtml = $('#answer_container').html()
-
+				//remember questions/answers html to reset
+				var questionsHtml = $('#questions').html();
+				var answersHtml = $('#answer_container').html()
 
 
 			</script>

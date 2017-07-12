@@ -83,34 +83,34 @@
 					out.println("<button class=\"btn btn-default\"  onclick=\"window.location = '/profile-edit.jsp';\">Edit Profile</button>\n");
 				}%>
 				<script>
-                    function sendRequest(id) {
-                        try {
-                            xhr = new XMLHttpRequest();
-                        } catch (e) {
-                            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-                        }
-                        if (xhr === null) {
-                            alert("Ajax not supported by your browser!");
-                            return;
-                        }
-                        var url = "/FriendRequestResponse?status=2&friend_id=" + id;
+					function sendRequest(id) {
+						try {
+							xhr = new XMLHttpRequest();
+						} catch (e) {
+							xhr = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						if (xhr === null) {
+							alert("Ajax not supported by your browser!");
+							return;
+						}
+						var url = "/FriendRequestResponse?status=2&friend_id=" + id;
 
-                        xhr.onreadystatechange = handler;
-                        xhr.open("POST", url, true);
-                        xhr.send(null);
-                    }
+						xhr.onreadystatechange = handler;
+						xhr.open("POST", url, true);
+						xhr.send(null);
+					}
 
 
-                    function handler() {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                                console.log("successful");
-                                alert("Friend Request sent")
-                            } else {
-                                alert("ERROR");
-                            }
-                        }
-                    }
+					function handler() {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+								console.log("successful");
+								alert("Friend Request sent")
+							} else {
+								alert("ERROR");
+							}
+						}
+					}
 				</script>
 			</div>
 

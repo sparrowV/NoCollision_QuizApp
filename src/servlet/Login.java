@@ -25,8 +25,7 @@ public class Login extends HttpServlet {
 		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 
 		if (username == null) {
-			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
-			dispatcher.forward(request, response);
+			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 			return;
 		}
 

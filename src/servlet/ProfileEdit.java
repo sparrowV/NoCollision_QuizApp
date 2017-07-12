@@ -27,7 +27,7 @@ public class ProfileEdit extends HttpServlet {
 		request.getSession().setAttribute(ServletKey.CURRENT_USER, userManager.getUserByUsername(currentUser
 				.getUsername()));
 
-		response.sendRedirect("/home-page.jsp");
+		response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
