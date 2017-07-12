@@ -17,7 +17,7 @@ public class UserManager {
 		return dao.getUser(username, password);
 	}
 
-	public User getUser(String username) {
+	public User getUserByUsername(String username) {
 		return dao.getUserByUsername(username);
 	}
 

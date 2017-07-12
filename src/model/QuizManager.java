@@ -31,4 +31,8 @@ public class QuizManager {
 	public Quiz getQuizById(int id) {
 		return dao.getQuizById(id);
 	}
+
+	public Quiz getQuizByTitle(String title) {
+		return dao.getQuizByTitle(title);
+	}
 }

@@ -2,7 +2,7 @@ package database.bean;
 
 import java.util.Date;
 
-public class User {
+public class User implements HtmlSerializable {
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -150,5 +150,10 @@ public class User {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	@Override
+	public String toHtml() {
+		return "<a href=\"" + "user/" + this.getUserId() + "\">" + this.getFirstName() + " " + this.getLastName() + " (" + this.getUsername() + ")" + "</a>";
 	}
 }
