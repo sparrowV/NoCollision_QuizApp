@@ -10,17 +10,39 @@ public class Quiz {
 	private int quizId;
 	private String title;
 	private Date dateCreated;
+	private boolean IsRandomizedOrder;
+	private boolean IsMultiplePages;
 	private List<Question> questions;
 
 	public Quiz() {
 
 	}
 
-	public Quiz(int author_id, String title, Date dateCreated, List<Question> questions) {
+	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages, List<Question> questions) {
 		this.authorId = author_id;
 		this.title = title;
 		this.dateCreated = dateCreated;
 		this.questions = questions;
+		this.IsRandomizedOrder = randomizedOrder;
+		this.IsMultiplePages = multiplePages;
+	}
+
+	public boolean getIsRandomizedOrder() {
+		return IsRandomizedOrder;
+	}
+
+	public void setIsRandomizedOrder(boolean order) {
+		this.IsRandomizedOrder = order;
+	}
+
+	public boolean getIsMultiplePages() {
+		return IsMultiplePages;
+
+	}
+
+	public void setIsMultiplePages(boolean value) {
+		this.IsMultiplePages = value;
+
 	}
 
 	public int getQuizId() {

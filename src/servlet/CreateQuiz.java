@@ -1,7 +1,9 @@
 package servlet;
 
-import database.bean.Quiz;
-import database.bean.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import database.bean.*;
 import listener.ContextKey;
 import model.QuizManager;
 
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
+import java.util.*;
 
 
 @WebServlet(name = "CreateQuiz", value = "/CreateQuiz")
@@ -22,17 +24,33 @@ public class CreateQuiz extends HttpServlet {
 		QuizManager quizManager = (QuizManager) request.getServletContext()
 				.getAttribute(ContextKey.QUIZ_MANAGER);
 		request.setCharacterEncoding("UTF-8");
+
+
 		HttpSession session = request.getSession();
+		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
+
+		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+
+		//get the questions
+		for (String key : data.getAsJsonObject("allQuestions").keySet()) {
+
+			Question question = generateQuestion(data.getAsJsonObject("allQuestions").get(key).getAsJsonObject());
+			quiz.addQuestion(question);
+
+
+		}
+
 
 		User user = (User) session.getAttribute(ServletKey.CURRENT_USER);
-
-		//getting current quiz and setting fields
-		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
-		String quizTitle = request.getParameter(ServletKey.QUIZ_TITLE);
+		String quizTitle = data.get("title").getAsString();
 		Date date = new Date();
 		quiz.setDateCreated(date);
 		quiz.setTitle(quizTitle);
 		quiz.setAuthorId(user.getUserId());
+		quiz.setIsRandomizedOrder(data.get("randomized").getAsBoolean());
+		quiz.setIsMultiplePages(data.get("multiplePages").getAsBoolean());
+
+
 		int id = quizManager.addQuiz(quiz);
 		quiz.setQuizId(id);
 
@@ -45,4 +63,63 @@ public class CreateQuiz extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
+
+	// generates question based on question type
+	private Question generateQuestion(JsonObject data) {
+		String questionType = data.getAsJsonObject("question").get("question_type").getAsString();
+		String questionText = data.getAsJsonObject("question").get("question_text").getAsString();
+		String media = data.getAsJsonObject("question").get("media").getAsString();
+
+
+		String fillText = data.getAsJsonObject("question").get("fill_in_blank").getAsString();
+
+
+		Answer answer = null;
+		Question question;
+
+
+		switch (questionType) {
+			case "plain": {
+				List<String> answers = new ArrayList<>();
+				answers.add(data.get("answer").getAsString());
+				answer = new AnswerPlain(answers);
+				break;
+			}
+			case "match": {
+				JsonArray matchFirstAnswers = data.getAsJsonObject("answer").getAsJsonArray("match_first");
+				JsonArray matchSecondAnswers = data.getAsJsonObject("answer").getAsJsonArray("match_second");
+
+				Map<String, String> matchedAnswers = new HashMap<>();
+				for (int i = 0; i < matchFirstAnswers.size(); i++) {
+					String key = matchFirstAnswers.get(i).getAsString();
+					String value = matchSecondAnswers.get(i).getAsString();
+					matchedAnswers.put(key, value);
+				}
+
+
+				answer = new AnswerMatch(matchedAnswers, true);
+				break;
+			}
+
+			case "multipleChoice": {
+				JsonArray choices = data.getAsJsonObject("answer").getAsJsonArray("choices");
+				JsonArray checkedArray = data.getAsJsonObject("answer").getAsJsonArray("checked");
+
+				Map<String, Boolean> multipleChoice = new HashMap<>();
+				for (int i = 0; i < choices.size(); i++) {
+					String key = choices.get(i).getAsString();
+					Boolean value = checkedArray.get(i).getAsBoolean();
+					multipleChoice.put(key, value);
+				}
+
+				answer = new AnswerMultipleChoice(multipleChoice, true);
+				break;
+			}
+		}
+
+
+		question = new Question(1, questionText, media, fillText, answer);
+		return question;
+	}
+
 }

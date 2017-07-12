@@ -34,23 +34,102 @@
 		%>
 
 		<div class="create-quiz">
-			<form action="CreateQuiz" method="post">
-				<input type="text" placeholder="Title" class='form-control' name="<%= ServletKey.QUIZ_TITLE%>"/>
+			<form action="CreateQuiz" method="post" onsubmit="return false">
+				<input type="text" id="title" placeholder="Title" class='form-control'
+				       name="<%= ServletKey.QUIZ_TITLE%>"/>
 				<button class="btn btn-primary" id="submit_quiz">Submit Quiz</button>
+
 
 
 			</form>
 
+			<div class="features" style="background-color: darkgrey ">
+
+				<p>Selext desired features:</p>
+				<form>
+					<div class="checkbox">
+						<input type="checkbox" id="random_order">
+						<span> Randomize Question Order </span>
+						<br/>
+						<input type="checkbox" id="multiple_pages">
+						<span>One Question Per Page </span>
+					</div>
+
+
+				</form>
+			</div>
+
+			<div id="all_questions"></div>
+
+
 			<br/>
-			<span id="questions_added">Questions added :0</span>
-			<div id="questions" class="questions"></div>
-			<div id="answers" class="answers"></div>
+
 
 			<script>
-                var questionCounter = 0
+                var questionCounter = -1
+
+                var add_question = document.createElement('button')
+                add_question.id = "add_question"
+                add_question.innerHTML = "Add Question"
+                add_question.classList = "btn btn-primary"
+
+                $('.create-quiz').append(add_question)
+
+                add_question.onclick = function (e) {
+
+                    questionCounter++
+
+                    var question_container = document.createElement('div')
+                    question_container.id = "question_container" + questionCounter
+                    $('#all_questions').append(question_container)
+
+                    var questions_added = document.createElement('span')
+                    questions_added.innerHTML = "Question #" + questionCounter
+                    questions_added.id = "question_number"
+
+                    question_container.appendChild(questions_added)
+
+                    var questions = document.createElement('div')
+                    questions.id = "questions"
+                    questions.class = "questions"
+
+                    var answers = document.createElement('div')
+                    answers.id = "answers"
+                    answers.class = "answers"
 
 
-                var question_text = document.createElement('div');
+                    $(question_container).append(questions)
+                    $(question_container).append(answers)
+
+                    var delete_button = document.createElement('button')
+                    delete_button.innerHTML = "Delete Question"
+                    delete_button.classList = "btn btn-danger"
+
+                    $(question_container).append(delete_button)
+
+                    $(delete_button).click(function (e) {
+
+                        $(question_container).remove()
+
+
+                        $("#all_questions").children().each(function () {
+                            var deleted_id = parseInt(question_container.id.replace(/[^\d.]/g, ''), 10)
+                            var current_id = parseInt(this.id.replace(/[^\d.]/g, ''), 10)
+
+                            if (deleted_id < current_id) {
+                                this.id = ""
+                                this.id = "question_container" + (current_id - 1)
+                                console.log($(this).find('span'))
+
+                                $(this).find('#question_number').text("Question#" + (current_id - 1).toString())
+                            }
+
+                        });
+                        questionCounter--
+
+                    });
+
+                    var question_text = document.createElement('div');
                     question_text.innerHTML = "<br> <input type='text' class='form-control' id='question_text' aria-describedby='urlHelp' placeholder='Enter question'>";
 
                     var fill_in_blank = document.createElement('div');
@@ -60,7 +139,7 @@
                     picture_url.innerHTML = "<input type='text' class='form-control' id='picture_url' aria-describedby='urlHelp' placeholder='Enter picture url'><br>";
 
                     var select = document.createElement('select');
-                    document.getElementById("answers").innerHTML = "<label for='answerTypes'> Answer Types:</label><br>";
+                    answers.innerHTML = "<label for='answerTypes'> Answer Types:</label><br>";
                     select.id = "select";
                     select.className = 'form-control';
                     var br = document.createElement("br");
@@ -72,91 +151,14 @@
                     answer_plain.appendChild(br);
 
 
-                var submit_question = document.createElement('button');
-                    submit_question.className = "btn btn-primary";
-                    submit_question.type = "submit";
-                    submit_question.id = "submit_question";
-                    submit_question.innerHTML = "Submit Question";
-                    submit_question.onclick = function (event) {
-
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "AddQuestion", true);
-                        xhr.setRequestHeader("Content-type", "application/json");
-
-                        var data = {
-                            question_text: document.getElementById("question_text").value,
-                            fill_in_blank: document.getElementById("fill_in_blank").value,
-                            media: document.getElementById("picture_url").value,
-                            question_type: document.getElementById("select").value,
-                            answer: getAnswer()
-                        };
-                        var jsonData = JSON.stringify(data);
-                        xhr.send(jsonData);
-
-                        console.log(jsonData);
-                        questionCounter++
-                        document.getElementById("questions_added").innerHTML = "Questions added :" + questionCounter
-
-                        //reset questions and answers
-                        $('#questions').html(questionsHtml)
-                        $('#answer_container').html(answersHtml)
-
-
-
-                        return false;
-                    };
-
-                    var getAnswer = function () {
-                        var select_option = document.getElementById("select").value;
-                        if (select_option === "plain") {
-
-                            return document.getElementById("answer_plain").value;
-
-                        } else if (select_option === "match") {
-
-                            var match_first = document.getElementsByClassName("match_first");
-                            var match_second = document.getElementsByClassName("match_second");
-
-                            var matchFirstArray = getArray(match_first);
-                            var matchSecondArray = getArray(match_second);
-
-                            return {match_first: matchFirstArray, match_second: matchSecondArray};
-
-                        } else if (select_option === "multipleChoice") {
-                            var checkedResult = [];
-
-                            var checkboxes = document.getElementsByClassName("checkbox");
-                            var choices = document.getElementsByClassName("choice");
-
-                            var choicesResult = getArray(choices);
-
-                            for (var i = 0; i < choices.length; i++) {
-                                checkedResult[i] = checkboxes[i].checked;
-                            }
-
-                            return {choices: choicesResult, checked: checkedResult};
-                        }
-                    };
-
-                    // gets values from dom element data
-                    var getArray = function (data) {
-                        var result = [];
-                        for (var i = 0; i < data.length; i++) {
-                            result[i] = data[i].value;
-                        }
-                        return result;
-                    };
-
                     var container = document.createElement('div');
                     container.id = "answer_container";
 
 
-                    document.getElementById("answers").appendChild(select);
-                    document.getElementById("answers").appendChild(container);
-                    document.getElementById("answers").appendChild(submit_question);
-                    document.getElementById("answers").appendChild(br);
+                    answers.appendChild(select);
+                    answers.appendChild(container);
+                    answers.appendChild(br);
                     container.appendChild(answer_plain);
-
 
 
                     var counter = 1;
@@ -165,25 +167,26 @@
                         e = e || window.event;
 
                         if (select.value === "plain") {
-                            document.getElementById("answer_container").innerHTML = "";
+                            container.innerHTML = "";
 
-                            document.getElementById("answer_container").appendChild(answer_plain);
-                            $('#answer_plain').val('')
+                            container.appendChild(answer_plain);
+                            $(answer_plain).val('')
                             counter = 0;
                             counter_match = 0;
                         }
 
                         if (select.value === "multipleChoice") {
-                            document.getElementById("answer_container").innerHTML = "";
+                            container.innerHTML = "";
 
                             var button = document.createElement('button');
                             button.id = "add_choice";
-                            button.className = "btn btn-secondary";
+                            button.classList = "btn btn-warning"
+
                             button.innerHTML = "Add choice";
-                            document.getElementById("answer_container").appendChild(button);
-                            var container = document.createElement('div');
-                            container.id = "choice_container";
-                            document.getElementById("answer_container").appendChild(container);
+                            container.appendChild(button);
+                            var container_choice = document.createElement('div');
+                            container_choice.id = "choice_container";
+                            container.appendChild(container_choice);
 
                             button.onclick = function (e) {
                                 var checkbox = document.createElement('input');
@@ -198,9 +201,9 @@
 
                                 var br1 = document.createElement("br");
 
-                                container.appendChild(checkbox);
-                                container.appendChild(choice);
-                                container.appendChild(br1);
+                                container_choice.appendChild(checkbox);
+                                container_choice.appendChild(choice);
+                                container_choice.appendChild(br1);
 
                                 counter += 1;
                                 counter_match = 0;
@@ -209,15 +212,16 @@
                         }
 
                         if (select.value === "match") {
-                            var cont = document.getElementById("answer_container");
-                            cont.innerHTML = "";
+
+
+                            container.innerHTML = "";
 
                             var add = document.createElement("button");
                             add.name = "add_choice_multiple";
-                            add.className = "btn btn-secondary";
+                            add.classList = "btn btn-warning"
                             add.innerHTML = "Add choice";
 
-                            cont.appendChild(add);
+                            container.appendChild(add);
                             add.onclick = function (e) {
                                 var input_group = document.createElement('input-group');
 
@@ -241,7 +245,7 @@
                                 input_group.appendChild(span);
                                 input_group.appendChild(text2);
                                 input_group.appendChild(document.createElement("br"));
-                                cont.appendChild(input_group);
+                                container.appendChild(input_group);
                                 counter_match += 1;
                             }
 
@@ -264,19 +268,108 @@
                     option3.innerHTML = "Multiple choice";
 
 
-                select.appendChild(option1);
+                    select.appendChild(option1);
                     select.appendChild(option2);
                     select.appendChild(option3);
 
 
-                    document.getElementById("questions").appendChild(question_text);
-                    document.getElementById("questions").appendChild(fill_in_blank);
-                    document.getElementById("questions").appendChild(picture_url);
+                    questions.appendChild(question_text);
+                    questions.appendChild(fill_in_blank);
+                    questions.appendChild(picture_url);
 
 
-                //remember questions/answers html to reset
-                var questionsHtml = $('#questions').html()
-                var answersHtml = $('#answer_container').html()
+                };
+
+                $('#submit_quiz').click(function (event) {
+
+
+                    result = {}
+                    result.title = $('#title').val()
+                    result.randomized = ($('#random_order')).is(":checked")
+                    result.multiplePages = ($('#multiple_pages')).is(":checked")
+                    result.allQuestions = {}
+                    var question_id = 0
+                    $("#all_questions ").children().each(function (index) {
+                        result.allQuestions[question_id] = {
+                            question: getQuestion($(this)),
+                            answer: getAnswer($(this))
+                        }
+                        question_id++
+
+                    });
+
+                    var jsonData = JSON.stringify(result);
+                    var request = $.ajax({
+                        url: '/CreateQuiz',
+                        type: 'POST',
+                        data: jsonData,
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            window.location.replace("/home-page.jsp")
+                        }
+                    });
+
+
+                });
+
+
+                var getAnswer = function (obj) {
+
+                    var select_option = $(obj).find('#select').val();
+
+                    if (select_option === "plain") {
+
+                        return $(obj).find('#answer_plain').val();
+
+                    } else if (select_option === "match") {
+
+                        var match_first = $(obj).find(".match_first");
+                        var match_second = $(obj).find(".match_second");
+
+                        var matchFirstArray = getArray(match_first);
+                        var matchSecondArray = getArray(match_second);
+
+                        return {match_first: matchFirstArray, match_second: matchSecondArray};
+
+                    } else if (select_option === "multipleChoice") {
+                        var checkedResult = [];
+
+                        var checkboxes = $(obj).find(".checkbox");
+                        var choices = $(obj).find(".choice");
+
+                        var choicesResult = getArray(choices);
+
+                        for (var i = 0; i < choices.length; i++) {
+                            checkedResult[i] = checkboxes[i].checked;
+                        }
+
+                        return {choices: choicesResult, checked: checkedResult};
+                    }
+                };
+
+
+                var getQuestion = function (obj) {
+
+
+                    return {
+                        question_text: $(obj).find("#question_text").val(),
+                        fill_in_blank: $(obj).find("#fill_in_blank").val(),
+                        media: $(obj).find("#picture_url").val(),
+                        question_type: $(obj).find("#select").val()
+
+                    }
+
+                }
+
+
+                // gets values from dom element data
+                var getArray = function (data) {
+                    var result = [];
+                    for (var i = 0; i < data.length; i++) {
+                        result[i] = data[i].value;
+                    }
+                    return result;
+                };
 
 
 
