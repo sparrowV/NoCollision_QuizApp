@@ -15,8 +15,19 @@ CREATE TABLE users (
   country       NVARCHAR(50),
   picture       NVARCHAR(1000),
   date_of_birth DATE,
+  status        INT           DEFAULT 0,
 
   CONSTRAINT users_pk PRIMARY KEY (user_id)
+);
+
+DROP TABLE IF EXISTS announcements;
+CREATE TABLE announcements (
+  id            INT AUTO_INCREMENT,
+  text          NVARCHAR(2000),
+  user_id       INT,
+
+  CONSTRAINT announcements_fk PRIMARY KEY (id),
+  CONSTRAINT announcements_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 DROP TABLE IF EXISTS quizzes;

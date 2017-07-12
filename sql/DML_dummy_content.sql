@@ -1,11 +1,17 @@
 USE quiz_app;
 
+INSERT INTO users (first_name, last_name, username, password, gender, country, picture, date_of_birth, status)
+  VALUE ('Dude', 'Lebowski', 'asd', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6',
+         'male', 'Los Angeles', 'https://www.parent.co/wp-content/uploads/2016/04/The-Big-Lebowski-White-Russian.jpeg', '1949-12-04', 1);
+
+
 INSERT INTO users (first_name, last_name, username, password)
 VALUES ('Tornike', 'Gurgenidze', 'Tokoko', 'pass1'),
   ('Misho', 'Zhgenti', 'Mishiko', 'pass2'),
   ('Otar', 'Jankhoteli', 'Jankho', 'pass3'),
   ('Otiko', 'Dvalishvili', 'Dvali', 'pass4'),
   ('Irakli', 'Chkuaseli', 'Chkua', 'pass5');
+
 
 INSERT INTO quizzes (author_id, title, date_created)
 VALUES (2, 'History', '2017-06-11'),
