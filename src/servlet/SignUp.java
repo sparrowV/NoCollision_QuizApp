@@ -55,6 +55,7 @@ public class SignUp extends HttpServlet {
 			newUser = userManager.addUser(newUser);
 			session.setAttribute(ServletKey.CURRENT_USER, newUser);
 
+
 			dispatcher = request.getRequestDispatcher(ServletKey.HOME_PAGE_JSP);
 		} else {
 			dispatcher = request.getRequestDispatcher(ServletKey.USERNAME_TAKEN_JSP);
