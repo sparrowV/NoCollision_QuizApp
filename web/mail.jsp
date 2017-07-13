@@ -75,10 +75,44 @@
 
 <script>
 
-	var d;
+	window.setInterval(function () {
+		/// call your function here
+		console.log('log');
+		var friend_id = "<%=friend_id%>";
+		var friend_name = "<%=friendName%>";
+		xhr1 = new XMLHttpRequest();
+
+		var url1 = "/ChatHistory?friend_id=" + friend_id + "&friend_name=" + friend_name;
+
+		//	console.log(url1);
+		xhr1.onreadystatechange = handler1;
+		xhr1.open("GET", url1, true);
+		xhr1.send(null);
+
+	}, 5000);
+
+	function handler1() {
+		if (xhr1.readyState === 4) {
+			if (xhr1.status === 200) {
+
+				console.log(xhr1.responseText);
+				document.getElementById('history').value = xhr1.responseText;
+
+				var element = document.getElementById('history');
+				//element.focus();
+				element.setSelectionRange(element.value.length, element.value.length);
+
+
+			} else {
+				console.log('Server problem...');
+			}
+		}
+	}
+
 	function send(friend_id) {
 		var message = document.getElementById('new_message').value;
 		//console.log(message);
+
 
 		try {
 			xhr = new XMLHttpRequest();
