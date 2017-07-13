@@ -72,6 +72,8 @@
 
 
 <script>
+
+	var d;
 	function send(friend_id) {
 		var message = document.getElementById('new_message').value;
 		//console.log(message);
@@ -87,7 +89,21 @@
 		}
 		var url = "/SendMessage?friend_id=" + friend_id + "&message=" + message;
 		//	console.log(url);
-		xhr.onreadystatechange = handler;
+
+		var chat = document.getElementById('history').value;
+		chat = chat + message;
+		chat = chat + '\n';
+		chat = chat + '\n';
+		chat = chat + '\n';
+		chat = chat + '\n';
+		document.getElementById('history').value = chat;
+		document.getElementById('new_message').value = '';
+
+		var element=document.getElementById('history');
+		element.focus();
+		element.setSelectionRange(element.value.length,element.value.length);
+
+		xhr.onreadystatechange = handler();
 		xhr.open("POST", url, true);
 		xhr.send(null);
 
@@ -95,7 +111,7 @@
 	function handler() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
-				location.reload();
+
 			} else {
 				alert('Sending Problem...');
 			}
