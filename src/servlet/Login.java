@@ -1,7 +1,9 @@
 package servlet;
 
+import database.bean.Announcement;
 import database.bean.User;
 import listener.ContextKey;
+import model.AnnouncementManager;
 import model.UserManager;
 import util.Hash;
 
@@ -21,6 +23,16 @@ public class Login extends HttpServlet {
 		RequestDispatcher dispatcher;
 		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
+		/*AnnouncementManager anMan = (AnnouncementManager) context.getAttribute(ContextKey.ANNOUNCEMENT_MANAGER);
+
+		AnnouncementServlet an1 = new AnnouncementServlet(1, "ANN1");
+		AnnouncementServlet an2 = new AnnouncementServlet(1, "ANN2");
+
+		anMan.addAnnouncement(an1);
+		anMan.addAnnouncement(an2);
+
+		System.out.println(anMan.getAnnouncements(1));*/
+
 		String username = request.getParameter(ServletKey.USERNAME);
 		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
 
@@ -33,7 +45,10 @@ public class Login extends HttpServlet {
 
 		if (user != null) {
 			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
-			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
+			if(user.isAdmin()) {
+				response.sendRedirect(ServletKey.ADMIN_JSP);
+			} else response.sendRedirect(ServletKey.HOME_PAGE_JSP);
+
 		} else {
 			response.sendRedirect(ServletKey.INCORRECT_JSP);
 		}

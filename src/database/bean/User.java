@@ -160,4 +160,9 @@ public class User implements HtmlSerializable {
 	public String toHtml() {
 		return "<a href=\"" + "user/" + this.getUserId() + "\">" + this.getFirstName() + " " + this.getLastName() + " (" + this.getUsername() + ")" + "</a>";
 	}
+
+	public boolean isAdmin() {
+		// status 0 means basic user
+		return getStatus()>0;
+	}
 }

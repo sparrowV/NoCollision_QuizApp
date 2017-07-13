@@ -347,6 +347,7 @@ public class UserDAO {
 		user.setCountry(resultSet.getString(DBContract.UserTable.COLUMN_NAME_COUNTRY));
 		user.setPicture(resultSet.getString(DBContract.UserTable.COLUMN_NAME_PICTURE));
 		user.setDateOfBirth(resultSet.getDate(DBContract.UserTable.COLUMN_NAME_DATE_OF_BIRTH));
+		user.setStatus(resultSet.getInt(DBContract.UserTable.COLUMN_NAME_STATUS));
 
 		return user;
 	}
