@@ -15,7 +15,13 @@
 	<title>Mail</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			var $textarea = $('#history');
+			$textarea.scrollTop($textarea[0].scrollHeight);
+		});
+	</script>
 
 	<% String friend_id = request.getParameter("friend_id");
 		String frinedName = request.getParameter("friend_name");
@@ -68,8 +74,7 @@
 <script>
 	function send(friend_id) {
 		var message = document.getElementById('new_message').value;
-		console.log(message);
-		location.reload();
+		//console.log(message);
 
 		try {
 			xhr = new XMLHttpRequest();
@@ -80,8 +85,8 @@
 			alert("Ajax not supported by your browser!");
 			return;
 		}
-		var url = "SendMessage?friend_id=" + friend_id + "&message=" + message;
-
+		var url = "/SendMessage?friend_id=" + friend_id + "&message=" + message;
+		//	console.log(url);
 		xhr.onreadystatechange = handler;
 		xhr.open("POST", url, true);
 		xhr.send(null);
@@ -90,10 +95,9 @@
 	function handler() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
-				//location.reload();
-				alert("Sent");
+				location.reload();
 			} else {
-				alert("ERROR");
+				alert('Sending Problem...');
 			}
 		}
 	}
