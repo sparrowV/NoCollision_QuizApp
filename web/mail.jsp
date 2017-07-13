@@ -23,7 +23,9 @@
 		});
 	</script>
 
-	<% String friend_id = request.getParameter("friend_id");
+	<%
+		request.setCharacterEncoding("UTF-8");
+		String friend_id = request.getParameter("friend_id");
 		String frinedName = request.getParameter("friend_name");
 		MessageManager messageManager = (MessageManager) application.getAttribute(ContextKey.MESSAGE_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
@@ -94,14 +96,12 @@
 		chat = chat + message;
 		chat = chat + '\n';
 		chat = chat + '\n';
-		chat = chat + '\n';
-		chat = chat + '\n';
 		document.getElementById('history').value = chat;
 		document.getElementById('new_message').value = '';
 
-		var element=document.getElementById('history');
+		var element = document.getElementById('history');
 		element.focus();
-		element.setSelectionRange(element.value.length,element.value.length);
+		element.setSelectionRange(element.value.length, element.value.length);
 
 		xhr.onreadystatechange = handler();
 		xhr.open("POST", url, true);

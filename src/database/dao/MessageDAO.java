@@ -69,8 +69,6 @@ public class MessageDAO {
 
 				html += "  " + message + "\n";
 				html += "\n";
-				html += "\n";
-				html += "\n";
 
 			}
 		} catch (SQLException e) {
