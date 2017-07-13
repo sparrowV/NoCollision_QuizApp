@@ -18,4 +18,8 @@ public class Announcement {
 		return adminId;
 	}
 
+	public String toString() {
+		return "AuthorId: " + adminId + " -- " +
+				"Announcement: " + announcement;
+	}
 }
