@@ -3,6 +3,8 @@ package model;
 import database.bean.Announcement;
 import database.dao.AnnouncementDAO;
 
+import java.util.List;
+
 public class AnnouncementManager {
 
 	private AnnouncementDAO annDAO;
@@ -17,6 +19,11 @@ public class AnnouncementManager {
 		} catch (Exception e) {
 			System.out.println("Something went wrong adding announcement");
 		}
+	}
+
+
+	public List<Announcement> getAnnouncements(int userId) {
+		return annDAO.getAnnouncements(userId);
 	}
 
 }
