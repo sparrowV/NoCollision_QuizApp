@@ -16,7 +16,7 @@ public class MessageManager {
 		this.dao.sendMessage(currentId, friendID, message);
 	}
 
-	public String getChatHistory(int currentUserId, int friendUserID) {
-		return this.dao.getChatHistory(currentUserId, friendUserID);
+	public String getChatHistory(int currentUserId, int friendUserID, String friendName) {
+		return this.dao.getChatHistory(currentUserId, friendUserID, friendName);
 	}
 }

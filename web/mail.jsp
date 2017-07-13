@@ -26,11 +26,11 @@
 	<%
 		request.setCharacterEncoding("UTF-8");
 		String friend_id = request.getParameter("friend_id");
-		String frinedName = request.getParameter("friend_name");
+		String friendName = request.getParameter("friend_name");
 		MessageManager messageManager = (MessageManager) application.getAttribute(ContextKey.MESSAGE_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
 
-		String chat = messageManager.getChatHistory(currentUser.getUserId(), Integer.parseInt(friend_id));
+		String chat = messageManager.getChatHistory(currentUser.getUserId(), Integer.parseInt(friend_id), friendName);
 		/*System.out.println(friend_id);
 		System.out.println("aaa");*/%>
 
@@ -55,7 +55,7 @@
 
 	<div class="w3-card-4" style="width:100%">
 		<header class="w3-container w3-light-grey">
-			<h3><%=frinedName%>
+			<h3><%=friendName%>
 			</h3>
 		</header>
 
