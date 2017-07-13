@@ -39,6 +39,7 @@
 	</script>
 
 	<%
+		request.setCharacterEncoding("UTF-8");
 		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
 		if (currentUser == null) {
