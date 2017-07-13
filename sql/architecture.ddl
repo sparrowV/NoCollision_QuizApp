@@ -133,9 +133,11 @@ CREATE TABLE challenges (
 	id         INT PRIMARY KEY AUTO_INCREMENT,
 	friend_one INT NOT NULL,
 	friend_two INT NOT NULL,
+	quiz_id    INT NOT NULL,
 	status     INT             DEFAULT 0,
 	FOREIGN KEY (friend_one) REFERENCES users (user_id),
-	FOREIGN KEY (friend_two) REFERENCES users (user_id)
+	FOREIGN KEY (friend_two) REFERENCES users (user_id),
+	FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id)
 );
 # status 0<---- means pending request
 # status 1 <---- means accepted request
