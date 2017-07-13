@@ -27,7 +27,7 @@ CREATE TABLE announcements (
 	user_id INT,
 
 	CONSTRAINT announcements_fk PRIMARY KEY (id),
-	CONSTRAINT announcements_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
+	CONSTRAINT announcements_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS quizzes;
@@ -41,7 +41,7 @@ CREATE TABLE quizzes (
 
 
 	CONSTRAINT quizzes_pk PRIMARY KEY (quiz_id),
-	CONSTRAINT quizzes_fk FOREIGN KEY (author_id) REFERENCES users (user_id)
+	CONSTRAINT quizzes_fk FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS questions;
@@ -63,7 +63,7 @@ CREATE TABLE questions_quizzes (
 	index_id    INT NOT NULL,
 
 	CONSTRAINT questions_quizzes_pk PRIMARY KEY (question_id, quiz_id),
-	CONSTRAINT questions_quizzes_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id),
+	CONSTRAINT questions_quizzes_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id) ON DELETE CASCADE,
 	CONSTRAINT questions_quizzes_fk2 FOREIGN KEY (question_id) REFERENCES questions (question_id)
 );
 
@@ -99,8 +99,8 @@ CREATE TABLE users_quiz_history (
 	duration NVARCHAR(100),
 	score    DOUBLE,
 
-	CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id),
-	CONSTRAINT users_quiz_history_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id)
+	CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+	CONSTRAINT users_quiz_history_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id) ON DELETE CASCADE
 );
 
 
@@ -110,8 +110,8 @@ CREATE TABLE friends (
 	friend_one INT NOT NULL, # A friend
 	friend_two INT NOT NULL, # B friend
 	status     INT             DEFAULT 0, # A->B friendship status   (no duplications B->A row)
-	FOREIGN KEY (friend_one) REFERENCES users (user_id),
-	FOREIGN KEY (friend_two) REFERENCES users (user_id)
+	FOREIGN KEY (friend_one) REFERENCES users (user_id) ON DELETE CASCADE,
+	FOREIGN KEY (friend_two) REFERENCES users (user_id) ON DELETE CASCADE
 );
 # if A sends friend request to B the following row would be like this:
 # A B 0
@@ -124,8 +124,8 @@ CREATE TABLE messages (
 	friend_two INT NOT NULL,
 	message    NVARCHAR(200),
 	status     INT             DEFAULT 0,
-	FOREIGN KEY (friend_one) REFERENCES users (user_id),
-	FOREIGN KEY (friend_two) REFERENCES users (user_id)
+	FOREIGN KEY (friend_one) REFERENCES users (user_id) ON DELETE CASCADE,
+	FOREIGN KEY (friend_two) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS challenges;
@@ -134,8 +134,8 @@ CREATE TABLE challenges (
 	friend_one INT NOT NULL,
 	friend_two INT NOT NULL,
 	status     INT             DEFAULT 0,
-	FOREIGN KEY (friend_one) REFERENCES users (user_id),
-	FOREIGN KEY (friend_two) REFERENCES users (user_id)
+	FOREIGN KEY (friend_one) REFERENCES users (user_id) ON DELETE CASCADE,
+	FOREIGN KEY (friend_two) REFERENCES users (user_id) ON DELETE CASCADE
 );
 # status 0<---- means pending request
 # status 1 <---- means accepted request
