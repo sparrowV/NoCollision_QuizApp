@@ -20,6 +20,6 @@ public class Announcement {
 
 	public String toString() {
 		return "AuthorId: " + adminId + " -- " +
-				"Announcement: " + announcement;
+				"AnnouncementServlet: " + announcement;
 	}
 }
