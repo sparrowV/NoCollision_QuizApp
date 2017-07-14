@@ -35,6 +35,7 @@ public class CreateQuiz extends HttpServlet {
 		for (String key : data.getAsJsonObject("allQuestions").keySet()) {
 
 			Question question = generateQuestion(data.getAsJsonObject("allQuestions").get(key).getAsJsonObject());
+
 			quiz.addQuestion(question);
 
 
@@ -113,6 +114,20 @@ public class CreateQuiz extends HttpServlet {
 				}
 
 				answer = new AnswerMultipleChoice(multipleChoice, true);
+				break;
+			}
+
+			case "multipleAnswer": {
+				List<String> answers = new ArrayList<>();
+				JsonArray choices = data.getAsJsonObject("answer").getAsJsonArray("multanswer");
+				boolean order = data.getAsJsonObject("answer").getAsJsonPrimitive("order").getAsBoolean();
+
+				for (int i = 0; i < choices.size(); i++) {
+
+					answers.add(choices.get(i).getAsString());
+				}
+
+				answer = new AnswerMultiple(answers, true, order);
 				break;
 			}
 		}

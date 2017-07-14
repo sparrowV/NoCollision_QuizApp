@@ -51,6 +51,7 @@ public final class DBContract {
 		public static final String COLUMN_NAME_ANSWER_TEXT2 = "answer_text2";
 		public static final String COLUMN_NAME_IS_CORRECT = "is_correct";
 		public static final String COLUMN_NAME_IS_TEXT = "is_text";
+		public static final String COLUMN_NAME_ORDER = "is_ordered";
 		//public static final String COLUMN_NAME_MEDIA = "media";
 		//public static final String COLUMN_NAME_MEDIA2 = "media2";
 		//public static final String COLUMN_NAME_INDEX_ID = "index_id";

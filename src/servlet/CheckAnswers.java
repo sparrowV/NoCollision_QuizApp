@@ -118,6 +118,9 @@ public class CheckAnswers extends HttpServlet {
 
 			answer = new AnswerMultipleChoice(choices, true);
 			return question.isCorrect(answer);
+		} else if (questionType.equals("multipleAnswer")) {
+
+
 		}
 
 		return false;

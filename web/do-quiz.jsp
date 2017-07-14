@@ -31,6 +31,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	<% QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
 		String quizId = request.getParameter("id");
+
 		HttpSession s = request.getSession();
 		s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
 
@@ -82,6 +83,7 @@
 			out.write("<header class=\"w3-container w3-light-green\">\n");
 			out.write("<h3>№" + i + "</h3>\n");
 			out.write("</header>\n");
+
 			out.write(question.toHtml());
 			out.write("<br/>\n");
 			out.write("<br/>\n");

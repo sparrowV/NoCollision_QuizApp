@@ -76,6 +76,7 @@ CREATE TABLE answers (
 	answer_text2 NVARCHAR(500),
 	is_correct   BOOL,
 	is_text      BOOL         DEFAULT TRUE,
+	is_ordered   BOOL,
 
 	CONSTRAINT answers_pk PRIMARY KEY (answer_id)
 );

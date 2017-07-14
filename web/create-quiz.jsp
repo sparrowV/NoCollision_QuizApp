@@ -119,7 +119,7 @@
                             if (deleted_id < current_id) {
                                 this.id = ""
                                 this.id = "question_container" + (current_id - 1)
-                                console.log($(this).find('span'))
+
 
                                 $(this).find('#question_number').text("Question#" + (current_id - 1).toString())
                             }
@@ -251,6 +251,49 @@
 
 
                         }
+	                    if (select.value === "multipleAnswer") {
+		                    container.innerHTML = "";
+
+		                    var add = document.createElement("button");
+		                    add.name = "add_choice_multiple";
+		                    add.classList = "btn btn-warning"
+		                    add.innerHTML = "Add choice";
+
+		                    var checkbox = document.createElement('input');
+		                    checkbox.type = 'checkbox';
+		                    checkbox.id = "checkbox_id"
+		                    checkbox.name = "checkbox" + counter.toString();
+		                    checkbox.className = 'form-check checkbox';
+
+		                    var label = document.createElement('label')
+		                    label.for = "checkbox_id"
+		                    label.innerHTML = " Order is important"
+
+
+		                    container.appendChild(add);
+		                    container.appendChild(checkbox);
+		                    container.appendChild(label);
+
+		                    add.onclick = function (e) {
+			                    var input_group = document.createElement('input-group');
+
+			                    var text = document.createElement('input');
+			                    text.type = "text";
+			                    text.className = "form-control multiple_answer";
+			                    text.placeholder = "insert answer";
+
+
+			                    var span = document.createElement('span');
+			                    span.className = "input-group-addon";
+			                    span.innerHTML = "-";
+
+			                    input_group.appendChild(text);
+			                    input_group.appendChild(span);
+			                    input_group.appendChild(document.createElement("br"));
+			                    container.appendChild(input_group);
+
+		                    }
+	                    }
 
                     };
 
@@ -267,10 +310,15 @@
                     option3.value = "multipleChoice";
                     option3.innerHTML = "Multiple choice";
 
+	                var option4 = document.createElement('option');
+	                option4.value = "multipleAnswer";
+	                option4.innerHTML = "Multiple Answer"
+
 
                     select.appendChild(option1);
                     select.appendChild(option2);
                     select.appendChild(option3);
+	                select.appendChild(option4);
 
 
                     questions.appendChild(question_text);
@@ -299,6 +347,7 @@
                     });
 
                     var jsonData = JSON.stringify(result);
+	                console.log(jsonData);
                     var request = $.ajax({
                         url: '/CreateQuiz',
                         type: 'POST',
@@ -344,6 +393,20 @@
                         }
 
                         return {choices: choicesResult, checked: checkedResult};
+                    }
+                    else if (select_option === "multipleAnswer") {
+
+	                    var results = [];
+	                    var multipleAnswers = $(obj).find('.multiple_answer');
+	                    var check = $(obj).find('.checkbox');
+
+
+	                    var results = getArray(multipleAnswers);
+
+	                    return {multanswer: results, order: check[0].checked}
+
+
+
                     }
                 };
 
