@@ -27,8 +27,9 @@ public class CheckAnswers extends HttpServlet {
 		UserManager userManager = (UserManager) request.getServletContext()
 				.getAttribute(ContextKey.USER_MANAGER);
 
+		JsonObject answers = data.get("answers").getAsJsonObject();
 
-		int res = checkAnswers(data.get("answers").getAsJsonObject(), manager);
+		int res = checkAnswers(answers, manager);
 
 		HttpSession s = request.getSession();
 		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
@@ -38,13 +39,13 @@ public class CheckAnswers extends HttpServlet {
 
 		String duration = (data.get("time").getAsString());
 
-		double score = (double) res / (data.get("answers").getAsJsonObject().size());
+		double score = (double) res / (answers.size());
 
 		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
 
 		JsonObject json = new JsonObject();
 		json.add("correct", new JsonPrimitive(res));
-		json.add("total", new JsonPrimitive(data.get("answers").getAsJsonObject().size()));
+		json.add("total", new JsonPrimitive(answers.size()));
 		response.getWriter().print(json);
 		response.getWriter().flush();
 	}
