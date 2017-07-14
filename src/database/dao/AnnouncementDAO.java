@@ -6,10 +6,9 @@ import database.DBInfo;
 import database.bean.Announcement;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnnouncementDAO {
 
@@ -40,6 +39,8 @@ public class AnnouncementDAO {
 			preparedStatement.executeUpdate();
 
 
+			preparedStatement.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.getStackTrace();
 		} finally {
@@ -50,4 +51,61 @@ public class AnnouncementDAO {
 			}
 		}
 	}
+
+
+	public List<Announcement> getAnnouncements(int userId) {
+		Connection connection = null;
+		List<Announcement> announcements = null;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// Query for selecting announcement of given user
+			String query = "SELECT * FROM " + DBContract.AnnouncementTable.TABLE_NAME + " WHERE " +
+					DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + " =?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			announcements = new ArrayList<>();
+
+			// Iterate over result set and add products to the list.
+			while (resultSet.next()) {
+				announcements.add(fetchAnnouncement(resultSet));
+			}
+
+			// Close statement and result set.
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+		return announcements;
+	}
+
+
+		private Announcement fetchAnnouncement(ResultSet resultSet) {
+			Announcement announcement = null;
+			try {
+				String text = resultSet.getString(DBContract.AnnouncementTable.COLUMN_NAME_TEXT);
+				int id = resultSet.getInt(DBContract.AnnouncementTable.COLUMN_NAME_USER_ID);
+				announcement = new Announcement(id, text);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return announcement;
+		}
+
 }
+

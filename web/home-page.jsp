@@ -5,7 +5,9 @@
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.MessageManager" %>
+<%@ page import="model.ChallengeManager" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="database.bean.Challenges" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -53,6 +55,12 @@
 
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
 
+		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
+		ArrayList<Challenges> myChallenges = challengeManager.getMyChallenges(currentUser.getUserId());
+		String challengeTitle = "Challenges";
+		if (myChallenges.size() != 0) {
+			challengeTitle = "Challenges (" + myChallenges.size() + ")";
+		}
 	%>
 </head>
 <body>
@@ -142,6 +150,8 @@
 					   aria-expanded="false">Messages<span
 							class="caret"></span></a>
 					<ul class="dropdown-menu">
+
+
 						<%
 
 
@@ -160,6 +170,68 @@
 							}%>
 
 
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false"><%=challengeTitle%><span
+							class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+
+						<%
+							if (myChallenges.size() == 0) {
+								out.write("<li class=\"dropdown-header\">No quiz challenges</li>");
+							}
+
+							for (int i = 0; i < myChallenges.size(); i++) {
+								Challenges currChallenge = myChallenges.get(i);
+								//do-quiz.jsp?id=
+								out.write("<li>" +
+										" <b>" + currChallenge.getChallengerUsername() + "</b>" +
+										" <a  onclick=\"acceptedChallenge(" + currChallenge.getChallengedQuizID() + "," + currChallenge.getChallengerID() +
+										")\" href=\"do-quiz.jsp?id=" + currChallenge.getChallengedQuizID() + "\">" + currChallenge.getChallengedQuizTitle() + "</a>"
+										+ "</li>");
+								if (i != myChallenges.size() - 1)
+									out.write("<li role='separator' class='divider'></li>\n");
+							}
+						%>
+						<script>
+							function acceptedChallenge(quiz_id, challenger_id) {
+								console.log(quiz_id);
+								console.log(challenger_id);
+								try {
+									xhr1 = new XMLHttpRequest();
+								} catch (e) {
+									xhr1 = new ActiveXObject("Microsoft.XMLHTTP");
+								}
+								if (xhr1 === null) {
+									alert("Ajax not supported by your browser!");
+									return;
+								}
+
+
+								var url1 = "/AcceptChallenge?quiz_id=" + quiz_id + "&challenger_id=" + challenger_id;
+
+
+								xhr1.onreadystatechange = handler1;
+								xhr1.open("POST", url1, true);
+								xhr1.send(null);
+							}
+
+							function handler1() {
+								if (xhr1.readyState === 4) {
+									if (xhr1.status === 200) {
+										console.log('accepted');
+									} else {
+										alert("ERROR accepting challenge");
+									}
+								}
+							}
+
+
+						</script>
 					</ul>
 				</li>
 
@@ -190,9 +262,11 @@
 	</div>
 </nav>
 
+
 <div class="container">
 	<div class="home-page">
 		<div class="jumbotron">
+
 
 			<%
 				//displaying all quizzes for given user
@@ -204,13 +278,15 @@
 				out.write("<div id='quizzes'>");
 				for (Quiz quiz : quizzes) {
 					out.write(quiz.toHtml());
-					out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz.getQuizId() + "></a>");
+
 				}
 				out.write("</div>");
 			%>
 			<p><a href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
 		</div>
 	</div>
+
+
 </div>
 </body>
 </html>

@@ -148,5 +148,32 @@ public final class DBContract {
 		}
 	}
 
+	public static class Challenges {
+		public static final String TABLE_NAME = "challenges";
+
+		public static final String ID = "id";
+		public static final String FRIEND_ONE = "friend_one";
+		public static final String FRIEND_TWO = "friend_two";
+		public static final String QUIZ_ID = "quiz_id";
+		public static final String STATUS = "status";
+
+		public static class SQL {
+			public static final String SEND_CHALLENGE = "insert into " + TABLE_NAME + " (" + FRIEND_ONE + ", " + FRIEND_TWO + ", " + QUIZ_ID + ")" +
+					"values(?,?,?);";
+			public static final String ACCEPT_CHALLENGE = "update " + TABLE_NAME + " set " + STATUS + "=1 " + "where " +
+					FRIEND_TWO + "=? and " + FRIEND_ONE + "=?  and " + QUIZ_ID + "=?;";
+			public static final String GET_MY_CHALLENGES = "SELECT\n" +
+					"\tusers.user_id,\n" +
+					"\tusers.username,\n" +
+					"\tquizzes.quiz_id,\n" +
+					"\tquizzes.title\n" +
+					"FROM challenges\n" +
+					"\tLEFT JOIN users ON challenges.friend_one = users.user_id\n" +
+					"\tLEFT JOIN quizzes ON challenges.quiz_id = quizzes.quiz_id\n" +
+					"WHERE challenges.friend_two = ? AND challenges.status = 0;";
+		}
+
+	}
+
 
 }
