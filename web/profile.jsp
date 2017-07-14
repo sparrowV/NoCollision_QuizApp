@@ -9,6 +9,51 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Custom styles for this web-page -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<style>
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #f1f1f1
+		}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		.dropdown:hover .dropbtn {
+			background-color: #3e8e41;
+		}</style>
+
 	<%
 		// temporary code for filtering
 		int userId = Integer.parseInt((String) request.getAttribute("id"));
@@ -35,15 +80,7 @@
 	<title><%=user.getFirstName() + " " + user.getLastName()%>
 	</title>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Custom styles for this web-page -->
-	<link rel="stylesheet" type="text/css" href="style.css">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -131,7 +168,7 @@
 
 				// Print each quiz's html representation.
 				for (Quiz quiz : quizzes) {
-					out.print(quiz.toHtml());
+					out.print(quiz.toHtml(friendshipManager.getFriends(currentUser.getUserId())));
 				}
 
 				// Print table footer.
@@ -141,6 +178,27 @@
 				// Print div closing tag.
 				out.println("</div>");
 			%>
+			<script>
+				function sendChallenge(quiz_id, friend_id) {
+					xhr2 = new XMLHttpRequest();
+
+					var url = "/SendChallenge?quiz_id=" + quiz_id + "&friend_id=" + friend_id;
+
+					xhr2.onreadystatechange = handler2;
+					xhr2.open("POST", url, true);
+					xhr2.send(null);
+				}
+				function handler2() {
+					if (xhr2.readyState === 4) {
+						if (xhr2.status === 200) {
+							console.log("successful");
+							alert("Challenge  sent")
+						} else {
+							alert("ERROR");
+						}
+					}
+				}
+			</script>
 		</div>
 	</div>
 </div>

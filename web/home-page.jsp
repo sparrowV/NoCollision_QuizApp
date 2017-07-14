@@ -1,11 +1,13 @@
+<%@ page import="database.bean.Challenges" %>
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
+<%@ page import="model.ChallengeManager" %>
 <%@ page import="model.FriendshipManager" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.MessageManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -54,7 +56,47 @@
 
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
 
+		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
+		ArrayList<Challenges> myChallenges = challengeManager.getMyChallenges(currentUser.getUserId());
+		String challengeTitle = "Challenges";
+		if (myChallenges.size() != 0) {
+			challengeTitle = "Challenges (" + myChallenges.size() + ")";
+		}
 	%>
+	<%--copied from w3schools material--%>
+	<style>
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #f1f1f1
+		}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		.dropdown:hover .dropbtn {
+			background-color: #3e8e41;
+		}</style>
 </head>
 <body>
 
@@ -143,6 +185,8 @@
 					   aria-expanded="false">Messages<span
 							class="caret"></span></a>
 					<ul class="dropdown-menu">
+
+
 						<%
 
 
@@ -161,6 +205,68 @@
 							}%>
 
 
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false"><%=challengeTitle%><span
+							class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+
+						<%
+							if (myChallenges.size() == 0) {
+								out.write("<li class=\"dropdown-header\">No quiz challenges</li>");
+							}
+
+							for (int i = 0; i < myChallenges.size(); i++) {
+								Challenges currChallenge = myChallenges.get(i);
+								//do-quiz.jsp?id=
+								out.write("<li>" +
+										" <b>" + currChallenge.getChallengerUsername() + "</b>" +
+										" <a  onclick=\"acceptedChallenge(" + currChallenge.getChallengedQuizID() + "," + currChallenge.getChallengerID() +
+										")\" href=\"do-quiz.jsp?id=" + currChallenge.getChallengedQuizID() + "\">" + currChallenge.getChallengedQuizTitle() + "</a>"
+										+ "</li>");
+								if (i != myChallenges.size() - 1)
+									out.write("<li role='separator' class='divider'></li>\n");
+							}
+						%>
+						<script>
+							function acceptedChallenge(quiz_id, challenger_id) {
+								console.log(quiz_id);
+								console.log(challenger_id);
+								try {
+									xhr1 = new XMLHttpRequest();
+								} catch (e) {
+									xhr1 = new ActiveXObject("Microsoft.XMLHTTP");
+								}
+								if (xhr1 === null) {
+									alert("Ajax not supported by your browser!");
+									return;
+								}
+
+
+								var url1 = "/AcceptChallenge?quiz_id=" + quiz_id + "&challenger_id=" + challenger_id;
+
+
+								xhr1.onreadystatechange = handler1;
+								xhr1.open("POST", url1, true);
+								xhr1.send(null);
+							}
+
+							function handler1() {
+								if (xhr1.readyState === 4) {
+									if (xhr1.status === 200) {
+										console.log('accepted');
+									} else {
+										alert("ERROR accepting challenge");
+									}
+								}
+							}
+
+
+						</script>
 					</ul>
 				</li>
 
@@ -206,11 +312,33 @@
 				List<Quiz> quizzes = manager.getQuizzesByAuthorId(userId);
 				out.write("<div id='quizzes'>");
 				for (Quiz quiz : quizzes) {
-					out.write(quiz.toHtml());
+					out.write(quiz.toHtml(myFriends));
 
 				}
 				out.write("</div>");
 			%>
+			<script>
+				function sendChallenge(quiz_id, friend_id) {
+					xhr2 = new XMLHttpRequest();
+
+					var url = "/SendChallenge?quiz_id=" + quiz_id + "&friend_id=" + friend_id;
+
+					xhr2.onreadystatechange = handler2;
+					xhr2.open("POST", url, true);
+					xhr2.send(null);
+				}
+				function handler2() {
+					if (xhr2.readyState === 4) {
+						if (xhr2.status === 200) {
+							console.log("successful");
+							alert("Challenge  sent")
+						} else {
+							alert("ERROR");
+						}
+					}
+				}
+			</script>
+
 			<p><a href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
 		</div>
 	</div>

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class QuizManager {
+
 	private QuizDAO dao;
 
 	public QuizManager(QuizDAO dao) {
@@ -24,6 +25,14 @@ public class QuizManager {
 		return id;
 	}
 
+	public void deleteQuiz(int quizId) {
+		try {
+			dao.deleteQuiz(quizId);
+		} catch (Exception e) {
+			System.out.println("Couldn't delete quiz");
+		}
+	}
+
 	public List<Quiz> getQuizzesByAuthorId(int authorId) {
 		return dao.getQuizzes(authorId);
 	}
@@ -34,5 +43,9 @@ public class QuizManager {
 
 	public Quiz getQuizByTitle(String title) {
 		return dao.getQuizByTitle(title);
+	}
+
+	public List<Quiz> getQuizList() {
+		return dao.getQuizList();
 	}
 }

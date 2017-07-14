@@ -4,6 +4,7 @@ import database.bean.User;
 import database.dao.UserDAO;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class UserManager {
@@ -28,6 +29,10 @@ public class UserManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public List<User> getUserList() {
+			return dao.getUsers();
 	}
 
 	public User addUser(User user) {
@@ -57,6 +62,15 @@ public class UserManager {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteUser(int userId) {
+		try {
+			dao.deleteUser(userId);
+		} catch (Exception e) {
+			System.out.println("Could't delete user");
+		}
+	}
+
 
 	public boolean usernameTaken(String username) {
 		boolean answer = false;
