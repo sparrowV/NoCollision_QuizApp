@@ -151,6 +151,8 @@
 					   aria-expanded="false">Messages<span
 							class="caret"></span></a>
 					<ul class="dropdown-menu">
+
+
 						<%
 
 
@@ -183,7 +185,54 @@
 							if (myChallenges.size() == 0) {
 								out.write("<li class=\"dropdown-header\">No quiz challenges</li>");
 							}
+
+							for (int i = 0; i < myChallenges.size(); i++) {
+								Challenges currChallenge = myChallenges.get(i);
+								//do-quiz.jsp?id=
+								out.write("<li>" +
+										" <b>" + currChallenge.getChallengerUsername() + "</b>" +
+										" <a  onclick=\"acceptedChallenge(" + currChallenge.getChallengedQuizID() + "," + currChallenge.getChallengerID() +
+										")\" href=\"do-quiz.jsp?id=" + currChallenge.getChallengedQuizID() + "\">" + currChallenge.getChallengedQuizTitle() + "</a>"
+										+ "</li>");
+								if (i != myChallenges.size() - 1)
+									out.write("<li role='separator' class='divider'></li>\n");
+							}
 						%>
+						<script>
+							function acceptedChallenge(quiz_id, challenger_id) {
+								console.log(quiz_id);
+								console.log(challenger_id);
+								try {
+									xhr1 = new XMLHttpRequest();
+								} catch (e) {
+									xhr1 = new ActiveXObject("Microsoft.XMLHTTP");
+								}
+								if (xhr1 === null) {
+									alert("Ajax not supported by your browser!");
+									return;
+								}
+
+
+								var url1 = "/AcceptChallenge?quiz_id=" + quiz_id + "&challenger_id=" + challenger_id;
+
+
+								xhr1.onreadystatechange = handler1;
+								xhr1.open("POST", url1, true);
+								xhr1.send(null);
+							}
+
+							function handler1() {
+								if (xhr1.readyState === 4) {
+									if (xhr1.status === 200) {
+										console.log('accepted');
+									} else {
+										alert("ERROR accepting challenge");
+									}
+								}
+							}
+
+
+						</script>
 					</ul>
 				</li>
 

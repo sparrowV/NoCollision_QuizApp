@@ -161,7 +161,7 @@ public final class DBContract {
 			public static final String SEND_CHALLENGE = "insert into " + TABLE_NAME + " (" + FRIEND_ONE + ", " + FRIEND_TWO + ", " + QUIZ_ID + ")" +
 					"values(?,?,?);";
 			public static final String ACCEPT_CHALLENGE = "update " + TABLE_NAME + " set " + STATUS + "=1 " + "where " +
-					FRIEND_ONE + "=? and " + FRIEND_TWO + "=?  and " + QUIZ_ID + "=?;";
+					FRIEND_TWO + "=? and " + FRIEND_ONE + "=?  and " + QUIZ_ID + "=?;";
 			public static final String GET_MY_CHALLENGES = "SELECT\n" +
 					"\tusers.user_id,\n" +
 					"\tusers.username,\n" +
