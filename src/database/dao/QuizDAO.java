@@ -213,6 +213,7 @@ public class QuizDAO {
 				users.add(fetchQuiz(resultSet));
 			}
 
+
 			// Close statement and result set.
 			resultSet.close();
 			preparedStatement.close();

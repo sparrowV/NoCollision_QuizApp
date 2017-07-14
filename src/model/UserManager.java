@@ -71,6 +71,7 @@ public class UserManager {
 		}
 	}
 
+
 	public boolean usernameTaken(String username) {
 		boolean answer = false;
 		try {

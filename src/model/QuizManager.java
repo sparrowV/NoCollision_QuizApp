@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class QuizManager {
+
 	private QuizDAO dao;
 
 	public QuizManager(QuizDAO dao) {
