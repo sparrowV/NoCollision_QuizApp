@@ -4,6 +4,7 @@
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.Collections" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -63,14 +64,21 @@
 
 </style>
 
-<div class="page">
+
+<div class="page" id="page">
 	<%
+
 		List<Question> questions = quiz.getQuestions();
+
+		if (quiz.getIsRandomizedOrder()) {
+			Collections.shuffle(questions); //randomize list
+		}
+		boolean isMultiplePages = quiz.getIsMultiplePages();
 		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
 		for (int i = 1; i <= questions.size(); i++) {
 			Question question = questions.get(i - 1);
 			out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
-			out.write("<div class =\"question_container\">\n");
+			out.write("<div class =\"question_container\" id=\"question_container\" " + i + ">\n");
 			out.write("<header class=\"w3-container w3-light-green\">\n");
 			out.write("<h3>№" + i + "</h3>\n");
 			out.write("</header>\n");
@@ -97,6 +105,7 @@
 
 	<br/>
 	<br/>
+
 
 	<%--
 		used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4

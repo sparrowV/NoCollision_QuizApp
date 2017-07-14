@@ -160,9 +160,11 @@
 	</div>
 </nav>
 
+
 <div class="container">
 	<div class="home-page">
 		<div class="jumbotron">
+
 
 			<%
 				//displaying all quizzes for given user
@@ -174,13 +176,15 @@
 				out.write("<div id='quizzes'>");
 				for (Quiz quiz : quizzes) {
 					out.write(quiz.toHtml());
-					out.write("<a href=" + ServletKey.DO_QUIZ_JSP + "?id=" + quiz.getQuizId() + "></a>");
+
 				}
 				out.write("</div>");
 			%>
 			<p><a href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
 		</div>
 	</div>
+
+
 </div>
 </body>
 </html>
