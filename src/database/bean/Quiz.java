@@ -138,5 +138,26 @@ public class Quiz {
 				"    </tr>";
 	}
 
+	public String toHtml(List<User> friends) {
+		String res = "<tr>\n" +
+				"      <th scope=\"row\">" + quizId + "</th>\n" +
+				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId +
+				">" + title + "</a>" + "</td>\n" +
+				"      <td>" + dateCreated + "</td>\n" +
+				"<td><div class=\"dropdown\">\n" +
+				"  <button class=\"btn btn-default\">Challenge Friend</button>\n" +
+				"  <div class=\"dropdown-content\">\n";
+
+		for (int i = 0; i < friends.size(); i++) {
+			res += "<a onclick=\"sendChallenge(" + quizId + "," + friends.get(i).getUserId() + ");\" href=\"" + "#" + "\">" + friends.get(i).getFirstName() + " " + friends.get(i).getLastName() + "</a>\n";
+		}
+
+
+		res += "  </div>\n" +
+				"</div> </td>" +
+				"    </tr>";
+		return res;
+	}
+
 
 }
