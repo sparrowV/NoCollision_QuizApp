@@ -24,6 +24,14 @@ public class QuizManager {
 		return id;
 	}
 
+	public void deleteQuiz(int quizId) {
+		try {
+			dao.deleteQuiz(quizId);
+		} catch (Exception e) {
+			System.out.println("Couldn't delete quiz");
+		}
+	}
+
 	public List<Quiz> getQuizzesByAuthorId(int authorId) {
 		return dao.getQuizzes(authorId);
 	}

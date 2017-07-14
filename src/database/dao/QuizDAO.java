@@ -127,6 +127,36 @@ public class QuizDAO {
 		return id;
 	}
 
+	public void deleteQuiz(int quizId) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// delete query
+			String deleteUserQuery = "DELETE FROM " + DBContract.QuizTable.TABLE_NAME + " WHERE " +
+					DBContract.QuizTable.COLUMN_NAME_ID + " =?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(deleteUserQuery);
+			preparedStatement.setInt(1, quizId);
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+	}
+
 	public Quiz getQuizById(int id) {
 		Quiz quiz = null;
 

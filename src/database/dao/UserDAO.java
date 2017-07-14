@@ -285,6 +285,37 @@ public class UserDAO {
 		}
 	}
 
+	public void deleteUser(int userId) {
+		Connection connection = null;
+
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// delete query
+			String deleteUserQuery = "DELETE FROM " + DBContract.UserTable.TABLE_NAME + " WHERE " +
+										DBContract.UserTable.COLUMN_NAME_ID + " =?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(deleteUserQuery);
+			preparedStatement.setInt(1, userId);
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+	}
+
 	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
 		Connection connection = null;
 

@@ -39,6 +39,8 @@ public class AnnouncementDAO {
 			preparedStatement.executeUpdate();
 
 
+			preparedStatement.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.getStackTrace();
 		} finally {

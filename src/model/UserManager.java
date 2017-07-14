@@ -58,6 +58,14 @@ public class UserManager {
 		}
 	}
 
+	public void deleteUser(int userId) {
+		try {
+			dao.deleteUser(userId);
+		} catch (Exception e) {
+			System.out.println("Could't delete user");
+		}
+	}
+
 	public boolean usernameTaken(String username) {
 		boolean answer = false;
 		try {
