@@ -76,7 +76,10 @@ public class QuestionDAO {
 					DBContract.QuestionTable.TABLE_NAME + "." + DBContract.QuestionTable.COLUMN_NAME_QUESTION_ID + " = " +
 					DBContract.QuestionQuizTable.TABLE_NAME + "." + DBContract.QuestionQuizTable.COLUMN_NAME_QUESTION_ID +
 					" WHERE " + DBContract.QuestionQuizTable.TABLE_NAME + "."
-					+ DBContract.QuestionQuizTable.COLUMN_NAME_QUIZ_ID + " = ?;";
+					+ DBContract.QuestionQuizTable.COLUMN_NAME_QUIZ_ID + " = ? "
+					+ "ORDER BY " + DBContract.QuestionQuizTable.TABLE_NAME + "." + DBContract.QuestionQuizTable.COLUMN_NAME_QUESTION_ID + " ASC;";
+
+
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, quizId);
 			ResultSet resultSet = preparedStatement.executeQuery();
