@@ -54,7 +54,7 @@
 
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
 
-		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.MESSAGE_MANAGER);
+		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
 
 	%>
 </head>
