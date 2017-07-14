@@ -5,6 +5,7 @@
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.MessageManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -38,6 +39,7 @@
 	</script>
 
 	<%
+		request.setCharacterEncoding("UTF-8");
 		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
 		if (currentUser == null) {
@@ -49,6 +51,9 @@
 		if (!friendRequests.isEmpty()) {
 			friendRequestNotification = " (" + friendRequests.size() + ")";
 		}
+
+		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
+
 	%>
 </head>
 <body>
@@ -129,6 +134,32 @@
 							}
 						}
 						</script>
+
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false">Messages<span
+							class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<%
+
+
+							if (myFriends.size() == 0) {
+								out.write("<li class=\"dropdown-header\">No Mails Yet</li>\n");
+							}
+							for (int i = 0; i < myFriends.size(); i++) {
+								out.write("<li>\n" +
+										" <form  action=\"mail.jsp\" method=\"post\">" +
+										"<input type=\"submit\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\"/>\n" +
+										"    <input name=\"friend_id\" value=\"" + myFriends.get(i).getUserId() + "\" type=\"hidden\"/>\n" +
+										"    <input name=\"friend_name\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\" type=\"hidden\"/>\n" +
+										" </form></li>\n");
+								if (i != myFriends.size() - 1)
+									out.write("<li role='separator' class='divider'></li>\n");
+							}%>
+
 
 					</ul>
 				</li>

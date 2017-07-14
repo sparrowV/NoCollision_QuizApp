@@ -36,7 +36,7 @@ public class MessageDAO {
 		}
 	}
 
-	public String getChatHistory(int currentUserId, int friendUserID) {
+	public String getChatHistory(int currentUserId, int friendUserID, String friendName) {
 		Connection connection = null;
 		String html = "";
 
@@ -52,7 +52,7 @@ public class MessageDAO {
 			preparedStatement.setString(4, String.valueOf(friendUserID));
 
 			ResultSet resultSet = preparedStatement.executeQuery();
-			html += "<div class=\"chat\">\n";
+			html += "";
 			while (resultSet.next()) {
 
 
@@ -67,12 +67,20 @@ public class MessageDAO {
 				System.out.println("friend1 " + friend1);
 				System.out.println("frined2 " + friend2);*/
 
-				html += "<div class=\"single_message\">\n";
-				html += "<h3>" + message + "</h3>\n";
-				html += "<hr>\n";
-				html += "</div>\n";
+				int friend1_ID = Integer.parseInt(friend1);
+				int friend2_ID = Integer.parseInt(friend2);
+
+				if (friend1_ID == currentUserId && friend2_ID == friendUserID) {
+					html += "You:\n";
+				} else if (friend1_ID == friendUserID && friend2_ID == currentUserId) {
+					html += friendName;
+					html += ":";
+					html += "\n";
+				}
+				html += message + "\n";
+				html += "\n";
+
 			}
-			html += "</div>\n";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

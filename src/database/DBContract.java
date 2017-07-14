@@ -148,5 +148,23 @@ public final class DBContract {
 		}
 	}
 
+	public static class Challenges {
+		public static final String TABLE_NAME = "challenges";
+
+		public static final String ID = "id";
+		public static final String FRIEND_ONE = "friend_one";
+		public static final String FRIEND_TWO = "friend_two";
+		public static final String QUIZ_ID = "quiz_id";
+		public static final String STATUS = "status";
+
+		public static class SQL {
+			public static final String SEND_CHALLENGE = "insert into " + TABLE_NAME + " (" + FRIEND_ONE + ", " + FRIEND_TWO + ", " + QUIZ_ID + ")" +
+					"values(?,?,?);";
+			public static final String ACCEPT_CHALLENGE = "update " + TABLE_NAME + " set " + STATUS + "=1 " + "where " +
+					FRIEND_ONE + "=? and " + FRIEND_TWO + "=?  and " + QUIZ_ID + "=?;";
+		}
+
+	}
+
 
 }
