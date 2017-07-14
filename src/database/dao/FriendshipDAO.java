@@ -110,6 +110,10 @@ public class FriendshipDAO {
 			preparedStatement.setString(1, Integer.toString(currentUserId));
 			preparedStatement.setString(2, Integer.toString(requestUserId));
 			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -126,6 +130,9 @@ public class FriendshipDAO {
 			preparedStatement.setString(1, Integer.toString(currentUserId));
 			preparedStatement.setString(2, Integer.toString(requestUserId));
 			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -148,6 +155,10 @@ public class FriendshipDAO {
 			while (resultSet.next()) {
 				return true;
 			}
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
