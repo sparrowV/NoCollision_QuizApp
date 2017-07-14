@@ -31,6 +31,10 @@ public class MessageDAO {
 			preparedStatement.setString(3, message);
 
 			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -81,6 +85,10 @@ public class MessageDAO {
 				html += "\n";
 
 			}
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
