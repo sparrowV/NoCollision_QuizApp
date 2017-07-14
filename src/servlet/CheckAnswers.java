@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +119,15 @@ public class CheckAnswers extends HttpServlet {
 
 			answer = new AnswerMultipleChoice(choices, true);
 			return question.isCorrect(answer);
-		} else if (questionType.equals("multipleAnswer")) {
+		} else if (questionType.equals("multiple")) {
+			JsonArray input = data.getAsJsonArray("answer");
 
-
+			ArrayList<String> answers = new ArrayList<String>();
+			for (JsonElement elem : input) {
+				answers.add(elem.getAsString());
+			}
+			answer = new AnswerMultiple(answers, true, true);
+			return question.isCorrect(answer);
 		}
 
 		return false;

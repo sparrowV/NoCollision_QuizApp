@@ -24,7 +24,12 @@ public class AnswerMultiple implements Answer, HtmlSerializable {
 
 	public boolean isCorrect(Answer other) {
 		List<String> otherAnswers = ((AnswerMultiple) other).getAnswers();
-		return answers.equals(otherAnswers);
+
+		if (order) {
+			return answers.equals(otherAnswers);
+		} else {
+			return answers.containsAll(otherAnswers) && otherAnswers.containsAll(answers);
+		}
 
 	}
 
@@ -50,16 +55,10 @@ public class AnswerMultiple implements Answer, HtmlSerializable {
 	}
 
 	public String toHtml() {
-		String toHtml = "<div class=\"answer\" data-type=\"plain\" style=\"width:100%\" >" +
-				"<input type=\"text\" ></input>" +
+		String toHtml = "<div class=\"answer\" data-type=\"multiple\" style=\"width:100%\" >" +
+				"<input type=\"text\" data-last ></input>" +
 				"</div>";
 		return toHtml;
-	}
-
-	private String oneAnswerHtml(String answer) {
-		String html = "<p>" + answer + "</p>";
-		return html;
-
 	}
 
 	@Override
@@ -69,14 +68,7 @@ public class AnswerMultiple implements Answer, HtmlSerializable {
 
 		AnswerMultiple that = (AnswerMultiple) o;
 
-		List<String> otherAnswers = that.getAnswers();
-		if (order) {
-			return answers.equals(otherAnswers);
-
-		} else {
-
-			return answers.containsAll(otherAnswers) && otherAnswers.containsAll(answers);
-		}
+		return this == that;
 	}
 
 	@Override

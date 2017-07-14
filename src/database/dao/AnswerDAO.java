@@ -281,7 +281,8 @@ public class AnswerDAO {
 					DBContract.AnswerTable.TABLE_NAME + "." + DBContract.AnswerTable.COLUMN_NAME_ANSWER_ID + " = " +
 					DBContract.AnswerQuestionTable.TABLE_NAME + "." + DBContract.AnswerQuestionTable.COLUMN_NAME_ANSWER_ID +
 					" WHERE " + DBContract.AnswerQuestionTable.TABLE_NAME + "." +
-					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = ?;";
+					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = ?" +
+					" ORDER BY " + DBContract.AnswerTable.TABLE_NAME + "." + DBContract.AnswerTable.COLUMN_NAME_ANSWER_ID;
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, questionId);

@@ -159,6 +159,24 @@
 
 	});
 
+	$('.question_container').on('input', '.answer[data-type="multiple"] input[data-last]', function (event) {
+		$(this).removeAttr("data-last");
+		$(this).prev('br').prev('input').removeAttr('data-next-to-last');
+		$(this).attr('data-next-to-last', true);
+		$('<br><input type="text" data-last >').insertAfter($(this));
+	});
+
+	$('.question_container').on('input', '.answer[data-type="multiple"] input[data-next-to-last]', function (event) {
+		if ($(this).val() == "") {
+			var last = $(this).next('br').next('input');
+			$(this).prev('br').prev('input').attr('data-next-to-last', true);
+			$(this).next('br').remove();
+			$(this).remove();
+			last.focus();
+		}
+	});
+
+	// .question_container .answer[data-type="multiple"] input[data-last]
 	$("#submit_btn").click(function () {
 		var time = $("#stopwatch")[0].innerHTML;
 		clearTimeout(t); //stop stopwatch
@@ -193,7 +211,7 @@
 
 		}
 
-		if (question_type === "multipleChoice") {
+		else if (question_type === "multipleChoice") {
 			var checkedResult = [];
 			var uncheckedResult = [];
 			$(obj).find("div input").each(function () {
@@ -214,7 +232,7 @@
 			};
 		}
 
-		if (question_type === "match") {
+		else if (question_type === "match") {
 			var leftValues = [];
 			var rightValues = [];
 			$(obj).find("#left li").each(function () {
@@ -232,6 +250,23 @@
 			};
 
 		}
+
+		else if (question_type === "multiple") {
+			var answers = [];
+			$(obj).find("input").each(function () {
+				if (!this.hasAttribute("data-last")) answers.push($(this).val());
+			});
+
+			return {
+				question_id: questionIdList[index],
+				question_type: question_type,
+				answer: answers
+			};
+		}
+
+
+
+
 	};
 
 	//setting up timer
