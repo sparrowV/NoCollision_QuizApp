@@ -6,6 +6,8 @@
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.ChallengeManager" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="database.bean.Challenges" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -55,7 +57,11 @@
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
 
 		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
-
+		ArrayList<Challenges> myChallenges = challengeManager.getMyChallenges(currentUser.getUserId());
+		String challengeTitle = "Challenges";
+		if (myChallenges.size() != 0) {
+			challengeTitle = "Challenges (" + myChallenges.size() + ")";
+		}
 	%>
 </head>
 <body>
@@ -168,11 +174,16 @@
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-					   aria-expanded="false">Challenges<span
+					   aria-expanded="false"><%=challengeTitle%><span
 							class="caret"></span></a>
 
 					<ul class="dropdown-menu">
-						<li>zura</li>
+
+						<%
+							if (myChallenges.size() == 0) {
+								out.write("<li class=\"dropdown-header\">No quiz challenges</li>");
+							}
+						%>
 					</ul>
 				</li>
 
