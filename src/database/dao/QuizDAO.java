@@ -191,6 +191,45 @@ public class QuizDAO {
 	}
 
 
+	public List<Quiz> getQuizList() {
+		// Create a new empty list.
+		List<Quiz> users = new ArrayList<>();
+
+		Connection connection = null;
+		try {
+			// Get the connection from the pool.
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// Prepare and execute 'SELECT' query.
+			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + ";";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			// Iterate over result set and add products to the list.
+			while (resultSet.next()) {
+				users.add(fetchQuiz(resultSet));
+			}
+
+			// Close statement and result set.
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+
+		return users;
+	}
+
 	public Quiz getQuizByTitle(String title) {
 		Quiz quiz = null;
 
@@ -245,4 +284,6 @@ public class QuizDAO {
 		quiz.setIsMultiplePages(resultSet.getBoolean(DBContract.QuizTable.COLUMN_NAME_MULTIPLE_PAGES));
 		return quiz;
 	}
+
+
 }

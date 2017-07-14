@@ -43,4 +43,8 @@ public class QuizManager {
 	public Quiz getQuizByTitle(String title) {
 		return dao.getQuizByTitle(title);
 	}
+
+	public List<Quiz> getQuizList() {
+		return dao.getQuizList();
+	}
 }
