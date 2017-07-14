@@ -5,7 +5,7 @@
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.MessageManager" %>
+<%@ page import="model.ChallengeManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -53,6 +53,8 @@
 		}
 
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
+
+		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.MESSAGE_MANAGER);
 
 	%>
 </head>
@@ -161,6 +163,16 @@
 							}%>
 
 
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					   aria-expanded="false">Challenges<span
+							class="caret"></span></a>
+
+					<ul class="dropdown-menu">
+						<li>zura</li>
 					</ul>
 				</li>
 

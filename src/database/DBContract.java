@@ -162,6 +162,15 @@ public final class DBContract {
 					"values(?,?,?);";
 			public static final String ACCEPT_CHALLENGE = "update " + TABLE_NAME + " set " + STATUS + "=1 " + "where " +
 					FRIEND_ONE + "=? and " + FRIEND_TWO + "=?  and " + QUIZ_ID + "=?;";
+			public static final String GET_MY_CHALLENGES = "SELECT\n" +
+					"\tusers.user_id,\n" +
+					"\tusers.username,\n" +
+					"\tquizzes.quiz_id,\n" +
+					"\tquizzes.title\n" +
+					"FROM challenges\n" +
+					"\tLEFT JOIN users ON challenges.friend_one = users.user_id\n" +
+					"\tLEFT JOIN quizzes ON challenges.quiz_id = quizzes.quiz_id\n" +
+					"WHERE challenges.friend_two = ? AND challenges.status = 0;";
 		}
 
 	}
