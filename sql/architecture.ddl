@@ -134,7 +134,7 @@ CREATE TABLE challenges (
 	friend_one INT NOT NULL,
 	friend_two INT NOT NULL,
 	quiz_id    INT NOT NULL,
-	status     INT             DEFAULT 0,
+	status     INT DEFAULT 0,
 	FOREIGN KEY (friend_one) REFERENCES users (user_id) ON DELETE CASCADE,
 	FOREIGN KEY (friend_two) REFERENCES users (user_id) ON DELETE CASCADE,
 	FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id) ON DELETE CASCADE
