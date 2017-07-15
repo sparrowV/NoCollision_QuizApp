@@ -193,6 +193,29 @@
 		$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
 			$("#result").html(data["correct"] + "/" + data["total"]);
 			$("#duration").html(time);
+			var arr = []
+			arr = data["correctAnswers"]
+
+
+			var quiz = $("#quiz_container")
+			var question = $(quiz).find(".question")
+			console.log(arr)
+			for (var i = 1; i < question.length + 1; i++) {
+				if (arr.includes(i.toString())) {
+					var correct = document.createElement('span')
+					correct.classList = "glyphicon glyphicon-ok"
+					correct.style = "color:green"
+					console.log(i)
+					$(question).eq(i - 1).append(correct)
+				} else {
+					var not_correct = document.createElement('span')
+					not_correct.classList = "glyphicon glyphicon-remove"
+					not_correct.style = "color:red"
+					$(question).eq(i - 1).append(not_correct)
+				}
+
+
+			}
 		}, "json")
 
 	});
