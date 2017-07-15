@@ -40,7 +40,6 @@ public class CheckAnswers extends HttpServlet {
 		String duration = (data.get("time").getAsString());
 
 		double score = (double) res / (answers.size());
-
 		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
 
 		JsonObject json = new JsonObject();

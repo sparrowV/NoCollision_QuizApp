@@ -24,6 +24,10 @@ public class Question implements HtmlSerializable {
 		this.answer = answer;
 	}
 
+	public int getQuestionId() {
+		return id;
+	}
+
 	public String getQuestion() {
 		return text;
 	}
