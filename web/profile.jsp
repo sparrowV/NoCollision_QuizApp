@@ -6,6 +6,8 @@
 <%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.BadgeManager" %>
+<%@ page import="database.bean.Badge" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -57,6 +59,7 @@
 	<%
 		UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
+		BadgeManager badgeManager = (BadgeManager) application.getAttribute(ContextKey.BADGE_MANAGER);
 
 		// temporary code for filtering
 		int userId = Integer.parseInt((String) request.getAttribute("id"));
@@ -111,6 +114,16 @@
 				</p>
 				<p><strong>Date of Birth: </strong><%=user.getDateOfBirth().toString()%>
 				</p>
+
+				<%
+					List<Badge> badges = badgeManager.getBadgesByUserId(userId);
+					for (Badge badge : badges) {
+						out.write(badge.toString());
+						out.write("<br>");
+					}
+				%>
+
+
 				<% if (currentUser.getUserId() != userId && (!isFriendAlready)) {
 					out.println("<button class=\"btn btn-default\" onclick=\"sendRequest(" + userId +
 							")\">Add Friend</button>\n");

@@ -3,6 +3,7 @@ package servlet;
 import com.google.gson.*;
 import database.bean.*;
 import listener.ContextKey;
+import model.BadgeManager;
 import model.QuestionManager;
 import model.UserManager;
 
@@ -27,6 +28,9 @@ public class CheckAnswers extends HttpServlet {
 		UserManager userManager = (UserManager) request.getServletContext()
 				.getAttribute(ContextKey.USER_MANAGER);
 
+		BadgeManager badgeManager = (BadgeManager) request.getServletContext()
+				.getAttribute(ContextKey.BADGE_MANAGER);
+
 		JsonObject answers = data.get("answers").getAsJsonObject();
 
 		int res = checkAnswers(answers, manager);
@@ -47,7 +51,10 @@ public class CheckAnswers extends HttpServlet {
 		double score = (double) res / (answers.size());
 		double xp = answers.size() * 10 * score +
 				20 * (answers.size() * 5) / time;
+
 		userManager.addUserQuizHistory(userId, quizId, duration, score, xp);
+		badgeManager.updateBadgesByUserId(userId);
+
 
 		JsonObject json = new JsonObject();
 		json.add("correct", new JsonPrimitive(res));

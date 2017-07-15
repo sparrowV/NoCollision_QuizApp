@@ -28,6 +28,7 @@ public final class DBContract {
 		public static final String COLUMN_NAME_DATA_CREATED = "date_created";
 		public static final String COLUMN_NAME_RANDOMIZED_ORDER = "randomized_order";
 		public static final String COLUMN_NAME_MULTIPLE_PAGES = "multiple_pages";
+		public static final String COLUMN_NAME_CATEGORY_ID = "category_id";
 	}
 
 	public static class QuestionQuizTable {
@@ -176,6 +177,28 @@ public final class DBContract {
 					"WHERE challenges.friend_two = ? AND challenges.status = 0;";
 		}
 
+	}
+
+	public static class QuizCategoryTable {
+		public static final String TABLE_NAME = "quiz_categories";
+		public static final String COLUMN_NAME_CATEGORY_ID = "category_id";
+		public static final String COLUMN_NAME_CATEGORY_NAME = "category_name";
+	}
+
+	public static class BadgeTable {
+		public static final String TABLE_NAME = "badges";
+		public static final String COLUMN_NAME_BADGE_ID = "badge_id";
+		public static final String COLUMN_NAME_BADGE_NAME = "badge_name";
+		public static final String COLUMN_NAME_DESCRIPTION = "description";
+		public static final String COLUMN_NAME_CATEGORY_ID = "category_id";
+		public static final String COLUMN_NAME_QUIZZES_NEEDED = "quizzes_needed";
+		public static final String COLUMN_NAME_XP_NEEDED = "xp_needed";
+	}
+
+	public static class UserBadgeTable {
+		public static final String TABLE_NAME = "users_badges";
+		public static final String COLUMN_NAME_USER_ID = "user_id";
+		public static final String COLUMN_NAME_BADGE_ID = "badge_id";
 	}
 
 

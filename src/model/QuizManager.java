@@ -1,5 +1,6 @@
 package model;
 
+import database.bean.Category;
 import database.bean.Quiz;
 import database.dao.QuizDAO;
 
@@ -43,6 +44,14 @@ public class QuizManager {
 
 	public Quiz getQuizByTitle(String title) {
 		return dao.getQuizByTitle(title);
+	}
+
+	public List<Category> getQuizCategories() {
+		return dao.getQuizCategories();
+	}
+
+	public Category getCategoryById(int categoryId) {
+		return dao.getQuizCategoryById(categoryId);
 	}
 
 	public List<Quiz> getQuizList() {
