@@ -18,7 +18,10 @@
 	int userId = Integer.parseInt(request.getParameter("id"));
 	UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 	User user = userManager.getUserById(userId);
-	int status = 1;
+	int status;
+	if (user.isAdmin()) {
+		status = 0;
+	} else status = 1;
 	userManager.updateUser(user, user.getFirstName(), user.getLastName(), user.getPicture(), user.getCountry(), status);
 	response.sendRedirect(ServletKey.ADMIN_JSP);
 %>

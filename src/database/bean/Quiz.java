@@ -1,6 +1,8 @@
 package database.bean;
 
 
+import servlet.ServletKey;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -140,9 +142,9 @@ public class Quiz {
 	}
 
 	public String toHtml() {
-		String deleteQuizButton = "<form action=\"delete-quiz.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>"+
-				"<input type=\"submit\" class=\"btn btn-default\" value=\"Delete Quiz\" />\n" +
-				"</form>";
+		String deleteQuizButton = "<form action=\""+ ServletKey.DEELETE_QUIZ_JSP +"\">\n" +
+				"<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>"+
+				"<input type=\"submit\" class=\"btn btn-default\" value=\"Delete Quiz\" />\n" + "</form>";
 		return "<tr>\n" +
 				"<th scope=\"row\">" + quizId + "</th>\n" +
 				"<td>" + "<a href=/do-quiz.jsp?id=" + quizId +

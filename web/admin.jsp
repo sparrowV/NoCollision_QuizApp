@@ -43,16 +43,31 @@
 				</button>
 				<br>
 				<script>
+					var $textArea = $("<textarea>", {id: "text", class: "form-control", rows: 2, cols: 50});
+					var $button = $("<button>", {
+						id: "button-addAnnouncement",
+						class: "btn btn-primary",
+						text: "Add Announcement"
+					});
+					$("#announcement").append($textArea);
+					$("#announcement").append($button);
+
+					$("#text").hide();
+					$("#button-addAnnouncement").hide();
+
 					function createAnnouncement() {
-						var $textArea = $("<textarea>", {id: "text", class: "form-control", rows: 2, cols: 50});
-						var $button = $("<button>", {
-							id: "button-addAnnouncement",
-							class: "btn btn-primary",
-							text: "Add Announcement"
-						});
+						$("#text").show();
+						$("#button-addAnnouncement").show();
 						$button.click(sendAnnouncement);
 						// get text from text area and send to servlet
 						function sendAnnouncement() {
+							// hide buttons
+							$("#text").hide();
+							$("#button-addAnnouncement").hide();
+							// clear text area
+							$("#text").val("");
+
+							// send announcement to servlet
 							var text = {text: $textArea.val()};
 							$.ajax({
 								url: '/AnnouncementServlet',
@@ -67,8 +82,6 @@
 							});
 						}
 
-						$("#announcement").append($textArea);
-						$("#announcement").append($button);
 					}
 				</script>
 			</div>
