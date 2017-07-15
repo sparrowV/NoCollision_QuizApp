@@ -1,5 +1,9 @@
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="model.QuizManager" %>
+<%@ page import="listener.ContextKey" %>
+<%@ page import="java.util.List" %>
+<%@ page import="database.bean.Category" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -31,6 +35,7 @@
 		<%
 			HttpSession s = request.getSession();
 			s.setAttribute(ServletKey.CURRENT_QUIZ, new Quiz());
+			QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
 		%>
 
 		<div class="create-quiz">
@@ -53,6 +58,17 @@
 						<br/>
 						<input type="checkbox" id="multiple_pages">
 						<span>One Question Per Page </span>
+						<br/>
+						<select id="category" name="category">
+							<%
+								List<Category> categories = quizManager.getQuizCategories();
+								for (Category category : categories) {
+									out.write("<option value=\"" + category.getCategoryId()
+											+ "\">" + category.getCategoryName() + "</option>");
+								}
+							%>
+						</select>
+
 					</div>
 
 
@@ -66,59 +82,59 @@
 
 
 			<script>
-                var questionCounter = -1
+				var questionCounter = -1;
 
-                var add_question = document.createElement('button')
-                add_question.id = "add_question"
-                add_question.innerHTML = "Add Question"
-                add_question.classList = "btn btn-primary"
+				var add_question = document.createElement('button');
+				add_question.id = "add_question";
+				add_question.innerHTML = "Add Question";
+				add_question.classList = "btn btn-primary";
 
-                $('.create-quiz').append(add_question)
+				$('.create-quiz').append(add_question);
 
                 add_question.onclick = function (e) {
 
-                    questionCounter++
+	                questionCounter++;
 
-                    var question_container = document.createElement('div')
-                    question_container.id = "question_container" + questionCounter
-                    $('#all_questions').append(question_container)
+	                var question_container = document.createElement('div');
+	                question_container.id = "question_container" + questionCounter;
+	                $('#all_questions').append(question_container);
 
-                    var questions_added = document.createElement('span')
-                    questions_added.innerHTML = "Question #" + questionCounter
-                    questions_added.id = "question_number"
+	                var questions_added = document.createElement('span');
+	                questions_added.innerHTML = "Question #" + questionCounter;
+	                questions_added.id = "question_number";
 
-                    question_container.appendChild(questions_added)
+	                question_container.appendChild(questions_added);
 
-                    var questions = document.createElement('div')
-                    questions.id = "questions"
-                    questions.class = "questions"
+	                var questions = document.createElement('div');
+	                questions.id = "questions";
+	                questions.class = "questions";
 
-                    var answers = document.createElement('div')
-                    answers.id = "answers"
-                    answers.class = "answers"
+	                var answers = document.createElement('div');
+	                answers.id = "answers";
+	                answers.class = "answers";
 
 
-                    $(question_container).append(questions)
-                    $(question_container).append(answers)
+	                $(question_container).append(questions);
+	                $(question_container).append(answers);
 
-                    var delete_button = document.createElement('button')
-                    delete_button.innerHTML = "Delete Question"
-                    delete_button.classList = "btn btn-danger"
+	                var delete_button = document.createElement('button');
+	                delete_button.innerHTML = "Delete Question";
+	                delete_button.classList = "btn btn-danger";
 
-                    $(question_container).append(delete_button)
+	                $(question_container).append(delete_button);
 
                     $(delete_button).click(function (e) {
 
-                        $(question_container).remove()
+	                    $(question_container).remove();
 
 
                         $("#all_questions").children().each(function () {
-                            var deleted_id = parseInt(question_container.id.replace(/[^\d.]/g, ''), 10)
-                            var current_id = parseInt(this.id.replace(/[^\d.]/g, ''), 10)
+	                        var deleted_id = parseInt(question_container.id.replace(/[^\d.]/g, ''), 10);
+	                        var current_id = parseInt(this.id.replace(/[^\d.]/g, ''), 10);
 
                             if (deleted_id < current_id) {
-                                this.id = ""
-                                this.id = "question_container" + (current_id - 1)
+	                            this.id = "";
+	                            this.id = "question_container" + (current_id - 1);
 
 
                                 $(this).find('#question_number').text("Question#" + (current_id - 1).toString())
@@ -170,7 +186,7 @@
                             container.innerHTML = "";
 
                             container.appendChild(answer_plain);
-                            $(answer_plain).val('')
+	                        $(answer_plain).val('');
                             counter = 0;
                             counter_match = 0;
                         }
@@ -180,7 +196,7 @@
 
                             var button = document.createElement('button');
                             button.id = "add_choice";
-                            button.classList = "btn btn-warning"
+	                        button.classList = "btn btn-warning";
 
                             button.innerHTML = "Add choice";
                             container.appendChild(button);
@@ -218,7 +234,7 @@
 
                             var add = document.createElement("button");
                             add.name = "add_choice_multiple";
-                            add.classList = "btn btn-warning"
+	                        add.classList = "btn btn-warning";
                             add.innerHTML = "Add choice";
 
                             container.appendChild(add);
@@ -256,18 +272,18 @@
 
 		                    var add = document.createElement("button");
 		                    add.name = "add_choice_multiple";
-		                    add.classList = "btn btn-warning"
+		                    add.classList = "btn btn-warning";
 		                    add.innerHTML = "Add choice";
 
 		                    var checkbox = document.createElement('input');
 		                    checkbox.type = 'checkbox';
-		                    checkbox.id = "checkbox_id"
+		                    checkbox.id = "checkbox_id";
 		                    checkbox.name = "checkbox" + counter.toString();
 		                    checkbox.className = 'form-check checkbox';
 
-		                    var label = document.createElement('label')
-		                    label.for = "checkbox_id"
-		                    label.innerHTML = " Order is important"
+		                    var label = document.createElement('label');
+		                    label.for = "checkbox_id";
+		                    label.innerHTML = " Order is important";
 
 
 		                    container.appendChild(add);
@@ -312,7 +328,7 @@
 
 	                var option4 = document.createElement('option');
 	                option4.value = "multipleAnswer";
-	                option4.innerHTML = "Multiple Answer"
+	                option4.innerHTML = "Multiple Answer";
 
 
                     select.appendChild(option1);
@@ -331,17 +347,18 @@
                 $('#submit_quiz').click(function (event) {
 
 
-                    result = {}
-                    result.title = $('#title').val()
-                    result.randomized = ($('#random_order')).is(":checked")
-                    result.multiplePages = ($('#multiple_pages')).is(":checked")
-                    result.allQuestions = {}
-                    var question_id = 0
+	                result = {};
+	                result.title = $('#title').val();
+	                result.randomized = ($('#random_order')).is(":checked");
+	                result.multiplePages = ($('#multiple_pages')).is(":checked");
+	                result.category = $('#category').val();
+	                result.allQuestions = {};
+	                var question_id = 0;
                     $("#all_questions ").children().each(function (index) {
                         result.allQuestions[question_id] = {
                             question: getQuestion($(this)),
                             answer: getAnswer($(this))
-                        }
+                        };
                         question_id++
 
                     });
@@ -422,7 +439,7 @@
 
                     }
 
-                }
+                };
 
 
                 // gets values from dom element data

@@ -54,10 +54,10 @@ public class UserManager {
 		dao.updateUser(user, firstName, lastName, pictureUrl, country);
 	}
 
-	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
+	public void addUserQuizHistory(int userId, int quizId, String duration, double score, double xp) {
 		try {
 
-			dao.addUserQuizHistory(userId, quizId, status, duration, score);
+			dao.addUserQuizHistory(userId, quizId, duration, score, xp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

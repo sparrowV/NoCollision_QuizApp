@@ -3,6 +3,7 @@ package servlet;
 import com.google.gson.*;
 import database.bean.*;
 import listener.ContextKey;
+import model.BadgeManager;
 import model.QuestionManager;
 import model.UserManager;
 
@@ -27,9 +28,14 @@ public class CheckAnswers extends HttpServlet {
 		UserManager userManager = (UserManager) request.getServletContext()
 				.getAttribute(ContextKey.USER_MANAGER);
 
+		BadgeManager badgeManager = (BadgeManager) request.getServletContext()
+				.getAttribute(ContextKey.BADGE_MANAGER);
 		JsonArray arr;
 
 		arr = checkAnswers(data.get("answers").getAsJsonObject(), manager);
+		JsonObject answers = data.get("answers").getAsJsonObject();
+
+
 
 		HttpSession s = request.getSession();
 		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
@@ -39,10 +45,20 @@ public class CheckAnswers extends HttpServlet {
 
 		String duration = (data.get("time").getAsString());
 
+		int time = 0;
+		for (String str : duration.split(":")) {
+			time = time * 60 + Integer.parseInt(str);
+		}
 		//double score = (double) res / (data.get("answers").getAsJsonObject().size());
 		double score = arr.size() / (data.get("answers").getAsJsonObject().size());
 
-		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
+
+		double xp = answers.size() * 10 * score +
+				20 * (answers.size() * 5) / time;
+
+		userManager.addUserQuizHistory(userId, quizId, duration, score, xp);
+		badgeManager.updateBadgesByUserId(userId);
+
 
 		JsonObject json = new JsonObject();
 		//json.add("correct", new JsonPrimitive(res));
@@ -50,6 +66,7 @@ public class CheckAnswers extends HttpServlet {
 		json.add("total", new JsonPrimitive(data.get("answers").getAsJsonObject().size()));
 		json.add("correctAnswers", arr);
 		System.out.println(arr.toString());
+
 		response.getWriter().print(json);
 		response.getWriter().flush();
 	}

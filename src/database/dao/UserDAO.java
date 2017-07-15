@@ -317,7 +317,7 @@ public class UserDAO {
 		}
 	}
 
-	public void addUserQuizHistory(int userId, int quizId, int status, String duration, double score) {
+	public void addUserQuizHistory(int userId, int quizId, String duration, double score, double xp) {
 		Connection connection = null;
 
 		try {
@@ -330,17 +330,17 @@ public class UserDAO {
 			String query = "INSERT INTO " + DBContract.UserQuizHistoryTable.TABLE_NAME + " " + "(" +
 					DBContract.UserQuizHistoryTable.COLUMN_NAME_USER_ID + ", " +
 					DBContract.UserQuizHistoryTable.COLUMN_NAME_QUIZ_ID + ", " +
-					DBContract.UserQuizHistoryTable.COLUMN_NAME_STATUS + ", " +
 					DBContract.UserQuizHistoryTable.COLUMN_NAME_DURATION + ", " +
-					DBContract.UserQuizHistoryTable.COLUMN_NAME_SCORE + ") " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_SCORE + ", " +
+					DBContract.UserQuizHistoryTable.COLUMN_NAME_XP + ") " +
 					"VALUES (?,?,?,?,?);";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userId);
 			preparedStatement.setInt(2, quizId);
-			preparedStatement.setInt(3, status);
-			preparedStatement.setString(4, duration);
-			preparedStatement.setDouble(5, score);
+			preparedStatement.setString(3, duration);
+			preparedStatement.setDouble(4, score);
+			preparedStatement.setDouble(5, xp);
 
 
 			preparedStatement.executeUpdate();

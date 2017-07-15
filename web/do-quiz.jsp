@@ -6,6 +6,9 @@
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="jdk.nashorn.internal.runtime.JSONFunctions" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: sparrow
@@ -26,23 +29,21 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-	<% QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
-		String quizId = request.getParameter("id");
-
-		HttpSession s = request.getSession();
-		s.setAttribute(ServletKey.DONE_QUIZ_ID, Integer.parseInt(quizId));
-
-		Quiz quiz = manager.getQuizById(Integer.parseInt(quizId));%>
 </head>
 <body class="w3-content">
 
-<% out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>\n");
-	out.write("<br></br>\n");
-	out.write("<br></br>\n");
+<%
+	QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+	int quizId = Integer.parseInt(request.getParameter("id"));
+	session.setAttribute(ServletKey.DONE_QUIZ_ID, quizId);
+	Quiz quiz = manager.getQuizById(quizId);
+
+	out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>");
+	out.write("<br></br>");
+	out.write("<br></br>");
 %>
+
 <h1 id="stopwatch">
 	<time>00:00:00</time>
 </h1>
@@ -67,14 +68,25 @@
 
 
 <div class="page" id="page">
+
 	<%
-
 		List<Question> questions = quiz.getQuestions();
+		if (quiz.getIsRandomizedOrder()) Collections.shuffle(questions);
 
-		if (quiz.getIsRandomizedOrder()) {
-			Collections.shuffle(questions); //randomize list
+		List<Integer> questionIdList = new ArrayList<>();
+		for (Question question : questions) questionIdList.add(question.getQuestionId());
+
+	%>
+
+	<script>
+		var questionIdList = JSON.parse('<%= new Gson().toJson(questionIdList) %>');
+	</script>
+
+	<%
+		if (quiz.getIsMultiplePages()) {
+			questions = questions.subList(0, 1);
 		}
-		boolean isMultiplePages = quiz.getIsMultiplePages();
+
 		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
 		for (int i = 1; i <= questions.size(); i++) {
 			Question question = questions.get(i - 1);
@@ -83,15 +95,19 @@
 			out.write("<header class=\"w3-container w3-light-green\">\n");
 			out.write("<h3>№" + i + "</h3>\n");
 			out.write("</header>\n");
-
+			out.write("<div id=\"questionHtml\">");
 			out.write(question.toHtml());
+			out.write("</div>");
+
 			out.write("<br/>\n");
 			out.write("<br/>\n");
 			out.write("<hr>\n");
 			out.write("<br/>\n");
 
 			out.write("<div class=\"w3-container\">\n");
+			out.write("<div id=\"answerHtml\">");
 			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
+			out.write("</div>");
 			out.write("</div>\n");
 
 			out.write("<br/>\n");
@@ -114,8 +130,8 @@
 	--%>
 	<div class="w3-container">
 
-		<button type="submit" id="submit_btn" onclick="document.getElementById('id01').style.display='block'"
-		        class="w3-button w3-block w3-light-green">Finish Quiz
+		<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-green">
+			<%= quiz.getIsMultiplePages() ? "Next" : "Finish" %>
 		</button>
 		<div id="id01" class="w3-modal">
 			<div class="w3-modal-content w3-animate-top w3-card-4">
@@ -144,81 +160,95 @@
 </div>
 <script>
 
-	var questionIdList = [];
-
-	$(document).ready(function () {
-		$(".sortable").sortable({axis: "y"});
+	var addSortable = function () {
+		$(".sortable").sortable({axis: "y"}, "");
 
 		$("ul.sortable li").hover(function () {
 			$(this).css('cursor', 'pointer');
 		});
+	};
 
-		$(".question_container .question").each(function (index) {
-			questionIdList.push($(this).attr("data-question-id"));
-		})
+	$(document).ready(function () {
+		addSortable();
+
+		$('.question_container').on('input', '.answer[data-type="multiple"] input[data-last]', function (event) {
+			$(this).removeAttr("data-last");
+			$(this).prev('br').prev('input').removeAttr('data-next-to-last');
+			$(this).attr('data-next-to-last', true);
+			$('<br><input type="text" data-last >').insertAfter($(this));
+		});
+
+		$('.question_container').on('input', '.answer[data-type="multiple"] input[data-next-to-last]', function (event) {
+			if ($(this).val() == "") {
+				var last = $(this).next('br').next('input');
+				$(this).prev('br').prev('input').attr('data-next-to-last', true);
+				$(this).next('br').remove();
+				$(this).remove();
+				last.focus();
+			}
+		});
 
 	});
 
-	$('.question_container').on('input', '.answer[data-type="multiple"] input[data-last]', function (event) {
-		$(this).removeAttr("data-last");
-		$(this).prev('br').prev('input').removeAttr('data-next-to-last');
-		$(this).attr('data-next-to-last', true);
-		$('<br><input type="text" data-last >').insertAfter($(this));
-	});
-
-	$('.question_container').on('input', '.answer[data-type="multiple"] input[data-next-to-last]', function (event) {
-		if ($(this).val() == "") {
-			var last = $(this).next('br').next('input');
-			$(this).prev('br').prev('input').attr('data-next-to-last', true);
-			$(this).next('br').remove();
-			$(this).remove();
-			last.focus();
-		}
-	});
+	var results = {};
+	results.answers = {};
+	var counter = 0;
 
 	// .question_container .answer[data-type="multiple"] input[data-last]
 	$("#submit_btn").click(function () {
-		var time = $("#stopwatch")[0].innerHTML;
-		clearTimeout(t); //stop stopwatch
-		var results = {};
 
-		results.time = time;
-		results.answers = {};
-		//answers["quizId"] = $("#quiz_container").attr("data-quiz-id");
-		var counter = 1;
-		$(".question_container .answer").each(function (index) {
-			results.answers[counter++] = getInsertedAnswer(this, index);
+		$(".question_container .answer").each(function () {
+			results.answers[counter] = getInsertedAnswer(this, counter);
+			counter++;
 		});
 
-		$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
-			$("#result").html(data["correct"] + "/" + data["total"]);
-			$("#duration").html(time);
-			var arr = []
-			arr = data["correctAnswers"]
+		if (counter < questionIdList.length) {
+			if (counter == questionIdList.length - 1)
+				$("button#submit_btn").html("Finish");
+
+			$.get("/GetQuestions", {'question_id': questionIdList[counter]}, function (data) {
+				$("#questionHtml").html(data["questionHtml"]);
+				$("#answerHtml").html(data["answerHtml"]);
+				addSortable();
+			}, "json")
+
+		} else if (counter == questionIdList.length) {
+			var time = $("#stopwatch")[0].innerHTML;
+			clearTimeout(t); //stop stopwatch
+			results.time = time;
+
+			$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
+				$("#result").html(data["correct"] + "/" + data["total"]);
+				$("#duration").html(time);
+				$("#id01").css('display', 'block');
+
+				var arr = []
+				arr = data["correctAnswers"]
 
 
-			var quiz = $("#quiz_container")
-			var question = $(quiz).find(".question")
-			console.log(arr)
-			for (var i = 1; i < question.length + 1; i++) {
-				if (arr.includes(i.toString())) {
-					var correct = document.createElement('span')
-					correct.classList = "glyphicon glyphicon-ok"
-					correct.style = "color:green"
-					console.log(i)
-					$(question).eq(i - 1).append(correct)
-				} else {
-					var not_correct = document.createElement('span')
-					not_correct.classList = "glyphicon glyphicon-remove"
-					not_correct.style = "color:red"
-					$(question).eq(i - 1).append(not_correct)
+				var quiz = $("#quiz_container")
+				var question = $(quiz).find(".question")
+				console.log(arr)
+				for (var i = 1; i < question.length + 1; i++) {
+					if (arr.includes(i.toString())) {
+						var correct = document.createElement('span')
+						correct.classList = "glyphicon glyphicon-ok"
+						correct.style = "color:green"
+						console.log(i)
+						$(question).eq(i - 1).append(correct)
+					} else {
+						var not_correct = document.createElement('span')
+						not_correct.classList = "glyphicon glyphicon-remove"
+						not_correct.style = "color:red"
+						$(question).eq(i - 1).append(not_correct)
+					}
+
+
 				}
+			}, "json")
 
-
-			}
-		}, "json")
-
-	});
+		}
+	;
 
 	//get answer for specific question
 	var getInsertedAnswer = function (obj, index) {

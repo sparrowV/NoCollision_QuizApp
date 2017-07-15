@@ -289,6 +289,11 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/user/<%= currentUser.getUserId()%>">Profile</a>
 						</li>
+						<% 	User currUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
+							if(currUser.isAdmin()) {
+								out.write("<li><a href=\"" + ServletKey.ADMIN_JSP + "\">Admin panel</a></li>");
+							}
+						%>
 						<li><a href="javascript:doPost()">Log out</a></li>
 					</ul>
 				</li>
