@@ -3,10 +3,7 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.Answer;
-import database.bean.AnswerMatch;
-import database.bean.AnswerMultipleChoice;
-import database.bean.AnswerPlain;
+import database.bean.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -110,6 +107,61 @@ public class AnswerDAO {
 			statement.close();
 		} catch (SQLException e) {
 			e.getStackTrace();
+			System.out.println("AddAnswerMultChoiceError");
+			System.out.println(e.getMessage());
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+		return res;
+	}
+
+	public List<Integer> addAnswerMultiple(AnswerMultiple answer) {
+		Connection connection = null;
+		ArrayList<Integer> res = new ArrayList<>();
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			List<String> answers = answer.getAnswers();
+
+
+			// query inserting into users table
+			String query = "INSERT INTO " + DBContract.AnswerTable.TABLE_NAME + " " + "(" +
+					DBContract.AnswerTable.COLUMN_NAME_TYPE_ID + ", " +
+					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT + ", " +
+					DBContract.AnswerTable.COLUMN_NAME_IS_TEXT + ", " +
+					DBContract.AnswerTable.COLUMN_NAME_ORDER +
+					") VALUES ";
+			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?, ?, ?),";
+			query += "(?, ?, ?, ?);";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			int i = 0;
+			for (int j = 0; j < answers.size(); j++) {
+				preparedStatement.setInt(i + 1, AnswerMultiple.TYPE);
+				preparedStatement.setString(i + 2, answers.get(j));
+				preparedStatement.setBoolean(i + 3, answer.isText());
+				preparedStatement.setBoolean(i + 4, answer.getOrder());
+				i += 4;
+			}
+			preparedStatement.executeUpdate();
+
+			ResultSet keys = preparedStatement.getGeneratedKeys();
+
+			while (keys.next()) {
+				res.add(keys.getInt(1));
+			}
+
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.getStackTrace();
 			System.out.println("AddAnswerMultError");
 			System.out.println(e.getMessage());
 		} finally {
@@ -121,6 +173,7 @@ public class AnswerDAO {
 		}
 		return res;
 	}
+
 
 	public List<Integer> addAnswerMatch(AnswerMatch answer) {
 		Connection connection = null;
@@ -228,7 +281,8 @@ public class AnswerDAO {
 					DBContract.AnswerTable.TABLE_NAME + "." + DBContract.AnswerTable.COLUMN_NAME_ANSWER_ID + " = " +
 					DBContract.AnswerQuestionTable.TABLE_NAME + "." + DBContract.AnswerQuestionTable.COLUMN_NAME_ANSWER_ID +
 					" WHERE " + DBContract.AnswerQuestionTable.TABLE_NAME + "." +
-					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = ?;";
+					DBContract.AnswerQuestionTable.COLUMN_NAME_QUESTION_ID + " = ?" +
+					" ORDER BY " + DBContract.AnswerTable.TABLE_NAME + "." + DBContract.AnswerTable.COLUMN_NAME_ANSWER_ID;
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, questionId);
@@ -254,6 +308,7 @@ public class AnswerDAO {
 		resultSet.next();
 		int typeId = resultSet.getInt(DBContract.AnswerTable.COLUMN_NAME_TYPE_ID);
 		boolean isText = resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_IS_TEXT);
+		boolean order = resultSet.getBoolean(DBContract.AnswerTable.COLUMN_NAME_ORDER);
 
 
 		switch (typeId) {
@@ -283,6 +338,14 @@ public class AnswerDAO {
 					pairs.put(str, str2);
 				} while (resultSet.next());
 				return new AnswerMatch(pairs, isText);
+
+			case AnswerMultiple.TYPE:
+				List<String> answersMultiple = new ArrayList<>();
+				do {
+					answersMultiple.add(resultSet.getString(DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT));
+				} while (resultSet.next());
+				return new AnswerMultiple(answersMultiple, isText, order);
+
 			default:
 				return null;
 		}

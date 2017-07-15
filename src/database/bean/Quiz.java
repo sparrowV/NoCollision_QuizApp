@@ -13,18 +13,20 @@ public class Quiz {
 	private boolean IsRandomizedOrder;
 	private boolean IsMultiplePages;
 	private List<Question> questions;
+	private int categoryId;
 
 	public Quiz() {
 
 	}
 
-	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages, List<Question> questions) {
+	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages, List<Question> questions, int categoryId) {
 		this.authorId = author_id;
 		this.title = title;
 		this.dateCreated = dateCreated;
 		this.questions = questions;
 		this.IsRandomizedOrder = randomizedOrder;
 		this.IsMultiplePages = multiplePages;
+		this.categoryId = categoryId;
 	}
 
 	public boolean getIsRandomizedOrder() {
@@ -86,6 +88,14 @@ public class Quiz {
 		this.questions = questions;
 	}
 
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -130,12 +140,37 @@ public class Quiz {
 	}
 
 	public String toHtml() {
+		String deleteQuizButton = "<form action=\"delete-quiz.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>"+
+				"<input type=\"submit\" value=\"Delete Quiz\" />\n" +
+				"</form>";
 		return "<tr>\n" +
+				"<th scope=\"row\">" + quizId + "</th>\n" +
+				"<td>" + "<a href=/do-quiz.jsp?id=" + quizId +
+				">" + title + "</a>" + "</td>\n" +
+				"<td>" + dateCreated + "</td>\n" +
+				"<td>" + deleteQuizButton + "</td>" +
+				"</tr>";
+	}
+
+	public String toHtml(List<User> friends) {
+		String res = "<tr>\n" +
 				"      <th scope=\"row\">" + quizId + "</th>\n" +
-				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId +
+				"      <td>" + "<a href=/do-quiz.jsp?id=" + quizId +
 				">" + title + "</a>" + "</td>\n" +
 				"      <td>" + dateCreated + "</td>\n" +
+				"<td><div class=\"dropdown\">\n" +
+				"  <button class=\"btn btn-default\">Challenge Friend</button>\n" +
+				"  <div class=\"dropdown-content\">\n";
+
+		for (int i = 0; i < friends.size(); i++) {
+			res += "<a onclick=\"sendChallenge(" + quizId + "," + friends.get(i).getUserId() + ");\" href=\"" + "#" + "\">" + friends.get(i).getFirstName() + " " + friends.get(i).getLastName() + "</a>\n";
+		}
+
+
+		res += "  </div>\n" +
+				"</div> </td>" +
 				"    </tr>";
+		return res;
 	}
 
 

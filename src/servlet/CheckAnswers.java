@@ -3,6 +3,7 @@ package servlet;
 import com.google.gson.*;
 import database.bean.*;
 import listener.ContextKey;
+import model.BadgeManager;
 import model.QuestionManager;
 import model.UserManager;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +28,12 @@ public class CheckAnswers extends HttpServlet {
 		UserManager userManager = (UserManager) request.getServletContext()
 				.getAttribute(ContextKey.USER_MANAGER);
 
+		BadgeManager badgeManager = (BadgeManager) request.getServletContext()
+				.getAttribute(ContextKey.BADGE_MANAGER);
 
-		int res = checkAnswers(data.get("answers").getAsJsonObject(), manager);
+		JsonObject answers = data.get("answers").getAsJsonObject();
+
+		int res = checkAnswers(answers, manager);
 
 		HttpSession s = request.getSession();
 		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
@@ -37,13 +43,22 @@ public class CheckAnswers extends HttpServlet {
 
 		String duration = (data.get("time").getAsString());
 
-		double score = (double) res / (data.get("answers").getAsJsonObject().size());
+		int time = 0;
+		for (String str : duration.split(":")) {
+			time = time * 60 + Integer.parseInt(str);
+		}
 
-		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
+		double score = (double) res / (answers.size());
+		double xp = answers.size() * 10 * score +
+				20 * (answers.size() * 5) / time;
+
+		userManager.addUserQuizHistory(userId, quizId, duration, score, xp);
+		badgeManager.updateBadgesByUserId(userId);
+
 
 		JsonObject json = new JsonObject();
 		json.add("correct", new JsonPrimitive(res));
-		json.add("total", new JsonPrimitive(data.get("answers").getAsJsonObject().size()));
+		json.add("total", new JsonPrimitive(answers.size()));
 		response.getWriter().print(json);
 		response.getWriter().flush();
 	}
@@ -117,6 +132,15 @@ public class CheckAnswers extends HttpServlet {
 			}
 
 			answer = new AnswerMultipleChoice(choices, true);
+			return question.isCorrect(answer);
+		} else if (questionType.equals("multiple")) {
+			JsonArray input = data.getAsJsonArray("answer");
+
+			ArrayList<String> answers = new ArrayList<String>();
+			for (JsonElement elem : input) {
+				answers.add(elem.getAsString());
+			}
+			answer = new AnswerMultiple(answers, true, true);
 			return question.isCorrect(answer);
 		}
 

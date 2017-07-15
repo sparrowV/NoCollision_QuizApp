@@ -1,9 +1,6 @@
 package model;
 
-import database.bean.Answer;
-import database.bean.AnswerMatch;
-import database.bean.AnswerMultipleChoice;
-import database.bean.AnswerPlain;
+import database.bean.*;
 import database.dao.AnswerDAO;
 
 import java.util.ArrayList;
@@ -28,6 +25,9 @@ public class AnswerManager {
 				break;
 			case AnswerMatch.TYPE:
 				idList = dao.addAnswerMatch((AnswerMatch) answer);
+				break;
+			case AnswerMultiple.TYPE:
+				idList = dao.addAnswerMultiple((AnswerMultiple) answer);
 				break;
 			default:
 				idList = new ArrayList<>();

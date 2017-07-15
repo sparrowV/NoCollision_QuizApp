@@ -30,6 +30,21 @@ CREATE TABLE announcements (
 	CONSTRAINT announcements_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS quiz_categories;
+CREATE TABLE quiz_categories (
+	category_id   INT AUTO_INCREMENT,
+	category_name NVARCHAR(100) NOT NULL,
+
+	CONSTRAINT quiz_categories_pk PRIMARY KEY (category_id)
+);
+
+INSERT INTO quiz_categories (category_name)
+VALUES ('Sport'),
+	('History'),
+	('Geography'),
+	('CS'),
+	('Math');
+
 DROP TABLE IF EXISTS quizzes;
 CREATE TABLE quizzes (
 	quiz_id          INT AUTO_INCREMENT,
@@ -38,10 +53,13 @@ CREATE TABLE quizzes (
 	date_created     DATE          NOT NULL,
 	randomized_order BOOL          NOT NULL,
 	multiple_pages   BOOL          NOT NULL,
-
+	category_id      INT           NOT NULL,
 
 	CONSTRAINT quizzes_pk PRIMARY KEY (quiz_id),
-	CONSTRAINT quizzes_fk FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE
+	CONSTRAINT quizzes_fk1 FOREIGN KEY (author_id) REFERENCES users (user_id)
+		ON DELETE CASCADE,
+	CONSTRAINT quizzes_fk2 FOREIGN KEY (category_id) REFERENCES quiz_categories (category_id)
+		ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS questions;
@@ -76,6 +94,7 @@ CREATE TABLE answers (
 	answer_text2 NVARCHAR(500),
 	is_correct   BOOL,
 	is_text      BOOL         DEFAULT TRUE,
+	is_ordered   BOOL,
 
 	CONSTRAINT answers_pk PRIMARY KEY (answer_id)
 );
@@ -95,9 +114,9 @@ DROP TABLE IF EXISTS users_quiz_history;
 CREATE TABLE users_quiz_history (
 	user_id  INT NOT NULL,
 	quiz_id  INT NOT NULL,
-	status   INT NOT NULL,
 	duration NVARCHAR(100),
 	score    DOUBLE,
+	xp       DOUBLE,
 
 	CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
 	CONSTRAINT users_quiz_history_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id) ON DELETE CASCADE
@@ -142,6 +161,28 @@ CREATE TABLE challenges (
 # status 0<---- means pending request
 # status 1 <---- means accepted request
 
+
+DROP TABLE IF EXISTS badges;
+CREATE TABLE badges (
+	badge_id       INT AUTO_INCREMENT,
+	badge_name     NVARCHAR(100) NOT NULL,
+	description    NVARCHAR(500) NOT NULL,
+	category_id    INT,
+	quizzes_needed INT,
+	xp_needed      DOUBLE,
+
+	CONSTRAINT badges_pk PRIMARY KEY (badge_id),
+	CONSTRAINT badges_fk FOREIGN KEY (category_id) REFERENCES quiz_categories (category_id)
+);
+
+DROP TABLE IF EXISTS users_badges;
+CREATE TABLE users_badges (
+	user_id  INT NOT NULL,
+	badge_id INT NOT NULL,
+
+	CONSTRAINT users_badges_fk1 FOREIGN KEY (user_id) REFERENCES users (user_id),
+	CONSTRAINT users_badges_fk2 FOREIGN KEY (badge_id) REFERENCES badges (badge_id)
+);
 
 
 

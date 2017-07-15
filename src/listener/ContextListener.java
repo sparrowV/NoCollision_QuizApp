@@ -44,6 +44,7 @@ public class ContextListener implements ServletContextListener {
 			context.setAttribute(ContextKey.MESSAGE_MANAGER, new MessageManager(new MessageDAO(pool)));
 			context.setAttribute(ContextKey.ANNOUNCEMENT_MANAGER, new AnnouncementManager(new AnnouncementDAO(pool)));
 			context.setAttribute(ContextKey.CHALLENGE_MANAGER, new ChallengeManager(new ChallengeDAO(pool)));
+			context.setAttribute(ContextKey.BADGE_MANAGER, new BadgeManager(new BadgeDAO(pool)));
 		} catch (Exception ignored) {
 		}
 	}

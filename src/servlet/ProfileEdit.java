@@ -23,7 +23,10 @@ public class ProfileEdit extends HttpServlet {
 		String picture = request.getParameter(ServletKey.PICTURE);
 		String country = request.getParameter(ServletKey.COUNTRY);
 
-		userManager.updateUser(currentUser, firstName, lastName, picture, country);
+		//user status
+		int status = currentUser.getStatus();
+
+		userManager.updateUser(currentUser, firstName, lastName, picture, country, status);
 
 		request.getSession().setAttribute(ServletKey.CURRENT_USER, userManager.getUserByUsername(currentUser
 				.getUsername()));

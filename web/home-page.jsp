@@ -1,13 +1,13 @@
+<%@ page import="database.bean.Challenges" %>
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
+<%@ page import="model.ChallengeManager" %>
 <%@ page import="model.FriendshipManager" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
-<%@ page import="java.util.List" %>
-<%@ page import="model.ChallengeManager" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="database.bean.Challenges" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -62,6 +62,40 @@
 			challengeTitle = "Challenges (" + myChallenges.size() + ")";
 		}
 	%>
+	<%--copied from w3schools material--%>
+	<style>
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #f1f1f1
+		}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		.dropdown:hover .dropbtn {
+			background-color: #3e8e41;
+		}</style>
 </head>
 <body>
 
@@ -254,6 +288,11 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/user/<%= currentUser.getUserId()%>">Profile</a>
 						</li>
+						<% 	User currUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
+							if(currUser.isAdmin()) {
+								out.write("<li><a href=\"" + ServletKey.ADMIN_JSP + "\">Admin panel</a></li>");
+							}
+						%>
 						<li><a href="javascript:doPost()">Log out</a></li>
 					</ul>
 				</li>
@@ -277,11 +316,33 @@
 				List<Quiz> quizzes = manager.getQuizzesByAuthorId(userId);
 				out.write("<div id='quizzes'>");
 				for (Quiz quiz : quizzes) {
-					out.write(quiz.toHtml());
+					out.write(quiz.toHtml(myFriends));
 
 				}
 				out.write("</div>");
 			%>
+			<script>
+				function sendChallenge(quiz_id, friend_id) {
+					xhr2 = new XMLHttpRequest();
+
+					var url = "/SendChallenge?quiz_id=" + quiz_id + "&friend_id=" + friend_id;
+
+					xhr2.onreadystatechange = handler2;
+					xhr2.open("POST", url, true);
+					xhr2.send(null);
+				}
+				function handler2() {
+					if (xhr2.readyState === 4) {
+						if (xhr2.status === 200) {
+							console.log("successful");
+							alert("Challenge  sent")
+						} else {
+							alert("ERROR");
+						}
+					}
+				}
+			</script>
+
 			<p><a href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
 		</div>
 	</div>

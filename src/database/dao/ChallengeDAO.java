@@ -42,6 +42,10 @@ public class ChallengeDAO {
 				String challengedQuizTitle = resultSet.getString(DBContract.QuizTable.COLUMN_NAME_TITLE);
 				myChallenges.add(new Challenges(challengerUserID, challengerUsername, challengedQuizID, challengedQuizTitle));
 			}
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -71,6 +75,10 @@ public class ChallengeDAO {
 			preparedStatement.setString(2, String.valueOf(friendUserID));
 			preparedStatement.setString(3, String.valueOf(quizID));
 			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
+			statement.close();
+			connection.close();
 			System.out.println("");
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -45,9 +45,7 @@ public class Login extends HttpServlet {
 
 		if (user != null) {
 			request.getSession().setAttribute(ServletKey.CURRENT_USER, user);
-			if(user.isAdmin()) {
-				response.sendRedirect(ServletKey.ADMIN_JSP);
-			} else response.sendRedirect(ServletKey.HOME_PAGE_JSP);
+			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 
 		} else {
 			response.sendRedirect(ServletKey.INCORRECT_JSP);
