@@ -3,6 +3,7 @@
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="model.UserManager" %>
+<%@ page import="servlet.ServletKey" %>
 <%--
   Created by IntelliJ IDEA.
   User: janxo
@@ -103,9 +104,12 @@
 						</thead>
 						<tbody>
 						<%
+							User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
 							UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 							for (User user : userManager.getUserList()) {
-								out.print(user.toHtmlTableFormat());
+								if (!user.equals(currentUser)) {
+									out.print(user.toHtmlTableFormat());
+								}
 							}
 						%>
 						</tbody>

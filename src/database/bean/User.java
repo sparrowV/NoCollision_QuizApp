@@ -159,7 +159,7 @@ public class User implements HtmlSerializable {
 	}
 
 	private String makeFormButtonHTML(String pageUrl, int id, String buttonName) {
-		String formButtonForHtmlTable = "<form action=\"" + pageUrl + "\">\n" +
+		String formButtonForHtmlTable = "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
 				"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>" +
 				"<input class=\"btn btn-default\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
 				"</form>";
@@ -170,10 +170,10 @@ public class User implements HtmlSerializable {
 		String makeAdminButtonName;
 		if (status == 0) {
 			makeAdminButtonName = "Grant Admin Status";
-		} else makeAdminButtonName = "Seize Admin privilege";
+		} else makeAdminButtonName = "Seize Admin Privilege";
 
-		String deleteUserButton = makeFormButtonHTML(ServletKey.DELETE_USER_JSP, userId, "Delete User");
-		String makeAdminButton = makeFormButtonHTML(ServletKey.MAKE_ADMIN_JSP, userId, makeAdminButtonName);
+		String deleteUserButton = makeFormButtonHTML(ServletKey.DELETE_USER_SERVLET, userId, "Delete User");
+		String makeAdminButton = makeFormButtonHTML(ServletKey.CHANGE_USER_STATUS_SERVLET, userId, makeAdminButtonName);
 		return "<tr>\n" +
 				"<th scope=\"row\">" + userId + "</th>\n" +
 				"<td>" + "<a href=/user/" + userId + ">" + username + "</a></td>\n" +
