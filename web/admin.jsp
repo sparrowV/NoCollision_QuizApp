@@ -53,36 +53,42 @@
 					$("#announcement").append($textArea);
 					$("#announcement").append($button);
 
+					// hide text area and button
 					$("#text").hide();
 					$("#button-addAnnouncement").hide();
 
+					// get text from text area and send to servlet
+					function sendAnnouncement(e) {
+						e.stopImmediatePropagation();
+						// send announcement to servlet
+						var text = {text: $textArea.val()};
+						$.ajax({
+							url: '/AnnouncementServlet',
+							type: 'POST',
+							data: JSON.stringify(text),
+							contentType: 'application/json; charset=utf-8',
+							dataType: 'json',
+							async: true,
+							success: function (msg) {
+								alert(msg);
+							}
+						});
+
+						// clear text area
+						$("#text").val("");
+
+						$("#text").hide();
+						$("#button-addAnnouncement").hide();
+
+						$("#button-announcement").show();
+					}
+
+
 					function createAnnouncement() {
+						$("#button-announcement").hide();
 						$("#text").show();
 						$("#button-addAnnouncement").show();
 						$button.click(sendAnnouncement);
-						// get text from text area and send to servlet
-						function sendAnnouncement() {
-							// hide buttons
-							$("#text").hide();
-							$("#button-addAnnouncement").hide();
-							// clear text area
-							$("#text").val("");
-
-							// send announcement to servlet
-							var text = {text: $textArea.val()};
-							$.ajax({
-								url: '/AnnouncementServlet',
-								type: 'POST',
-								data: JSON.stringify(text),
-								contentType: 'application/json; charset=utf-8',
-								dataType: 'json',
-								async: true,
-								success: function (msg) {
-									alert(msg);
-								}
-							});
-						}
-
 					}
 				</script>
 			</div>
