@@ -102,3 +102,11 @@ ul.sortable li {
 	margin: 1px;
 	text-align: center;
 }
+
+#announcement {
+	text-align: center;
+}
+
+textarea {
+	resize: none;
+}

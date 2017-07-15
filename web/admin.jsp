@@ -1,11 +1,9 @@
-<%@ page import="listener.ContextKey" %>
-<%@ page import="model.AnnouncementManager" %>
-<%@ page import="servlet.ServletKey" %>
+<%@ page import="database.bean.Quiz" %>
 <%@ page import="database.bean.User" %>
-<%@ page import="database.bean.Announcement" %>
-<%@ page import="model.UserManager" %>
+<%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
-<%@ page import="database.bean.Quiz" %><%--
+<%@ page import="model.UserManager" %>
+<%--
   Created by IntelliJ IDEA.
   User: janxo
   Date: 7/11/2017
@@ -16,127 +14,118 @@
 <html>
 <head>
 	<title>Admin</title>
-
-	<style>
-		.dropbtn {
-			background-color: #4CAF50;
-			color: white;
-			padding: 16px;
-			font-size: 16px;
-			border: none;
-			cursor: pointer;
-		}
-
-		.dropdown {
-			position: relative;
-			display: inline-block;
-		}
-
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			background-color: #f9f9f9;
-			min-width: 160px;
-			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-			z-index: 1;
-		}
-
-		.dropdown-content a {
-			color: black;
-			padding: 12px 16px;
-			text-decoration: none;
-			display: block;
-		}
-
-		.dropdown-content a:hover {
-			background-color: #f1f1f1
-		}
-
-		.dropdown:hover .dropdown-content {
-			display: block;
-		}
-
-		.dropdown:hover .dropbtn {
-			background-color: #3e8e41;
-		}
-	</style>
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Custom styles for this web-page -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="javascript:history.back()">Back</a>
+		</div>
+	</div>
+</nav>
+
 <div class="container">
 	<div class="admin">
-		<div id="announcement">
-			<!-- create button when pressed creates text area and another button for submitting text -->
-			<button id="button-announcement" onclick="createAnnouncement()">Create Announcement</button>
-			<script>
-				function createAnnouncement() {
-					var $textArea = $("<textarea>", {id: "text", class: "announcement-text", rows: 2, cols: 50});
-					var $button = $("<button>", {id: "button-addAnnouncement", text: "Add Announcement"});
-					$button.click(sendAnnouncement);
-					// get text from text area and send to servlet
-					function sendAnnouncement() {
-						var text = {text: $textArea.val()};
-						$.ajax({
-							url: '/AnnouncementServlet',
-							type: 'POST',
-							data: JSON.stringify(text),
-							contentType: 'application/json; charset=utf-8',
-							dataType: 'json',
-							async: true,
-							success: function (msg) {
-								alert(msg);
-							}
+		<div class="jumbotron">
+			<div id="announcement">
+				<!-- create button when pressed creates text area and another button for submitting text -->
+				<button class="btn btn-default" id="button-announcement" onclick="createAnnouncement()">Create
+					Announcement
+				</button>
+				<br>
+				<script>
+					function createAnnouncement() {
+						var $textArea = $("<textarea>", {id: "text", class: "form-control", rows: 2, cols: 50});
+						var $button = $("<button>", {
+							id: "button-addAnnouncement",
+							class: "btn btn-primary",
+							text: "Add Announcement"
 						});
-					}
+						$button.click(sendAnnouncement);
+						// get text from text area and send to servlet
+						function sendAnnouncement() {
+							var text = {text: $textArea.val()};
+							$.ajax({
+								url: '/AnnouncementServlet',
+								type: 'POST',
+								data: JSON.stringify(text),
+								contentType: 'application/json; charset=utf-8',
+								dataType: 'json',
+								async: true,
+								success: function (msg) {
+									alert(msg);
+								}
+							});
+						}
 
-					$("#announcement").append($textArea);
-					$("#announcement").append($button);
-				}
-			</script>
-		</div>
-
-		<br>
-
-		<div class="users-list">
-			<table class="user-table">
-				<thead class="user-table-head">
-				<tr>
-					<th>ID</th>
-					<th>UserName</th>
-					<th>BirthDate</th>
-				<tr>
-				</thead>
-				<tbody>
-				<%
-					UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
-					for (User user : userManager.getUserList()) {
-						out.print(user.toHtmlTableFormat());
+						$("#announcement").append($textArea);
+						$("#announcement").append($button);
 					}
-				%>
-				</tbody>
-			</table>
-		</div>
-		<br>
-		<br>
-		<div class="quiz-list">
-			<table class="quiz-table">
-				<thead class="quiz-table-head">
-				<tr>
-					<th>ID</th>
-					<th>Title</th>
-					<th>Date</th>
-				<tr>
-				</thead>
-				<tbody>
-				<%
-					QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
-					for (Quiz quiz : quizManager.getQuizList()) {
-						out.print(quiz.toHtml());
-					}
-				%>
-				</tbody>
-			</table>
+				</script>
+			</div>
+
+			<br>
+
+			<label for="users">Users</label>
+			<div id="users">
+				<div class="table-responsive">
+					<table class="table">
+						<thead class="thead-inverse">
+						<tr>
+							<th>ID</th>
+							<th>Username</th>
+							<th>Birth date</th>
+							<th>Delete</th>
+							<th>Change status</th>
+						<tr>
+						</thead>
+						<tbody>
+						<%
+							UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
+							for (User user : userManager.getUserList()) {
+								out.print(user.toHtmlTableFormat());
+							}
+						%>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<br>
+			<br>
+
+			<label for="quizzes">Quizzes</label>
+			<div id="quizzes">
+				<div class="table-responsive">
+					<table class="table">
+						<thead class="thead-inverse">
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>Date</th>
+							<th>Delete</th>
+						<tr>
+						</thead>
+						<tbody>
+						<%
+							QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+							for (Quiz quiz : quizManager.getQuizList()) {
+								out.print(quiz.toHtml());
+							}
+						%>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

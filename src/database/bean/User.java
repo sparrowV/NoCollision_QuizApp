@@ -158,19 +158,18 @@ public class User implements HtmlSerializable {
 
 	public String toHtmlTableFormat() {
 		String deleteUserButton = "<form action=\"delete-user.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + userId + "\"/>"+
-				"<input type=\"submit\" value=\"Delete User\" />\n" +
+				"<input class=\"btn btn-default\" type=\"submit\" value=\"Delete User\" />\n" +
 				"</form>";
 		String makeAdminButton = "<form action=\"make-admin.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + userId + "\"/>"+
-				"<input type=\"submit\" value=\"Make Admin\" />\n" +
+				"<input class=\"btn btn-default\" type=\"submit\" value=\"Make Admin\" />\n" +
 				"</form>";
-		String res = "<tr>\n" +
+		return "<tr>\n" +
 				"<th scope=\"row\">" + userId + "</th>\n" +
 				"<td>" + username + "</td>\n" +
 				"<td>" + dateOfBirth + "</td>\n" +
 				"<td>" + deleteUserButton + "</td>\n" +
 				"<td>" + makeAdminButton + "</td>\n" +
 				"</tr>\n";
-		return res;
 	}
 
 	@Override
