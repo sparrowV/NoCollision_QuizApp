@@ -140,12 +140,16 @@ public class Quiz {
 	}
 
 	public String toHtml() {
+		String deleteQuizButton = "<form action=\"delete-quiz.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>"+
+				"<input type=\"submit\" value=\"Delete Quiz\" />\n" +
+				"</form>";
 		return "<tr>\n" +
-				"      <th scope=\"row\">" + quizId + "</th>\n" +
-				"      <td>" + "<a href=/do-quiz.jsp?id=" + quizId +
+				"<th scope=\"row\">" + quizId + "</th>\n" +
+				"<td>" + "<a href=/do-quiz.jsp?id=" + quizId +
 				">" + title + "</a>" + "</td>\n" +
-				"      <td>" + dateCreated + "</td>\n" +
-				"    </tr>";
+				"<td>" + dateCreated + "</td>\n" +
+				"<td>" + deleteQuizButton + "</td>" +
+				"</tr>";
 	}
 
 	public String toHtml(List<User> friends) {

@@ -116,3 +116,10 @@ VALUES (1, 1),
 	(21, 9),
 	(22, 9),
 	(23, 9);
+
+INSERT INTO quiz_categories (category_name)
+VALUES ('Sport'),
+	('History'),
+	('Geography'),
+	('CS'),
+	('Math');

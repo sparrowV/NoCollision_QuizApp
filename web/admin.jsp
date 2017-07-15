@@ -37,7 +37,7 @@
 			position: absolute;
 			background-color: #f9f9f9;
 			min-width: 160px;
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 			z-index: 1;
 		}
 
@@ -48,7 +48,9 @@
 			display: block;
 		}
 
-		.dropdown-content a:hover {background-color: #f1f1f1}
+		.dropdown-content a:hover {
+			background-color: #f1f1f1
+		}
 
 		.dropdown:hover .dropdown-content {
 			display: block;
@@ -82,7 +84,7 @@
 							contentType: 'application/json; charset=utf-8',
 							dataType: 'json',
 							async: true,
-							success: function(msg) {
+							success: function (msg) {
 								alert(msg);
 							}
 						});
@@ -94,34 +96,47 @@
 			</script>
 		</div>
 
-		<div id="delete-user">
-			<div class="dropdown">
-				<button class="dropbtn">Delete User</button>
-				<div class="dropdown-content">
-					<%
-						UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
-						for (User user : userManager.getUserList()) {
-							String res = "<a href=\"delete-user.jsp?id=" + user.getUserId() + "\">" + user.getUsername();
-							out.print(res);
-						}
-					%>
-				</div>
-			</div>
+		<br>
+
+		<div class="users-list">
+			<table class="user-table">
+				<thead class="user-table-head">
+				<tr>
+					<th>ID</th>
+					<th>UserName</th>
+					<th>BirthDate</th>
+				<tr>
+				</thead>
+				<tbody>
+				<%
+					UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
+					for (User user : userManager.getUserList()) {
+						out.print(user.toHtmlTableFormat());
+					}
+				%>
+				</tbody>
+			</table>
 		</div>
 		<br>
-		<div id="delete-quiz">
-			<div class="dropdown">
-				<button class="dropbtn">Delete Quiz</button>
-				<div class="dropdown-content">
-					<%
-						QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
-						for (Quiz quiz : quizManager.getQuizList()) {
-							String res = "<a href=\"delete-quiz.jsp?id=" + quiz.getQuizId() + "\">" + quiz.getTitle();
-							out.print(res);
-						}
-					%>
-				</div>
-			</div>
+		<br>
+		<div class="quiz-list">
+			<table class="quiz-table">
+				<thead class="quiz-table-head">
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Date</th>
+				<tr>
+				</thead>
+				<tbody>
+				<%
+					QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+					for (Quiz quiz : quizManager.getQuizList()) {
+						out.print(quiz.toHtml());
+					}
+				%>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
