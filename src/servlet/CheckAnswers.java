@@ -30,10 +30,12 @@ public class CheckAnswers extends HttpServlet {
 
 		BadgeManager badgeManager = (BadgeManager) request.getServletContext()
 				.getAttribute(ContextKey.BADGE_MANAGER);
+		JsonArray arr;
 
+		arr = checkAnswers(data.get("answers").getAsJsonObject(), manager);
 		JsonObject answers = data.get("answers").getAsJsonObject();
 
-		int res = checkAnswers(answers, manager);
+
 
 		HttpSession s = request.getSession();
 		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
@@ -47,8 +49,10 @@ public class CheckAnswers extends HttpServlet {
 		for (String str : duration.split(":")) {
 			time = time * 60 + Integer.parseInt(str);
 		}
+		//double score = (double) res / (data.get("answers").getAsJsonObject().size());
+		double score = arr.size() / (data.get("answers").getAsJsonObject().size());
 
-		double score = (double) res / (answers.size());
+
 		double xp = answers.size() * 10 * score +
 				20 * (answers.size() * 5) / time;
 
@@ -57,8 +61,12 @@ public class CheckAnswers extends HttpServlet {
 
 
 		JsonObject json = new JsonObject();
-		json.add("correct", new JsonPrimitive(res));
-		json.add("total", new JsonPrimitive(answers.size()));
+		//json.add("correct", new JsonPrimitive(res));
+		json.add("correct", new JsonPrimitive(arr.size()));
+		json.add("total", new JsonPrimitive(data.get("answers").getAsJsonObject().size()));
+		json.add("correctAnswers", arr);
+		System.out.println(arr.toString());
+
 		response.getWriter().print(json);
 		response.getWriter().flush();
 	}
@@ -75,15 +83,17 @@ public class CheckAnswers extends HttpServlet {
 	 * @return returns the number of correct answers
 	 */
 
-	private int checkAnswers(JsonObject data, QuestionManager manager) {
+	private JsonArray checkAnswers(JsonObject data, QuestionManager manager) {
 		int result = 0;
+		JsonArray arr = new JsonArray();
 		System.out.println(data);
 		//iterate over all answers
 		for (String answerIndex : data.keySet()) {
 			if (checkSpecificAnswer(data.get(answerIndex).getAsJsonObject(), manager))
-				result++;
+				arr.add(answerIndex);
+			//result++;
 		}
-		return result;
+		return arr;
 	}
 
 	/**

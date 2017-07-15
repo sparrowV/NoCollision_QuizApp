@@ -14,12 +14,12 @@ VALUES ('Tornike', 'Gurgenidze', 'Tokoko', 'pass1'),
 	('Irakli', 'Chkuaseli', 'Chkua', 'pass5');
 
 
-INSERT INTO quizzes (author_id, title, date_created)
-VALUES (2, 'History', '2017-06-11'),
-	(2, 'Geography', '2017-06-11'),
-	(4, 'Math', '2017-06-11'),
-	(4, 'CS', '2017-06-11'),
-	(5, 'Economics', '2017-06-11');
+INSERT INTO quizzes (author_id, title, date_created, randomized_order, multiple_pages)
+VALUES (2, 'History', '2017-06-11', FALSE, FALSE),
+	(2, 'Geography', '2017-06-11', FALSE, FALSE),
+	(4, 'Math', '2017-06-11', FALSE, FALSE),
+	(4, 'CS', '2017-06-11', FALSE, FALSE),
+	(5, 'Economics', '2017-06-11', FALSE, FALSE);
 
 
 INSERT INTO questions (question_text)

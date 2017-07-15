@@ -1,14 +1,13 @@
+<%@ page import="com.google.gson.Gson" %>
 <%@ page import="database.bean.HtmlSerializable" %>
 <%@ page import="database.bean.Question" %>
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="jdk.nashorn.internal.runtime.JSONFunctions" %>
-<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: sparrow
@@ -221,9 +220,34 @@
 				$("#result").html(data["correct"] + "/" + data["total"]);
 				$("#duration").html(time);
 				$("#id01").css('display', 'block');
+
+				var arr = []
+				arr = data["correctAnswers"]
+
+
+				var quiz = $("#quiz_container")
+				var question = $(quiz).find(".question")
+				console.log(arr)
+				for (var i = 0; i < question.length + 1; i++) {
+					if (arr.includes(i.toString())) {
+						var correct = document.createElement('span')
+						correct.classList = "glyphicon glyphicon-ok"
+						correct.style = "color:green"
+						console.log(i)
+						$(question).eq(i).append(correct)
+					} else {
+						var not_correct = document.createElement('span')
+						not_correct.classList = "glyphicon glyphicon-remove"
+						not_correct.style = "color:red"
+						$(question).eq(i).append(not_correct)
+					}
+
+
+				}
 			}, "json")
 		}
 	});
+
 
 	//get answer for specific question
 	var getInsertedAnswer = function (obj, index) {
@@ -293,8 +317,6 @@
 		}
 
 
-
-
 	};
 
 	//setting up timer
@@ -319,9 +341,11 @@
 
 		timer();
 	}
+
 	function timer() {
 		t = setTimeout(add, 1000);
 	}
+
 	timer();
 
 
