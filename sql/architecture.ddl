@@ -38,6 +38,13 @@ CREATE TABLE quiz_categories (
 	CONSTRAINT quiz_categories_pk PRIMARY KEY (category_id)
 );
 
+INSERT INTO quiz_categories (category_name)
+VALUES ('Sport'),
+	('History'),
+	('Geography'),
+	('CS'),
+	('Math');
+
 DROP TABLE IF EXISTS quizzes;
 CREATE TABLE quizzes (
 	quiz_id          INT AUTO_INCREMENT,
