@@ -39,8 +39,15 @@ public class CheckAnswers extends HttpServlet {
 
 		String duration = (data.get("time").getAsString());
 
+		int time = 0;
+		for (String str : duration.split(":")) {
+			time = time * 60 + Integer.parseInt(str);
+		}
+
 		double score = (double) res / (answers.size());
-		userManager.addUserQuizHistory(userId, quizId, 1, duration, score);
+		double xp = answers.size() * 10 * score +
+				20 * (answers.size() * 5) / time;
+		userManager.addUserQuizHistory(userId, quizId, duration, score, xp);
 
 		JsonObject json = new JsonObject();
 		json.add("correct", new JsonPrimitive(res));

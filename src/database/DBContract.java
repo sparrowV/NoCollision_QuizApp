@@ -1,5 +1,7 @@
 package database;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+
 public final class DBContract {
 	private DBContract() {
 	}
@@ -68,9 +70,9 @@ public final class DBContract {
 		public static final String TABLE_NAME = "users_quiz_history";
 		public static final String COLUMN_NAME_USER_ID = "user_id";
 		public static final String COLUMN_NAME_QUIZ_ID = "quiz_id";
-		public static final String COLUMN_NAME_STATUS = "status";
 		public static final String COLUMN_NAME_DURATION = "duration";
 		public static final String COLUMN_NAME_SCORE = "score";
+		public static final String COLUMN_NAME_XP = "xp";
 
 	}
 

@@ -96,9 +96,9 @@ DROP TABLE IF EXISTS users_quiz_history;
 CREATE TABLE users_quiz_history (
 	user_id  INT NOT NULL,
 	quiz_id  INT NOT NULL,
-	status   INT NOT NULL,
 	duration NVARCHAR(100),
 	score    DOUBLE,
+	xp       DOUBLE,
 
 	CONSTRAINT users_quiz_history_fk FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
 	CONSTRAINT users_quiz_history_fk1 FOREIGN KEY (quiz_id) REFERENCES quizzes (quiz_id) ON DELETE CASCADE
