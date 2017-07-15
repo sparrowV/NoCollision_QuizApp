@@ -45,13 +45,14 @@ public class UserManager {
 		return null;
 	}
 
-	public void updateUser(User user, String firstName, String lastName, String pictureUrl, String country) {
+	public void updateUser(User user, String firstName, String lastName, String pictureUrl, String country, int status) {
 		if (firstName == null) firstName = user.getFirstName();
 		if (lastName == null) lastName = user.getLastName();
 		if (pictureUrl == null) pictureUrl = user.getPicture();
 		if (country == null) country = user.getCountry();
 
-		dao.updateUser(user, firstName, lastName, pictureUrl, country);
+
+		dao.updateUser(user, firstName, lastName, pictureUrl, country, status);
 	}
 
 	public void addUserQuizHistory(int userId, int quizId, String duration, double score, double xp) {

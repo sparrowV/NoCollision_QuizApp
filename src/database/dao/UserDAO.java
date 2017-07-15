@@ -248,7 +248,7 @@ public class UserDAO {
 	}
 
 
-	public void updateUser(User user, String firstName, String lastName, String pictureUrl, String country) {
+	public void updateUser(User user, String firstName, String lastName, String pictureUrl, String country, int status) {
 		Connection connection = null;
 		try {
 			connection = pool.getConnection();
@@ -261,7 +261,8 @@ public class UserDAO {
 					+ DBContract.UserTable.COLUMN_NAME_FIRST_NAME + " = ?, "
 					+ DBContract.UserTable.COLUMN_NAME_LAST_NAME + " = ?, "
 					+ DBContract.UserTable.COLUMN_NAME_PICTURE + " = ?, "
-					+ DBContract.UserTable.COLUMN_NAME_COUNTRY + " = ? "
+					+ DBContract.UserTable.COLUMN_NAME_COUNTRY + " = ?, "
+					+ DBContract.UserTable.COLUMN_NAME_STATUS + " = ? "
 					+ " WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?;";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -269,7 +270,9 @@ public class UserDAO {
 			preparedStatement.setString(2, lastName);
 			preparedStatement.setString(3, pictureUrl);
 			preparedStatement.setString(4, country);
-			preparedStatement.setString(5, user.getUsername());
+			preparedStatement.setInt(5, status);
+			preparedStatement.setString(6, user.getUsername());
+
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
