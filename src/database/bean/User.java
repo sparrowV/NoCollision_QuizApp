@@ -156,9 +156,14 @@ public class User implements HtmlSerializable {
 	}
 
 	private String makeFormButtonHtml(String pageUrl, int id, String buttonName) {
+		if (buttonName.equals("Delete User") || buttonName.equals("Seize Admin Status"))
+			return "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
+					"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>\n" +
+					"<input class=\"btn bg-danger\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
+					"</form>\n";
 		return "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
 				"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>\n" +
-				"<input class=\"btn btn-default\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
+				"<input class=\"btn bg-success\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
 				"</form>\n";
 	}
 

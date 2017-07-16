@@ -47,7 +47,7 @@
 		<div class="jumbotron">
 			<div id="announcement">
 				<!-- create button when pressed creates text area and another button for submitting text -->
-				<button class="btn btn-default" id="button-announcement" onclick="createAnnouncement()">Create
+				<button class="btn bg-primary" id="button-announcement" onclick="createAnnouncement()">Create
 					Announcement
 				</button>
 				<br>
