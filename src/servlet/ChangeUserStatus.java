@@ -21,11 +21,12 @@ public class ChangeUserStatus extends HttpServlet {
 		int userId = Integer.parseInt(request.getParameter(ServletKey.ID));
 		UserManager userManager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 		User user = userManager.getUserById(userId);
-		int status;
+
 		if (user.isAdmin()) {
-			status = 0;
-		} else status = 1;
-		userManager.updateUser(user, user.getFirstName(), user.getLastName(), user.getPicture(), user.getCountry(), status);
+			user.seizeAdminStatus();
+		} else user.grantAdminStatus();
+
+		userManager.changeUserStatus(user.getUserId(), user.getStatus());
 		response.sendRedirect(ServletKey.ADMIN_JSP);
 	}
 

@@ -83,4 +83,11 @@ public class UserManager {
 		return answer;
 	}
 
+	public void changeUserStatus(int userId, int status) {
+		try {
+			dao.updateUserStatus(userId, status);
+		} catch (Exception e) {
+			System.out.println("ERROR UPDATING USER STATUS");
+		}
+	}
 }

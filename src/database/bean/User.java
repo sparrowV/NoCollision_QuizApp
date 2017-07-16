@@ -16,6 +16,9 @@ public class User implements HtmlSerializable {
 	private int userId;
 	private int status;
 
+	private static final int ADMIN_STATUS = 1;
+	private static final int PLAIN_USER_STATUS = 0;
+
 
 	public User() {
 	}
@@ -156,6 +159,14 @@ public class User implements HtmlSerializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public void grantAdminStatus() {
+		status = ADMIN_STATUS;
+	}
+
+	public void seizeAdminStatus() {
+		status = PLAIN_USER_STATUS;
 	}
 
 	private String makeFormButtonHTML(String pageUrl, int id, String buttonName) {
