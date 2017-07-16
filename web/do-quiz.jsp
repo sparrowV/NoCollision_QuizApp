@@ -74,16 +74,21 @@
 
 		List<Integer> questionIdList = new ArrayList<>();
 		for (Question question : questions) questionIdList.add(question.getQuestionId());
+		boolean multiplePages = quiz.getIsMultiplePages();
+		boolean practice = false;
+		if (practice) multiplePages = true;
 
 	%>
 
 	<script>
 		var questionIdList = JSON.parse('<%= new Gson().toJson(questionIdList) %>');
 		var immediateCorrection = JSON.parse('<%= new Gson().toJson(quiz.getIsImmediateCorrection()) %>');
+		var practice = JSON.parse('<%= new Gson().toJson(practice) %>');
+		if (practice) immediateCorrection = true;
 	</script>
 
 	<%
-		if (quiz.getIsMultiplePages()) {
+		if (multiplePages) {
 			questions = questions.subList(0, 1);
 		}
 
@@ -201,6 +206,14 @@
 		}
 	}
 
+	function changeQuestion() {
+		$.get("/GetQuestions", {'question_id': questionIdList[counter]}, function (data) {
+			$("#questionHtml").html(data["questionHtml"]);
+			$("#answerHtml").html(data["answerHtml"]);
+			addSortable();
+		}, "json")
+	}
+
 	// .question_container .answer[data-type="multiple"] input[data-last]
 	$("#submit_btn").click(function () {
 
@@ -224,20 +237,21 @@
 							class: "glyphicon glyphicon-remove",
 							"style": "color:red"
 						}).insertAfter("#questionHtml .question");
+						alert(questionIdList);
+						questionIdList.push(questionIdList[counter - 1]);
+						alert(questionIdList);
 					}
+					sleep(1000);
+					changeQuestion();
 				})
+			} else {
+				if (counter == questionIdList.length - 1)
+					$("button#submit_btn").html("Finish");
+				changeQuestion();
 			}
 
-			if (counter == questionIdList.length - 1)
-				$("button#submit_btn").html("Finish");
 
-			$.get("/GetQuestions", {'question_id': questionIdList[counter]}, function (data) {
-				$("#questionHtml").html(data["questionHtml"]);
-				$("#answerHtml").html(data["answerHtml"]);
-				addSortable();
-			}, "json")
-
-		} else if (counter == questionIdList.length) {
+		} else if (counter == questionIdList.length && !practice) {
 			var time = $("#stopwatch")[0].innerHTML;
 			clearTimeout(t); //stop stopwatch
 			results.time = time;
