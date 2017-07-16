@@ -171,9 +171,9 @@ public class User implements HtmlSerializable {
 
 	private String makeFormButtonHTML(String pageUrl, int id, String buttonName) {
 		String formButtonForHtmlTable = "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
-				"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>" +
+				"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>\n" +
 				"<input class=\"btn btn-default\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
-				"</form>";
+				"</form>\n";
 		return formButtonForHtmlTable;
 	}
 

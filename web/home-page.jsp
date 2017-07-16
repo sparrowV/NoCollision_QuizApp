@@ -195,7 +195,7 @@
 							for (int i = 0; i < myFriends.size(); i++) {
 								out.write("<li>\n" +
 										" <form  action=\"mail.jsp\" method=\"post\">" +
-										"<input type=\"submit\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\"/>\n" +
+										"    <input class=\"btn btn-default\" type=\"submit\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\"/>\n" +
 										"    <input name=\"friend_id\" value=\"" + myFriends.get(i).getUserId() + "\" type=\"hidden\"/>\n" +
 										"    <input name=\"friend_name\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\" type=\"hidden\"/>\n" +
 										" </form></li>\n");
@@ -225,7 +225,7 @@
 								out.write("<li>" +
 										" <b>" + currChallenge.getChallengerUsername() + "</b>" +
 										" <a  onclick=\"acceptedChallenge(" + currChallenge.getChallengedQuizID() + "," + currChallenge.getChallengerID() +
-										")\" href=\"do-quiz.jsp?id=" + currChallenge.getChallengedQuizID() + "\">" + currChallenge.getChallengedQuizTitle() + "</a>"
+										")\" class=\"btn btn-default\" href=\"do-quiz.jsp?id=" + currChallenge.getChallengedQuizID() + "\">" + currChallenge.getChallengedQuizTitle() + "</a>"
 										+ "</li>");
 								if (i != myChallenges.size() - 1)
 									out.write("<li role='separator' class='divider'></li>\n");
@@ -288,8 +288,8 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/user/<%= currentUser.getUserId()%>">Profile</a>
 						</li>
-						<% 	User currUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
-							if(currUser.isAdmin()) {
+						<% User currUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
+							if (currUser.isAdmin()) {
 								out.write("<li><a href=\"" + ServletKey.ADMIN_JSP + "\">Admin panel</a></li>");
 							}
 						%>
@@ -343,7 +343,8 @@
 				}
 			</script>
 
-			<p><a href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
+			<p><a class="btn btn-default bg-info"
+			      href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
 		</div>
 	</div>
 

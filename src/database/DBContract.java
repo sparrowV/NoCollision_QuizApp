@@ -28,6 +28,7 @@ public final class DBContract {
 		public static final String COLUMN_NAME_DATA_CREATED = "date_created";
 		public static final String COLUMN_NAME_RANDOMIZED_ORDER = "randomized_order";
 		public static final String COLUMN_NAME_MULTIPLE_PAGES = "multiple_pages";
+		public static final String COLUMN_NAME_IMMEDIATE_CORRECTION = "immediate_correction";
 		public static final String COLUMN_NAME_CATEGORY_ID = "category_id";
 	}
 
