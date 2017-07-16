@@ -29,6 +29,7 @@ public class CreateQuiz extends HttpServlet {
 		HttpSession session = request.getSession();
 		Quiz quiz = (Quiz) session.getAttribute(ServletKey.CURRENT_QUIZ);
 
+
 		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
 
 		//get the questions
@@ -62,9 +63,6 @@ public class CreateQuiz extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
 
 	// generates question based on question type
 	private Question generateQuestion(JsonObject data) {

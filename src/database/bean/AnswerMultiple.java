@@ -68,7 +68,7 @@ public class AnswerMultiple implements Answer, HtmlSerializable {
 
 		AnswerMultiple that = (AnswerMultiple) o;
 
-		return this == that;
+		return this.answers.equals(that.answers);
 	}
 
 	@Override
