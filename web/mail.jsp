@@ -89,13 +89,13 @@
 		xhr1.open("GET", url1, true);
 		xhr1.send(null);
 
-	}, 5000);
+	}, 1000);
 
 	function handler1() {
 		if (xhr1.readyState === 4) {
 			if (xhr1.status === 200) {
 
-				console.log(xhr1.responseText);
+				//	console.log(xhr1.responseText);
 				document.getElementById('history').value = xhr1.responseText;
 
 				var element = document.getElementById('history');

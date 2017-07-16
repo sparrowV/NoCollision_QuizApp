@@ -23,7 +23,5 @@ public class DeleteUser extends HttpServlet {
 		response.sendRedirect(ServletKey.ADMIN_JSP);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 }

@@ -21,6 +21,7 @@ public class MyFriends extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//	System.out.println("GET");
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ServletKey.MY_FRIENDS_JSP);
+
 		dispatcher.forward(request, response);
 	}
 }

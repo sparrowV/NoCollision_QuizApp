@@ -131,14 +131,15 @@
 							}
 							for (int i = 0; i < friendRequests.size(); i++) {
 								out.write("<li><b>" + friendRequests.get(i).getUsername() + "</b>\n" +
-										"<form action=\"/FriendRequestResponse\" method=\"post\" onsubmit=\"acceptRequest(1); return false;\">\n" +
-										"   <input id=\"accept\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>" +
-										" <input type=\"submit\" class=\"btn btn-default\" value=\"Accept\"/>" +
-										"</form>" +
-										"<form action=\"/FriendRequestResponse\" method=\"post\" onsubmit=\"acceptRequest(0); return false;\">\n" +
-										"   <input id=\"reject\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>" +
-										" <input type=\"submit\" class=\"btn btn-default\" value=\"Reject\"/>" +
-										"</form>" +
+										"<form action=\"/FriendRequestResponse\"  style=\"text-align: center; margin: auto;\" method=\"post\" onsubmit=\"acceptRequest(1); return false;\">\n" +
+										"   <input id=\"accept\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>\n" +
+										" <input type=\"submit\"  class=\"btn bg-success\" value=\"Accept\"/>\n" +
+										"</form>\n" +
+										"<br>\n" +
+										"<form action=\"/FriendRequestResponse\" style=\"text-align: center; margin: auto;\" method=\"post\" onsubmit=\"acceptRequest(0); return false;\">\n" +
+										"   <input id=\"reject\" name=\"friend_id\" type=\"hidden\" value=\"" + friendRequests.get(i).getUserId() + "\"/>\n" +
+										" <input type=\"submit\" class=\"btn bg-warning\" value=\"Reject\"/>\n" +
+										"</form>\n" +
 										"  </li>\n");
 								if (i != friendRequests.size() - 1)
 									out.write("<li role='separator' class='divider'></li>\n");
@@ -197,7 +198,7 @@
 							}
 							for (int i = 0; i < myFriends.size(); i++) {
 								out.write("<li>\n" +
-										" <form  action=\"mail.jsp\" method=\"post\">" +
+										" <form  action=\"mail.jsp\" style=\"text-align: center; margin: auto;\" method=\"post\">" +
 										"    <input class=\"btn btn-default\" type=\"submit\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\"/>\n" +
 										"    <input name=\"friend_id\" value=\"" + myFriends.get(i).getUserId() + "\" type=\"hidden\"/>\n" +
 										"    <input name=\"friend_name\" value=\"" + myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName() + "\" type=\"hidden\"/>\n" +
@@ -274,7 +275,8 @@
 
 				<form class="navbar-form navbar-left" action="search.jsp" method="post">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search" name="<%= ServletKey.SEARCH%>">>
+						<input type="text" size="8" class="form-control" placeholder="Search"
+						       name="<%= ServletKey.SEARCH%>">>
 					</div>
 					<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
 					        data-html="true" title="user:<i>username</i> for users<br>quiz:<i>title</i> for quizzes">
