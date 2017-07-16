@@ -164,8 +164,12 @@ public class Quiz implements HtmlSerializable {
 	}
 
 	public String toHtml() {
-		//todo
-		return "";
+		// TODO: Refactor this mess.
+		return "<tr>\n" +
+				"      <th scope=\"row\">" + quizId + "</th>\n" +
+				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId + ">" + title + "</a>" + "</td>\n" +
+				"      <td>" + dateCreated + "</td>\n" +
+				"    </tr>";
 	}
 
 	public String toHtml(List<User> friends) {
