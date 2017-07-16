@@ -268,7 +268,6 @@ public class QuizDAO {
 		return quiz;
 	}
 
-
 	public List<Category> getQuizCategories() {
 		List<Category> res = new ArrayList<>();
 

@@ -28,36 +28,36 @@ public class TimelineActivity {
 		return quiz_id;
 	}
 
-	public String getQuizTitle() {
-		return quizTitle;
-	}
-
-	public String getDuration() {
-		return duration;
-	}
-
-	public String getScore() {
-		return score;
-	}
-
-	public String getXp() {
-		return xp;
-	}
-
 	public void setQuiz_id(int quiz_id) {
 		this.quiz_id = quiz_id;
+	}
+
+	public String getQuizTitle() {
+		return quizTitle;
 	}
 
 	public void setQuizTitle(String quizTitle) {
 		this.quizTitle = quizTitle;
 	}
 
+	public String getDuration() {
+		return duration;
+	}
+
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 
+	public String getScore() {
+		return score;
+	}
+
 	public void setScore(String score) {
 		this.score = score;
+	}
+
+	public String getXp() {
+		return xp;
 	}
 
 	public void setXp(String xp) {
@@ -68,12 +68,12 @@ public class TimelineActivity {
 		return userID;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
 	public void setUserID(int userID) {
 		this.userID = userID;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 
 	public void setUserName(String userName) {

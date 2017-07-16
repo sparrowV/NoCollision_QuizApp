@@ -19,7 +19,9 @@ public class Announcement {
 		return adminId;
 	}
 
-	public int getAnnouncementId() { return announcementId; };
+	public int getAnnouncementId() {
+		return announcementId;
+	}
 
 	public String toString() {
 		return "AuthorId: " + adminId + " -- " +

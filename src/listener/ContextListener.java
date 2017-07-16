@@ -32,11 +32,12 @@ public class ContextListener implements ServletContextListener {
 			AnswerManager answerManager = new AnswerManager(new AnswerDAO(pool));
 			QuestionManager questionManager = new QuestionManager(new QuestionDAO(pool, answerManager));
 			QuizManager quizManager = new QuizManager(new QuizDAO(pool, questionManager));
-
+			UserManager userManager = new UserManager(new UserDAO(pool));
+			LeaderboardManager leaderboardManager = new LeaderboardManager(new LeaderboardDAO(pool, userManager));
 
 			// Save the database and UserDao in context.
 			context.setAttribute(ContextKey.CONNECTION_POOL, pool);
-			context.setAttribute(ContextKey.USER_MANAGER, new UserManager(new UserDAO(pool)));
+			context.setAttribute(ContextKey.USER_MANAGER, userManager);
 			context.setAttribute(ContextKey.QUIZ_MANAGER, quizManager);
 			context.setAttribute(ContextKey.QUESTION_MANAGER, questionManager);
 			context.setAttribute(ContextKey.ANSWER_MANAGER, answerManager);
@@ -46,6 +47,7 @@ public class ContextListener implements ServletContextListener {
 			context.setAttribute(ContextKey.CHALLENGE_MANAGER, new ChallengeManager(new ChallengeDAO(pool)));
 			context.setAttribute(ContextKey.BADGE_MANAGER, new BadgeManager(new BadgeDAO(pool)));
 			context.setAttribute(ContextKey.TIMELINE_MANAGER, new TimelineManager(new TimelineDAO(pool)));
+			context.setAttribute(ContextKey.LEADERBOARD_MANAGER, leaderboardManager);
 		} catch (Exception ignored) {
 		}
 	}
