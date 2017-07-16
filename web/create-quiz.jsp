@@ -9,6 +9,9 @@
 <head>
 	<title>Create Quiz</title>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+
 	<!-- Custom styles for this web-page -->
 	<link rel="stylesheet" type="text/css" href="style.css">
 
@@ -20,8 +23,6 @@
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -58,6 +59,9 @@
 						<br/>
 						<input type="checkbox" id="multiple_pages">
 						<span>One Question Per Page </span>
+						<br/>
+						<input type="checkbox" id="immediate_correction">
+						<span>Show mistakes immediately (only for multi-page quizzes) </span>
 						<br/>
 						<select id="category" name="category">
 							<%
@@ -351,6 +355,7 @@
 	                result.title = $('#title').val();
 	                result.randomized = ($('#random_order')).is(":checked");
 	                result.multiplePages = ($('#multiple_pages')).is(":checked");
+	                result.immediateCorrection = ($('#immediate_correction')).is(":checked");
 	                result.category = $('#category').val();
 	                result.allQuestions = {};
 	                var question_id = 0;

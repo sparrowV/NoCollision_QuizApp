@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.HTMLDocument;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 @WebServlet(name = "CheckAnswers", value = "/CheckAnswers")
@@ -25,17 +29,21 @@ public class CheckAnswers extends HttpServlet {
 		QuestionManager manager = (QuestionManager) request.getServletContext()
 				.getAttribute(ContextKey.QUESTION_MANAGER);
 
+		if (data.get("type").getAsString().equals("immediateCorrection")) {
+			boolean bool = checkSpecificAnswer(data.get("answers").getAsJsonObject().get("0").getAsJsonObject(), manager);
+			response.getWriter().print(bool);
+			response.getWriter().flush();
+			return;
+		}
+
 		UserManager userManager = (UserManager) request.getServletContext()
 				.getAttribute(ContextKey.USER_MANAGER);
 
 		BadgeManager badgeManager = (BadgeManager) request.getServletContext()
 				.getAttribute(ContextKey.BADGE_MANAGER);
-		JsonArray arr;
 
-		arr = checkAnswers(data.get("answers").getAsJsonObject(), manager);
+		JsonArray arr = checkAnswers(data.get("answers").getAsJsonObject(), manager);
 		JsonObject answers = data.get("answers").getAsJsonObject();
-
-
 
 		HttpSession s = request.getSession();
 		int quizId = (int) s.getAttribute(ServletKey.DONE_QUIZ_ID);
@@ -49,9 +57,7 @@ public class CheckAnswers extends HttpServlet {
 		for (String str : duration.split(":")) {
 			time = time * 60 + Integer.parseInt(str);
 		}
-		//double score = (double) res / (data.get("answers").getAsJsonObject().size());
-		double score = arr.size() / (data.get("answers").getAsJsonObject().size());
-
+		double score = arr.size() / answers.size();
 
 		double xp = answers.size() * 10 * score +
 				20 * (answers.size() * 5) / time;

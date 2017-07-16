@@ -50,6 +50,7 @@ public class CreateQuiz extends HttpServlet {
 		quiz.setAuthorId(user.getUserId());
 		quiz.setIsRandomizedOrder(data.get("randomized").getAsBoolean());
 		quiz.setIsMultiplePages(data.get("multiplePages").getAsBoolean());
+		quiz.setIsImmediateCorrection(data.get("immediateCorrection").getAsBoolean());
 		quiz.setCategoryId(data.get("category").getAsInt());
 
 		int id = quizManager.addQuiz(quiz);

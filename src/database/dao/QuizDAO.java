@@ -90,9 +90,10 @@ public class QuizDAO {
 					DBContract.QuizTable.COLUMN_NAME_DATA_CREATED + ", " +
 					DBContract.QuizTable.COLUMN_NAME_RANDOMIZED_ORDER + "," +
 					DBContract.QuizTable.COLUMN_NAME_MULTIPLE_PAGES + "," +
+					DBContract.QuizTable.COLUMN_NAME_IMMEDIATE_CORRECTION + "," +
 					DBContract.QuizTable.COLUMN_NAME_CATEGORY_ID + ")" +
 
-					"VALUES (?,?,?,?,?,?);";
+					"VALUES (?,?,?,?,?,?,?);";
 
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -101,7 +102,8 @@ public class QuizDAO {
 			preparedStatement.setDate(3, new java.sql.Date(quiz.getDateCreated().getTime()));  // Convert Java date to SQL date.
 			preparedStatement.setBoolean(4, quiz.getIsRandomizedOrder());
 			preparedStatement.setBoolean(5, quiz.getIsMultiplePages());
-			preparedStatement.setInt(6, quiz.getCategoryId());
+			preparedStatement.setBoolean(6, quiz.getIsImmediateCorrection());
+			preparedStatement.setInt(7, quiz.getCategoryId());
 			preparedStatement.executeUpdate();
 
 			ResultSet keys = preparedStatement.getGeneratedKeys();
@@ -350,6 +352,7 @@ public class QuizDAO {
 		quiz.setQuestions(questionManager.getQuestionsByQuiz(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_ID)));
 		quiz.setIsRandomizedOrder(resultSet.getBoolean(DBContract.QuizTable.COLUMN_NAME_RANDOMIZED_ORDER));
 		quiz.setIsMultiplePages(resultSet.getBoolean(DBContract.QuizTable.COLUMN_NAME_MULTIPLE_PAGES));
+		quiz.setIsImmediateCorrection(resultSet.getBoolean(DBContract.QuizTable.COLUMN_NAME_IMMEDIATE_CORRECTION));
 		quiz.setCategoryId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_CATEGORY_ID));
 		return quiz;
 	}

@@ -12,6 +12,7 @@ public class Quiz {
 	private Date dateCreated;
 	private boolean IsRandomizedOrder;
 	private boolean IsMultiplePages;
+	private boolean IsImmediateCorrection;
 	private List<Question> questions;
 	private int categoryId;
 
@@ -19,7 +20,8 @@ public class Quiz {
 
 	}
 
-	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages, List<Question> questions, int categoryId) {
+	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages,
+	            List<Question> questions, int categoryId, boolean immediateCorrection) {
 		this.authorId = author_id;
 		this.title = title;
 		this.dateCreated = dateCreated;
@@ -27,6 +29,7 @@ public class Quiz {
 		this.IsRandomizedOrder = randomizedOrder;
 		this.IsMultiplePages = multiplePages;
 		this.categoryId = categoryId;
+		this.IsImmediateCorrection = immediateCorrection;
 	}
 
 	public boolean getIsRandomizedOrder() {
@@ -39,12 +42,18 @@ public class Quiz {
 
 	public boolean getIsMultiplePages() {
 		return IsMultiplePages;
-
 	}
 
 	public void setIsMultiplePages(boolean value) {
 		this.IsMultiplePages = value;
+	}
 
+	public boolean getIsImmediateCorrection() {
+		return IsImmediateCorrection;
+	}
+
+	public void setIsImmediateCorrection(boolean value) {
+		this.IsImmediateCorrection = value;
 	}
 
 	public int getQuizId() {

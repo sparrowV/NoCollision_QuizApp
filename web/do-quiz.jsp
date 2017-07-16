@@ -79,6 +79,7 @@
 
 	<script>
 		var questionIdList = JSON.parse('<%= new Gson().toJson(questionIdList) %>');
+		var immediateCorrection = JSON.parse('<%= new Gson().toJson(quiz.getIsImmediateCorrection()) %>');
 	</script>
 
 	<%
@@ -189,9 +190,16 @@
 
 	});
 
-	var results = {};
+	var results = {"type": "normal"};
 	results.answers = {};
 	var counter = 0;
+
+	function sleep(miliseconds) {
+		var currentTime = new Date().getTime();
+
+		while (currentTime + miliseconds >= new Date().getTime()) {
+		}
+	}
 
 	// .question_container .answer[data-type="multiple"] input[data-last]
 	$("#submit_btn").click(function () {
@@ -202,6 +210,24 @@
 		});
 
 		if (counter < questionIdList.length) {
+			if (immediateCorrection) {
+				var data = {"type": "immediateCorrection"};
+				data.answers = {"0": results.answers[counter - 1]};
+				$.post("/CheckAnswers", JSON.stringify((data)), function (data) {
+					if (data == 'true') {
+						$("<span>", {
+							class: "glyphicon glyphicon-ok",
+							"style": "color:green"
+						}).insertAfter("#questionHtml .question");
+					} else {
+						$("<span>", {
+							class: "glyphicon glyphicon-remove",
+							"style": "color:red"
+						}).insertAfter("#questionHtml .question");
+					}
+				})
+			}
+
 			if (counter == questionIdList.length - 1)
 				$("button#submit_btn").html("Finish");
 
@@ -221,27 +247,26 @@
 				$("#duration").html(time);
 				$("#id01").css('display', 'block');
 
-				var arr = []
-				arr = data["correctAnswers"]
+				var arr = [];
+				arr = data["correctAnswers"];
 
 
-				var quiz = $("#quiz_container")
-				var question = $(quiz).find(".question")
-				console.log(arr)
+				var quiz = $("#quiz_container");
+				var question = $(quiz).find(".question");
+				console.log(arr);
 				for (var i = 0; i < question.length + 1; i++) {
 					if (arr.includes(i.toString())) {
-						var correct = document.createElement('span')
-						correct.classList = "glyphicon glyphicon-ok"
-						correct.style = "color:green"
-						console.log(i)
+						var correct = document.createElement('span');
+						correct.classList = "glyphicon glyphicon-ok";
+						correct.style = "color:green";
+						console.log(i);
 						$(question).eq(i).append(correct)
 					} else {
-						var not_correct = document.createElement('span')
-						not_correct.classList = "glyphicon glyphicon-remove"
-						not_correct.style = "color:red"
+						var not_correct = document.createElement('span');
+						not_correct.classList = "glyphicon glyphicon-remove";
+						not_correct.style = "color:red";
 						$(question).eq(i).append(not_correct)
 					}
-
 
 				}
 			}, "json")

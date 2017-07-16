@@ -47,13 +47,15 @@ VALUES ('Sport'),
 
 DROP TABLE IF EXISTS quizzes;
 CREATE TABLE quizzes (
-	quiz_id          INT AUTO_INCREMENT,
-	author_id        INT           NOT NULL,
-	title            NVARCHAR(100) NOT NULL,
-	date_created     DATE          NOT NULL,
-	randomized_order BOOL          NOT NULL,
-	multiple_pages   BOOL          NOT NULL,
-	category_id      INT           NOT NULL,
+	quiz_id              INT AUTO_INCREMENT,
+	author_id            INT           NOT NULL,
+	title                NVARCHAR(100) NOT NULL,
+	date_created         DATE          NOT NULL,
+	randomized_order     BOOL          NOT NULL,
+	multiple_pages       BOOL          NOT NULL,
+	immediate_correction BOOL          NOT NULL,
+	category_id          INT           NOT NULL,
+
 
 	CONSTRAINT quizzes_pk PRIMARY KEY (quiz_id),
 	CONSTRAINT quizzes_fk1 FOREIGN KEY (author_id) REFERENCES users (user_id)
