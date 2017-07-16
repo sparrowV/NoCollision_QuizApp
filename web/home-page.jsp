@@ -36,6 +36,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script type='text/javascript'>
 		$(document).ready(function () {
 			$("[data-toggle=tooltip]").tooltip();
@@ -355,5 +357,34 @@
 
 
 </div>
+
+<div class="w3-container">
+	<%
+		for (int i = 0; i < timeline.size(); i++) {
+			out.write("<div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
+					"\t\t<header class=\"w3-container w3-cyan\">\n");
+			out.write("<h1> <b>" + timeline.get(i).getUserName() + "<b><h1>\n");
+			out.write("\t\t</header>\n");
+
+			out.write("\t\t<div class=\"w3-container\">\n");
+			out.write("<h1> Quiz: " + timeline.get(i).getQuizTitle() + "<h1>\n");
+			out.write("<h2>Score: " + timeline.get(i).getScore() + "<h2>\n");
+			out.write("<h2>XP: " + timeline.get(i).getXp() + "<h2>\n");
+			out.write("<h2>Time: " + timeline.get(i).getDuration() + "<h2>\n");
+
+			out.write("\t\t</div>\n");
+
+
+			out.write("\t</div>\n");
+			if (i != timeline.size() - 1) {
+				out.write("<br>\n");
+				out.write("<br>\n");
+			}
+		}
+
+	%>
+
+</div>
+
 </body>
 </html>
