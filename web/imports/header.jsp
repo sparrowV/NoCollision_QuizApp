@@ -150,12 +150,12 @@
 		var url1 = "/AcceptChallenge?quiz_id=" + quiz_id + "&challenger_id=" + challenger_id;
 
 
-		xhr1.onreadystatechange = handler1;
+		xhr1.onreadystatechange = acceptedChallengeHandler;
 		xhr1.open("POST", url1, true);
 		xhr1.send(null);
 	}
 
-	function handler1() {
+	function acceptedChallengeHandler() {
 		if (xhr1.readyState === 4) {
 			if (xhr1.status === 200) {
 				console.log('accepted');
@@ -182,13 +182,13 @@
 			var url = "FriendRequestResponse?status=0&friend_id=" + document.getElementById("reject").value;
 		}
 
-		xhr.onreadystatechange = handler;
+		xhr.onreadystatechange = acceptRequestHandler;
 		xhr.open("POST", url, true);
 		xhr.send(null);
 	}
 
 
-	function handler() {
+	function acceptRequestHandler() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				console.log("successful");

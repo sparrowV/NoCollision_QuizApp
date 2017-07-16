@@ -1,9 +1,9 @@
+<%@ page import="database.bean.*" %>
 <%@ page import="listener.ContextKey" %>
+<%@ page import="model.*" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.*" %>
-<%@ page import="database.bean.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,6 +26,8 @@
 			$("[data-toggle=tooltip]").tooltip();
 		});
 	</script>
+
+	<script src="/imports/scripts.js" type="text/javascript"></script>
 
 	<%
 		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
@@ -174,27 +176,6 @@
 			'action': 'Logout',
 			'method': 'post'
 		}).appendTo(document.body).submit().remove();
-	}
-
-	function sendChallenge(quiz_id, friend_id) {
-		xhr2 = new XMLHttpRequest();
-
-		var url = "/SendChallenge?quiz_id=" + quiz_id + "&friend_id=" + friend_id;
-
-		xhr2.onreadystatechange = handler2;
-		xhr2.open("POST", url, true);
-		xhr2.send(null);
-	}
-
-	function handler2() {
-		if (xhr2.readyState === 4) {
-			if (xhr2.status === 200) {
-				console.log("successful");
-				alert("Challenge  sent")
-			} else {
-				alert("ERROR");
-			}
-		}
 	}
 </script>
 

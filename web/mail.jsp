@@ -1,7 +1,7 @@
-<%@ page import="model.MessageManager" %>
+<%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
-<%@ page import="servlet.ServletKey" %>
-<%@ page import="database.bean.User" %><%--
+<%@ page import="model.MessageManager" %>
+<%@ page import="servlet.ServletKey" %><%--
   Created by IntelliJ IDEA.
   User: m1sho
   Date: 13.07.2017
@@ -67,7 +67,7 @@
 			<textarea id="new_message" rows="4" cols="40" style="width:100%"></textarea>
 		</div>
 		<%
-			out.write("\t\t<button onclick=\"send(" + friend_id + ");\" class=\"w3-button w3-block w3-light-green\">Send Message</button>\n");
+			out.write("\t\t<button onclick=\"sendMessage(" + friend_id + ");\" class=\"w3-button w3-block w3-light-green\">Send Message</button>\n");
 		%>
 	</div>
 </div>
@@ -109,7 +109,7 @@
 		}
 	}
 
-	function send(friend_id) {
+	function sendMessage(friend_id) {
 		var message = document.getElementById('new_message').value;
 		//console.log(message);
 
@@ -137,12 +137,12 @@
 		element.focus();
 		element.setSelectionRange(element.value.length, element.value.length);
 
-		xhr.onreadystatechange = handler();
+		xhr.onreadystatechange = sendMessageHandler();
 		xhr.open("POST", url, true);
 		xhr.send(null);
 
 	}
-	function handler() {
+	function sendMessageHandler() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 

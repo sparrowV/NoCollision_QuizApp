@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/imports/scripts.js" type="text/javascript"></script>
 
 	<style>
 
@@ -130,36 +131,6 @@
 				} else if (currentUser.getUserId() == userId) {
 					out.println("<button class=\"btn btn-default\"  onclick=\"window.location = '/profile-edit.jsp';\">Edit Profile</button>\n");
 				}%>
-				<script>
-					function sendRequest(id) {
-						try {
-							xhr = new XMLHttpRequest();
-						} catch (e) {
-							xhr = new ActiveXObject("Microsoft.XMLHTTP");
-						}
-						if (xhr === null) {
-							alert("Ajax not supported by your browser!");
-							return;
-						}
-						var url = "/FriendRequestResponse?status=2&friend_id=" + id;
-
-						xhr.onreadystatechange = handler;
-						xhr.open("POST", url, true);
-						xhr.send(null);
-					}
-
-
-					function handler() {
-						if (xhr.readyState === 4) {
-							if (xhr.status === 200) {
-								console.log("successful");
-								alert("Friend Request sent")
-							} else {
-								alert("ERROR");
-							}
-						}
-					}
-				</script>
 			</div>
 
 			<%
@@ -189,27 +160,6 @@
 				// Print div closing tag.
 				out.println("</div>");
 			%>
-			<script>
-				function sendChallenge(quiz_id, friend_id) {
-					xhr2 = new XMLHttpRequest();
-
-					var url = "/SendChallenge?quiz_id=" + quiz_id + "&friend_id=" + friend_id;
-
-					xhr2.onreadystatechange = handler2;
-					xhr2.open("POST", url, true);
-					xhr2.send(null);
-				}
-				function handler2() {
-					if (xhr2.readyState === 4) {
-						if (xhr2.status === 200) {
-							console.log("successful");
-							alert("Challenge  sent")
-						} else {
-							alert("ERROR");
-						}
-					}
-				}
-			</script>
 		</div>
 	</div>
 </div>
