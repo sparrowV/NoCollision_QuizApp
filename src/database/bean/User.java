@@ -22,11 +22,6 @@ public class User implements HtmlSerializable {
 	public User() {
 	}
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
 	public User(String firstName, String lastName, String username, String password, String gender, String picture, String country, Date dateOfBirth, int status) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -69,13 +64,6 @@ public class User implements HtmlSerializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void update(String firstName, String lastName, String username, String password) {
-		setFirstName(firstName);
-		setLastName(lastName);
-		setUsername(username);
-		setPassword(password);
 	}
 
 	public String getGender() {
@@ -125,8 +113,7 @@ public class User implements HtmlSerializable {
 
 		User user = (User) o;
 
-		if (!getUsername().equals(user.getUsername())) return false;
-		return getPassword().equals(user.getPassword());
+		return getUsername().equals(user.getUsername()) && getPassword().equals(user.getPassword());
 	}
 
 	@Override
@@ -179,7 +166,7 @@ public class User implements HtmlSerializable {
 		String makeAdminButtonName;
 		if (status == 0) {
 			makeAdminButtonName = "Grant Admin Status";
-		} else makeAdminButtonName = "Seize Admin Privilege";
+		} else makeAdminButtonName = "Seize Admin Status";
 
 		String deleteUserButton = makeFormButtonHtml(ServletKey.DELETE_USER_SERVLET, userId, "Delete User");
 		String makeAdminButton = makeFormButtonHtml(ServletKey.CHANGE_USER_STATUS_SERVLET, userId, makeAdminButtonName);
