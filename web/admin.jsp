@@ -26,6 +26,14 @@
 </head>
 <body>
 
+<%
+	// check if user is not admin send back to home page
+	User checkUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
+	if (!checkUser.isAdmin()) {
+		response.sendRedirect(ServletKey.HOME_PAGE_JSP);
+	}
+%>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -142,7 +150,7 @@
 						<%
 							QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
 							for (Quiz quiz : quizManager.getQuizList()) {
-								out.print(quiz.toHtml());
+								out.print(quiz.toHtmlTableFormat());
 							}
 						%>
 						</tbody>

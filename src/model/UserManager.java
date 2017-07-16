@@ -32,7 +32,7 @@ public class UserManager {
 	}
 
 	public List<User> getUserList() {
-			return dao.getUsers();
+		return dao.getUsers();
 	}
 
 	public User addUser(User user) {
@@ -56,38 +56,19 @@ public class UserManager {
 	}
 
 	public void addUserQuizHistory(int userId, int quizId, String duration, double score, double xp) {
-		try {
-
-			dao.addUserQuizHistory(userId, quizId, duration, score, xp);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dao.addUserQuizHistory(userId, quizId, duration, score, xp);
 	}
 
 	public void deleteUser(int userId) {
-		try {
-			dao.deleteUser(userId);
-		} catch (Exception e) {
-			System.out.println("Could't delete user");
-		}
+		dao.deleteUser(userId);
 	}
 
 
 	public boolean usernameTaken(String username) {
-		boolean answer = false;
-		try {
-			answer = dao.usernameExists(username);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return answer;
+		return dao.usernameExists(username);
 	}
 
 	public void changeUserStatus(int userId, int status) {
-		try {
-			dao.updateUserStatus(userId, status);
-		} catch (Exception e) {
-			System.out.println("ERROR UPDATING USER STATUS");
-		}
+		dao.updateUserStatus(userId, status);
 	}
 }

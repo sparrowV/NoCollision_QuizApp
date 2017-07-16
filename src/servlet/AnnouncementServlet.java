@@ -33,12 +33,10 @@ public class AnnouncementServlet extends HttpServlet {
 
 		// get announcement text
 		String text = data.get("text").getAsString();
-		System.out.println(text);
 
 		// create announcement for given user
 		Announcement announcement = new Announcement(user.getUserId(), text);
 
-		System.out.println(announcement);
 
 		// add announcement to database
 		announcementManager.addAnnouncement(announcement);

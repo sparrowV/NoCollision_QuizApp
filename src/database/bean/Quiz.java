@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements HtmlSerializable {
 	private int authorId;
 	private int quizId;
 	private String title;
@@ -150,9 +150,9 @@ public class Quiz {
 		questions.add(question);
 	}
 
-	public String toHtml() {
-		String deleteQuizButton = "<form method=\"post\" action=\""+ ServletKey.DELETE_QUIZ_SERVLET +"\">\n" +
-				"<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>"+
+	public String toHtmlTableFormat() {
+		String deleteQuizButton = "<form method=\"post\" action=\"" + ServletKey.DELETE_QUIZ_SERVLET + "\">\n" +
+				"<input type=\"hidden\" name=\"id\" value=\"" + quizId + "\"/>" +
 				"<input type=\"submit\" class=\"btn btn-default\" value=\"Delete Quiz\" />\n" + "</form>";
 		return "<tr>\n" +
 				"<th scope=\"row\">" + quizId + "</th>\n" +
@@ -161,6 +161,15 @@ public class Quiz {
 				"<td>" + dateCreated + "</td>\n" +
 				"<td>" + deleteQuizButton + "</td>" +
 				"</tr>";
+	}
+
+	public String toHtml() {
+		// TODO: Refactor this mess.
+		return "<tr>\n" +
+				"      <th scope=\"row\">" + quizId + "</th>\n" +
+				"      <td>" + "<a href=do-quiz.jsp?id=" + quizId + ">" + title + "</a>" + "</td>\n" +
+				"      <td>" + dateCreated + "</td>\n" +
+				"    </tr>";
 	}
 
 	public String toHtml(List<User> friends) {

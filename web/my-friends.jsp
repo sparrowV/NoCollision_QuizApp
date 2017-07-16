@@ -1,8 +1,8 @@
 <%@ page import="database.bean.User" %>
-<%@ page import="java.util.List" %>
-<%@ page import="servlet.ServletKey" %>
+<%@ page import="listener.ContextKey" %>
 <%@ page import="model.FriendshipManager" %>
-<%@ page import="listener.ContextKey" %><%--
+<%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: m1sho
   Date: 05.07.2017
@@ -33,12 +33,6 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="javascript:history.back()">Back</a>
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#">My Friends</a></li>
-            </ul>
         </div>
     </div>
 </nav>

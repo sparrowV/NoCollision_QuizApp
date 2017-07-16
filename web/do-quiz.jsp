@@ -155,7 +155,7 @@
 					</h2>
 				</div>
 				<footer class="w3-container w3-khaki">
-					<a href="/home-page.jsp">Go To Home Page</a>
+					<a href="${pageContext.request.contextPath}/home-page.jsp">Go To Home Page</a>
 				</footer>
 			</div>
 		</div>
@@ -199,10 +199,10 @@
 	results.answers = {};
 	var counter = 0;
 
-	function sleep(miliseconds) {
+	function sleep(milliseconds) {
 		var currentTime = new Date().getTime();
 
-		while (currentTime + miliseconds >= new Date().getTime()) {
+		while (currentTime + milliseconds >= new Date().getTime()) {
 		}
 	}
 
@@ -227,7 +227,7 @@
 				var data = {"type": "immediateCorrection"};
 				data.answers = {"0": results.answers[counter - 1]};
 				$.post("/CheckAnswers", JSON.stringify((data)), function (data) {
-					if (data == 'true') {
+					if (data === 'true') {
 						$("<span>", {
 							class: "glyphicon glyphicon-ok",
 							"style": "color:green"
@@ -245,12 +245,10 @@
 					changeQuestion();
 				})
 			} else {
-				if (counter == questionIdList.length - 1)
+				if (counter === questionIdList.length - 1)
 					$("button#submit_btn").html("Finish");
 				changeQuestion();
 			}
-
-
 		} else if (counter == questionIdList.length && !practice) {
 			var time = $("#stopwatch")[0].innerHTML;
 			clearTimeout(t); //stop stopwatch

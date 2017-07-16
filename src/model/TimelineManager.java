@@ -1,6 +1,11 @@
 package model;
 
+import database.bean.TimelineActivity;
+import database.bean.User;
 import database.dao.TimelineDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by m1sho on 16.07.2017.
@@ -12,8 +17,8 @@ public class TimelineManager {
 		this.dao = dao;
 	}
 
-	public void getTimeline(int currentUserID) {
-		this.dao.getTimeline(currentUserID);
+	public List<TimelineActivity> getTimeline(List<User> myFriends) {
+		return this.dao.getTimeline(myFriends);
 	}
 
 }

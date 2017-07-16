@@ -8,6 +8,8 @@
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.TimelineManager" %>
+<%@ page import="database.bean.TimelineActivity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -61,6 +63,9 @@
 		if (myChallenges.size() != 0) {
 			challengeTitle = "Challenges (" + myChallenges.size() + ")";
 		}
+
+		TimelineManager timelineManager = (TimelineManager) application.getAttribute(ContextKey.TIMELINE_MANAGER);
+		List<TimelineActivity> timeline = timelineManager.getTimeline(friendshipManager.getFriends(currentUser.getUserId()));
 	%>
 	<%--copied from w3schools material--%>
 	<style>

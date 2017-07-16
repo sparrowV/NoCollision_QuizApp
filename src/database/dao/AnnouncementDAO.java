@@ -4,6 +4,7 @@ package database.dao;
 import database.DBContract;
 import database.DBInfo;
 import database.bean.Announcement;
+import database.bean.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -94,18 +95,65 @@ public class AnnouncementDAO {
 		return announcements;
 	}
 
+	public Announcement getLastAnnouncement(int userId) {
+		Connection connection = null;
+		Announcement announcement = null;
+		try {
+			connection = pool.getConnection();
 
-		private Announcement fetchAnnouncement(ResultSet resultSet) {
-			Announcement announcement = null;
-			try {
-				String text = resultSet.getString(DBContract.AnnouncementTable.COLUMN_NAME_TEXT);
-				int id = resultSet.getInt(DBContract.AnnouncementTable.COLUMN_NAME_USER_ID);
-				announcement = new Announcement(id, text);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			ResultSet resultSet;
+			// Query for selecting last announcement of user with given id
+			String query = "SELECT * FROM " + DBContract.AnnouncementTable.TABLE_NAME +
+					" WHERE " + DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + " =? " +
+					" AND " + DBContract.AnnouncementTable.COLUMN_NAME_ID + " = " +
+					"(SELECT MAX(" + DBContract.AnnouncementTable.COLUMN_NAME_ID + ") FROM " +
+					DBContract.AnnouncementTable.TABLE_NAME +
+					" WHERE " + DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + " = ?);";
+
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setInt(2, userId);
+
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				announcement = fetchAnnouncement(resultSet);
 			}
-			return announcement;
+
+
+			// Close statement and result set.
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
 		}
+		return announcement;
+	}
+
+
+	private Announcement fetchAnnouncement(ResultSet resultSet) {
+		Announcement announcement = null;
+		try {
+			String text = resultSet.getString(DBContract.AnnouncementTable.COLUMN_NAME_TEXT);
+			int id = resultSet.getInt(DBContract.AnnouncementTable.COLUMN_NAME_USER_ID);
+			announcement = new Announcement(id, text);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return announcement;
+	}
+
 
 }
 
