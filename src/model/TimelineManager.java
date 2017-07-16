@@ -1,5 +1,6 @@
 package model;
 
+import database.bean.TimelineActivity;
 import database.bean.User;
 import database.dao.TimelineDAO;
 
@@ -16,8 +17,8 @@ public class TimelineManager {
 		this.dao = dao;
 	}
 
-	public void getTimeline(List<User> myFriends) {
-		this.dao.getTimeline(myFriends);
+	public List<TimelineActivity> getTimeline(List<User> myFriends) {
+		return this.dao.getTimeline(myFriends);
 	}
 
 }
