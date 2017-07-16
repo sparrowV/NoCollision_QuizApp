@@ -95,7 +95,7 @@ public class AnnouncementDAO {
 		return announcements;
 	}
 
-	public Announcement getLastAnnouncement(int userId) {
+	public Announcement getLastAnnouncement() {
 		Connection connection = null;
 		Announcement announcement = null;
 		try {
@@ -105,28 +105,19 @@ public class AnnouncementDAO {
 			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
 
 			ResultSet resultSet;
-			// Query for selecting last announcement of user with given id
+			// Query for selecting last announcement
 			String query = "SELECT * FROM " + DBContract.AnnouncementTable.TABLE_NAME +
-					" WHERE " + DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + " =? " +
-					" AND " + DBContract.AnnouncementTable.COLUMN_NAME_ID + " = " +
+					" WHERE " + DBContract.AnnouncementTable.COLUMN_NAME_ID + " = " +
 					"(SELECT MAX(" + DBContract.AnnouncementTable.COLUMN_NAME_ID + ") FROM " +
-					DBContract.AnnouncementTable.TABLE_NAME +
-					" WHERE " + DBContract.AnnouncementTable.COLUMN_NAME_USER_ID + " = ?);";
+					DBContract.AnnouncementTable.TABLE_NAME + ");";
 
-
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, userId);
-			preparedStatement.setInt(2, userId);
-
-			resultSet = preparedStatement.executeQuery();
+			resultSet = statement.executeQuery(query);
 			if (resultSet.next()) {
 				announcement = fetchAnnouncement(resultSet);
 			}
 
-
 			// Close statement and result set.
 			resultSet.close();
-			preparedStatement.close();
 			statement.close();
 
 		} catch (SQLException e) {

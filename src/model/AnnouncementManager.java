@@ -22,8 +22,8 @@ public class AnnouncementManager {
 		return annDAO.getAnnouncements(userId);
 	}
 
-	public Announcement getLastAnnouncement(int userId) {
-		return annDAO.getLastAnnouncement(userId);
+	public Announcement getLastAnnouncement() {
+		return annDAO.getLastAnnouncement();
 	}
 
 }
