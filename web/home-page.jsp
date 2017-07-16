@@ -1,15 +1,9 @@
-<%@ page import="database.bean.Challenges" %>
-<%@ page import="database.bean.Quiz" %>
-<%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
-<%@ page import="model.ChallengeManager" %>
-<%@ page import="model.FriendshipManager" %>
-<%@ page import="model.QuizManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.TimelineManager" %>
-<%@ page import="database.bean.TimelineActivity" %>
+<%@ page import="model.*" %>
+<%@ page import="database.bean.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -66,6 +60,8 @@
 			challengeTitle = "Challenges (" + myChallenges.size() + ")";
 		}
 
+		AnnouncementManager announcementManager = (AnnouncementManager) application.getAttribute(ContextKey.ANNOUNCEMENT_MANAGER);
+		Announcement announcement = announcementManager.getLastAnnouncement();
 		TimelineManager timelineManager = (TimelineManager) application.getAttribute(ContextKey.TIMELINE_MANAGER);
 		List<TimelineActivity> timeline = timelineManager.getTimeline(friendshipManager.getFriends(currentUser.getUserId()));
 	%>
@@ -359,7 +355,27 @@
 </div>
 
 <div class="w3-container">
+
+	<%--announcement--%>
 	<%
+		if (announcement != null) {
+			out.write("  <div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
+					"    <header class=\"w3-container w3-orange\">\n" +
+					"      <h1>Admin Announcement</h1>\n" +
+					"    </header>\n" +
+					"    <div class=\"w3-container\">\n" +
+					"      <hr>\n" +
+					"      <h1>" + announcement.getAnnouncement() + "</h1>" +
+					"<br>\n" +
+					"    </div>\n" +
+					"  </div>\n" +
+					"<br>\n" +
+					"<br>\n");
+		}
+	%>
+
+
+	<% // friends activity
 		for (int i = 0; i < timeline.size(); i++) {
 			out.write("<div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
 					"\t\t<header class=\"w3-container w3-cyan\">\n");
