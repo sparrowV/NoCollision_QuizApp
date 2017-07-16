@@ -11,4 +11,6 @@ public final class ContextKey {
 	public static final String ANNOUNCEMENT_MANAGER = "announcement_manager";
 	public static final String CHALLENGE_MANAGER = "challenge_manager";
 	public static final String BADGE_MANAGER = "badge_manager";
+	public static final String TIMELINE_MANAGER = "timeline_manager";
+
 }
