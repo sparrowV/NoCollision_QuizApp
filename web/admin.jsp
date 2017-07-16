@@ -3,6 +3,7 @@
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="model.UserManager" %>
+<%@ page import="servlet.ServletKey" %>
 <%--
   Created by IntelliJ IDEA.
   User: janxo
@@ -43,32 +44,51 @@
 				</button>
 				<br>
 				<script>
-					function createAnnouncement() {
-						var $textArea = $("<textarea>", {id: "text", class: "form-control", rows: 2, cols: 50});
-						var $button = $("<button>", {
-							id: "button-addAnnouncement",
-							class: "btn btn-primary",
-							text: "Add Announcement"
-						});
-						$button.click(sendAnnouncement);
-						// get text from text area and send to servlet
-						function sendAnnouncement() {
-							var text = {text: $textArea.val()};
-							$.ajax({
-								url: '/AnnouncementServlet',
-								type: 'POST',
-								data: JSON.stringify(text),
-								contentType: 'application/json; charset=utf-8',
-								dataType: 'json',
-								async: true,
-								success: function (msg) {
-									alert(msg);
-								}
-							});
-						}
+					var $textArea = $("<textarea>", {id: "text", class: "form-control", rows: 2, cols: 50});
+					var $button = $("<button>", {
+						id: "button-addAnnouncement",
+						class: "btn btn-primary",
+						text: "Add Announcement"
+					});
+					$("#announcement").append($textArea);
+					$("#announcement").append($button);
 
-						$("#announcement").append($textArea);
-						$("#announcement").append($button);
+					// hide text area and button
+					$("#text").hide();
+					$("#button-addAnnouncement").hide();
+
+					// get text from text area and send to servlet
+					function sendAnnouncement(e) {
+						e.stopImmediatePropagation();
+						// send announcement to servlet
+						var text = {text: $textArea.val()};
+						$.ajax({
+							url: '/AnnouncementServlet',
+							type: 'POST',
+							data: JSON.stringify(text),
+							contentType: 'application/json; charset=utf-8',
+							dataType: 'json',
+							async: true,
+							success: function (msg) {
+								alert(msg);
+							}
+						});
+
+						// clear text area
+						$("#text").val("");
+
+						$("#text").hide();
+						$("#button-addAnnouncement").hide();
+
+						$("#button-announcement").show();
+					}
+
+
+					function createAnnouncement() {
+						$("#button-announcement").hide();
+						$("#text").show();
+						$("#button-addAnnouncement").show();
+						$button.click(sendAnnouncement);
 					}
 				</script>
 			</div>
@@ -90,9 +110,12 @@
 						</thead>
 						<tbody>
 						<%
+							User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
 							UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
 							for (User user : userManager.getUserList()) {
-								out.print(user.toHtmlTableFormat());
+								if (!user.equals(currentUser)) {
+									out.print(user.toHtmlTableFormat());
+								}
 							}
 						%>
 						</tbody>

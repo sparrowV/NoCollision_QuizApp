@@ -1,5 +1,7 @@
 package database.bean;
 
+import servlet.ServletKey;
+
 import java.util.Date;
 
 public class User implements HtmlSerializable {
@@ -13,6 +15,9 @@ public class User implements HtmlSerializable {
 	private Date dateOfBirth;
 	private int userId;
 	private int status;
+
+	private static final int ADMIN_STATUS = 1;
+	private static final int PLAIN_USER_STATUS = 0;
 
 
 	public User() {
@@ -156,16 +161,33 @@ public class User implements HtmlSerializable {
 		this.userId = userId;
 	}
 
+	public void grantAdminStatus() {
+		status = ADMIN_STATUS;
+	}
+
+	public void seizeAdminStatus() {
+		status = PLAIN_USER_STATUS;
+	}
+
+	private String makeFormButtonHTML(String pageUrl, int id, String buttonName) {
+		String formButtonForHtmlTable = "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
+				"<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>\n" +
+				"<input class=\"btn btn-default\" type=\"submit\" value=\"" + buttonName + "\" />\n" +
+				"</form>\n";
+		return formButtonForHtmlTable;
+	}
+
 	public String toHtmlTableFormat() {
-		String deleteUserButton = "<form action=\"delete-user.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + userId + "\"/>"+
-				"<input class=\"btn btn-default\" type=\"submit\" value=\"Delete User\" />\n" +
-				"</form>";
-		String makeAdminButton = "<form action=\"make-admin.jsp\">\n" + "<input type=\"hidden\" name=\"id\" value=\"" + userId + "\"/>"+
-				"<input class=\"btn btn-default\" type=\"submit\" value=\"Make Admin\" />\n" +
-				"</form>";
+		String makeAdminButtonName;
+		if (status == 0) {
+			makeAdminButtonName = "Grant Admin Status";
+		} else makeAdminButtonName = "Seize Admin Privilege";
+
+		String deleteUserButton = makeFormButtonHTML(ServletKey.DELETE_USER_SERVLET, userId, "Delete User");
+		String makeAdminButton = makeFormButtonHTML(ServletKey.CHANGE_USER_STATUS_SERVLET, userId, makeAdminButtonName);
 		return "<tr>\n" +
 				"<th scope=\"row\">" + userId + "</th>\n" +
-				"<td>" + username + "</td>\n" +
+				"<td>" + "<a href=/user/" + userId + ">" + username + "</a></td>\n" +
 				"<td>" + dateOfBirth + "</td>\n" +
 				"<td>" + deleteUserButton + "</td>\n" +
 				"<td>" + makeAdminButton + "</td>\n" +
@@ -179,6 +201,6 @@ public class User implements HtmlSerializable {
 
 	public boolean isAdmin() {
 		// status 0 means basic user
-		return getStatus()>0;
+		return getStatus() > 0;
 	}
 }

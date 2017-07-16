@@ -288,6 +288,40 @@ public class UserDAO {
 		}
 	}
 
+	// changes status of the user with the given id
+	public void updateUserStatus(int userId, int status) {
+		Connection connection = null;
+		try {
+			connection = pool.getConnection();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+
+			// query inserting into users table
+			String query = "UPDATE " + DBContract.UserTable.TABLE_NAME + " SET "
+					+ DBContract.UserTable.COLUMN_NAME_STATUS + " = ? "
+					+ " WHERE " + DBContract.UserTable.COLUMN_NAME_ID + " = ?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+			preparedStatement.setInt(1, status);
+			preparedStatement.setInt(2, userId);
+
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.getStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+	}
+
 	public void deleteUser(int userId) {
 		Connection connection = null;
 
@@ -299,7 +333,7 @@ public class UserDAO {
 
 			// delete query
 			String deleteUserQuery = "DELETE FROM " + DBContract.UserTable.TABLE_NAME + " WHERE " +
-										DBContract.UserTable.COLUMN_NAME_ID + " =?;";
+					DBContract.UserTable.COLUMN_NAME_ID + " =?;";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(deleteUserQuery);
 			preparedStatement.setInt(1, userId);
@@ -386,4 +420,6 @@ public class UserDAO {
 
 		return user;
 	}
+
+
 }
