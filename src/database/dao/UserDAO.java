@@ -120,7 +120,7 @@ public class UserDAO {
 		return id;
 	}
 
-	public boolean usernameExists(String username) throws SQLException {
+	public boolean usernameExists(String username) {
 		Connection connection;
 		try {
 			connection = pool.getConnection();

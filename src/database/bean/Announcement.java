@@ -2,6 +2,7 @@ package database.bean;
 
 
 public class Announcement {
+	private int announcementId;
 	private String announcement;
 	private int adminId;
 
@@ -17,6 +18,8 @@ public class Announcement {
 	public int getAdminId() {
 		return adminId;
 	}
+
+	public int getAnnouncementId() { return announcementId; };
 
 	public String toString() {
 		return "AuthorId: " + adminId + " -- " +

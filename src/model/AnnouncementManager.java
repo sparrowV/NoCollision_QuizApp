@@ -14,16 +14,16 @@ public class AnnouncementManager {
 	}
 
 	public void addAnnouncement(Announcement announcement) {
-		try {
-			annDAO.addAnnouncement(announcement);
-		} catch (Exception e) {
-			System.out.println("Something went wrong adding announcement");
-		}
+		annDAO.addAnnouncement(announcement);
 	}
 
 
 	public List<Announcement> getAnnouncements(int userId) {
 		return annDAO.getAnnouncements(userId);
+	}
+
+	public Announcement getLastAnnouncement(int userId) {
+		return annDAO.getLastAnnouncement(userId);
 	}
 
 }

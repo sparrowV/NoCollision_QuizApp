@@ -80,6 +80,7 @@ public final class DBContract {
 
 	public static class AnnouncementTable {
 		public static final String TABLE_NAME = "announcements";
+		public static final String COLUMN_NAME_ID = "id";
 		public static final String COLUMN_NAME_TEXT = "text";
 		public static final String COLUMN_NAME_USER_ID = "user_id";
 	}
