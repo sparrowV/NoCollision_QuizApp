@@ -20,8 +20,10 @@ public class FriendshipDAO {
 		this.pool = pool;
 	}
 
+
 	/**
-	 * Returns list of the currentID user's friends
+	 * @param currentUserId
+	 * @return list of the currentID user's friends
 	 */
 	public List<User> getFriends(int currentUserId) {
 		Connection connection = null;
@@ -52,8 +54,10 @@ public class FriendshipDAO {
 		}
 	}
 
+
 	/**
-	 * Sends friend request from currentUserId  to requestUserId
+	 * @param currentUserId
+	 * @param requestUserId Sends friend request from currentUserId  to requestUserId
 	 */
 	public void sendFriendRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
@@ -76,7 +80,8 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * Returns all received friend request for the user (currentUserId)
+	 * @param currentUserId
+	 * @return all received friend request for the user (currentUserId)
 	 */
 	public List<User> getReceivedFriendRequests(int currentUserId) {
 		List<User> pendingRequests = new ArrayList<>();
@@ -97,7 +102,8 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * Confirms sent friend request from requestUserId to currentUserId
+	 * @param currentUserId
+	 * @param requestUserId Confirms sent friend request from requestUserId to currentUserId
 	 */
 	public void acceptRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
@@ -120,7 +126,8 @@ public class FriendshipDAO {
 	}
 
 	/**
-	 * rejects the friendship request
+	 * @param currentUserId
+	 * @param requestUserId rejects the friendship request
 	 */
 	public void rejectRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
@@ -141,6 +148,11 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * @param currentUserId
+	 * @param friendUserId
+	 * @return if the currentUserID and friendsUserID are friends or not
+	 */
 	public boolean areFriends(int currentUserId, int friendUserId) {
 		Connection connection = null;
 		try {

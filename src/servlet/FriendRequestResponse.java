@@ -16,6 +16,16 @@ import java.io.IOException;
  */
 @WebServlet(name = "FriendRequestResponse", value = "/FriendRequestResponse")
 public class FriendRequestResponse extends HttpServlet {
+
+	/**
+	 * POST Method:
+	 * response of the friendship request
+	 * <p>
+	 * if the received status is 1 means accept
+	 * if 0 reject
+	 * else if 2 just sends a friend request
+	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int friend_id = Integer.parseInt(request.getParameter("friend_id"));
 		String status = request.getParameter("status"); // accept or reject
