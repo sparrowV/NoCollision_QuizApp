@@ -4,30 +4,30 @@ package database.bean;
  * Created by m1sho on 16.07.2017.
  */
 public class TimelineActivity {
-	int userID;
-	String userName;
-	int quiz_id;
-	String quizTitle;
-	String duration;
-	String score;
-	String xp;
+	private int userId;
+	private String userName;
+	private int quizId;
+	private String quizTitle;
+	private String duration;
+	private String score;
+	private String xp;
 
-	public TimelineActivity(int userID, String userName, int quiz_id, String quizTitle, String duration, String score, String xp) {
-		this.userID = userID;
+	public TimelineActivity(int userId, String userName, int quizId, String quizTitle, String duration, String score, String xp) {
+		this.userId = userId;
 		this.userName = userName;
-		this.quiz_id = quiz_id;
+		this.quizId = quizId;
 		this.quizTitle = quizTitle;
 		this.duration = duration;
 		this.score = score;
 		this.xp = xp;
 	}
 
-	public int getQuiz_id() {
-		return quiz_id;
+	public int getQuizId() {
+		return quizId;
 	}
 
-	public void setQuiz_id(int quiz_id) {
-		this.quiz_id = quiz_id;
+	public void setQuizId(int quiz_id) {
+		this.quizId = quiz_id;
 	}
 
 	public String getQuizTitle() {
@@ -62,12 +62,12 @@ public class TimelineActivity {
 		this.xp = xp;
 	}
 
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {
