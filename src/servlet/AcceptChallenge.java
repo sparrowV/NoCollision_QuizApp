@@ -3,7 +3,6 @@ package servlet;
 import database.bean.User;
 import listener.ContextKey;
 import model.ChallengeManager;
-import model.MessageManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,6 +1,5 @@
 package servlet;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import database.bean.*;
@@ -33,9 +32,9 @@ import static org.mockito.Mockito.*;
  * Created by sparrow on 7/16/2017.
  */
 public class CreateQuizTest {
-	BufferedReader rd;
-	HttpSession sessionMock;
-	User userMock;
+	private BufferedReader rd;
+	private HttpSession sessionMock;
+	private User userMock;
 	private HttpServletRequest requestMock;
 	private HttpServletResponse responseMock;
 	private ServletContext servletContextMock;
@@ -43,9 +42,7 @@ public class CreateQuizTest {
 	private QuizManager quizManager;
 	private RequestDispatcher requestDispatcher;
 	private Quiz quizMock;
-	private Gson gsonMock;
 	private ArrayList<Question> list;
-	private JsonObject jsonObjectMock;
 	private CreateQuiz createQuiz;
 
 	@Before
