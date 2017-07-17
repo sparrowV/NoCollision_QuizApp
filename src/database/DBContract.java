@@ -1,7 +1,5 @@
 package database;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-
 public final class DBContract {
 	private DBContract() {
 	}

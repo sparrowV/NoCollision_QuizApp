@@ -4,7 +4,6 @@ package database.dao;
 import database.DBContract;
 import database.DBInfo;
 import database.bean.Announcement;
-import database.bean.User;
 
 import javax.sql.DataSource;
 import java.sql.*;

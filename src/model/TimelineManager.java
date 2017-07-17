@@ -4,7 +4,6 @@ import database.bean.TimelineActivity;
 import database.bean.User;
 import database.dao.TimelineDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

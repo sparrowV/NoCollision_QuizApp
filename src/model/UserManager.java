@@ -3,7 +3,6 @@ package model;
 import database.bean.User;
 import database.dao.UserDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
