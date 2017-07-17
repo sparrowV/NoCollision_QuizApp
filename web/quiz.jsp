@@ -81,7 +81,8 @@
 		<div class="col-lg-2">
 			<div class="wrapper">
 				<p>Created By:</p>
-				<p><img src="/resources/profile.PNG" alt="Site Logo"> <%= author.getUsername() %>
+				<p><img width="32dp" height="32dp" src="<%=author.getPicture()%>"
+				        alt="Site Logo"> <%= author.getUsername() %>
 				</p>
 				<a href="<%=author.getProfilePath()%>">
 					<button class="btn btn-primary">View Profile</button>
