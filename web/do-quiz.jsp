@@ -120,21 +120,18 @@
 		List<Integer> questionIdList = new ArrayList<>();
 		for (Question question : questions) questionIdList.add(question.getQuestionId());
 		boolean multiplePages = quiz.getIsMultiplePages();
-		boolean practice = false;
-		if (practice) multiplePages = true;
-
 
 		String mode = request.getParameter("mode");
 		boolean isPractice = false;
 		if (mode != null)
 			isPractice = true;
-
+		if (isPractice) multiplePages = true;
 	%>
 
 	<script>
 		var questionIdList = JSON.parse('<%= new Gson().toJson(questionIdList) %>');
 		var immediateCorrection = JSON.parse('<%= new Gson().toJson(quiz.getIsImmediateCorrection()) %>');
-		var practice = JSON.parse('<%= new Gson().toJson(practice) %>');
+		var practice = JSON.parse('<%= new Gson().toJson(isPractice) %>');
 		if (practice) immediateCorrection = true;
 	</script>
 
@@ -150,9 +147,9 @@
 				</h2>
 				<hr>
 				<div class="progress">
-					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-					     aria-valuemin="0" aria-valuemax="100" style="width:40%">
-						40% Complete (success)
+					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"
+					     aria-valuemin="0" aria-valuemax="100" style="width:0">
+						0% Complete
 					</div>
 				</div>
 
@@ -306,26 +303,39 @@
 			counter++;
 		});
 
+		var value = counter / questionIdList.length * 100;
+		$('.progress-bar').css('width', value + '%').attr('aria-valuenow', value);
+
+
 		if (counter < questionIdList.length) {
+
 			if (immediateCorrection) {
 				var data = {"type": "immediateCorrection"};
 				data.answers = {"0": results.answers[counter - 1]};
 				$.post("/CheckAnswers", JSON.stringify((data)), function (data) {
 					if (data === 'true') {
-						$("<span>", {
+						if ($('.progress-bar').hasClass("progress-bar-danger")) {
+							$('.progress-bar').removeClass("progress-bar-danger");
+							$('.progress-bar').addClass("progress-bar-success");
+						}
+
+						/*$("<span>", {
 							class: "glyphicon glyphicon-ok",
 							"style": "color:green"
-						}).insertAfter("#questionHtml .question");
+						 }).insertAfter("#questionHtml .question");*/
 					} else {
-						$("<span>", {
+						if ($('.progress-bar').hasClass("progress-bar-success")) {
+							$('.progress-bar').removeClass("progress-bar-success");
+							$('.progress-bar').addClass("progress-bar-danger");
+						}
+						/*						$("<span>", {
 							class: "glyphicon glyphicon-remove",
 							"style": "color:red"
-						}).insertAfter("#questionHtml .question");
-						alert(questionIdList);
-						questionIdList.push(questionIdList[counter - 1]);
-						alert(questionIdList);
+						 }).insertAfter("#questionHtml .question");*/
+						if (practice) {
+							questionIdList.push(questionIdList[counter - 1]);
+						}
 					}
-					sleep(1000);
 					changeQuestion();
 				})
 			} else {
