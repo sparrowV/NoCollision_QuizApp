@@ -175,7 +175,7 @@ public class Quiz implements HtmlSerializable {
 	public String toHtml(List<User> friends) {
 		String res = "<tr>\n" +
 				"      <th scope=\"row\">" + quizId + "</th>\n" +
-				"      <td>" + "<a href=/do-quiz.jsp?id=" + quizId +
+				"      <td>" + "<a href=/quiz/" + quizId +
 				">" + title + "</a>" + "</td>\n" +
 				"      <td>" + dateCreated + "</td>\n" +
 				"<td><div class=\"dropdown\">\n" +
