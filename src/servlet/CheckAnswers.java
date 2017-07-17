@@ -73,9 +73,7 @@ public class CheckAnswers extends HttpServlet {
 		response.getWriter().flush();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 
 	/**
 	 * gives result base on quiz-takers inserted answers
