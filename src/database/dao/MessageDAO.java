@@ -17,6 +17,13 @@ public class MessageDAO {
 		this.pool = pool;
 	}
 
+	/**
+	 * sends the message from currentUser to friend
+	 *
+	 * @param currentUserId
+	 * @param friendID
+	 * @param message
+	 */
 	public void sendMessage(int currentUserId, int friendID, String message) {
 		Connection connection = null;
 
@@ -40,6 +47,9 @@ public class MessageDAO {
 		}
 	}
 
+	/**
+	 * returns the chat history
+	 */
 	public String getChatHistory(int currentUserId, int friendUserID, String friendName) {
 		Connection connection = null;
 		String html = "";

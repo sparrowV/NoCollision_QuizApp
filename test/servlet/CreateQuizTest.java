@@ -128,17 +128,10 @@ public class CreateQuizTest {
 
 
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		//verify(sessionMock,times(1)).getAttribute(ServletKey.CURRENT_QUIZ);
+
 
 		verify(requestMock, times(1)).getRequestDispatcher(captor.capture());
-		/**
-		 Question question = list.get(0);
-		 assertEquals(question.getQuestion(),"Thetext");
-		 assertEquals(question.getFillText(),"TheText");
-		 assertEquals(question.getMedia(),"https://fuckyou.com");
-		 assertEquals(question.getAnswer().getType(),1);
-		 assertEquals(((AnswerPlain)question.getAnswer()).getAnswer(),"TheAnswer");
-		 **/
+
 		assertEquals(list.get(0), question);
 
 		assertEquals(captor.getAllValues().get(0), ServletKey.HOME_PAGE_JSP);
@@ -206,7 +199,7 @@ public class CreateQuizTest {
 
 
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		//verify(sessionMock,times(1)).getAttribute(ServletKey.CURRENT_QUIZ);
+
 
 		verify(requestMock, times(1)).getRequestDispatcher(captor.capture());
 
@@ -280,7 +273,7 @@ public class CreateQuizTest {
 
 
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		//verify(sessionMock,times(1)).getAttribute(ServletKey.CURRENT_QUIZ);
+
 
 		verify(requestMock, times(1)).getRequestDispatcher(captor.capture());
 
@@ -353,7 +346,7 @@ public class CreateQuizTest {
 
 
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		//verify(sessionMock,times(1)).getAttribute(ServletKey.CURRENT_QUIZ);
+
 
 		verify(requestMock, times(1)).getRequestDispatcher(captor.capture());
 

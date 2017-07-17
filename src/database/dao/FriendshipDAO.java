@@ -119,6 +119,9 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * rejects the friendship request
+	 */
 	public void rejectRequest(int currentUserId, int requestUserId) {
 		Connection connection = null;
 		try {
@@ -181,6 +184,9 @@ public class FriendshipDAO {
 		}
 	}
 
+	/**
+	 * private parsing method
+	 */
 	private User fetchUser(ResultSet resultSet) throws SQLException {
 		User user = new User();
 

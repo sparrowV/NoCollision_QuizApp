@@ -20,6 +20,11 @@ public class TimelineDAO {
 		this.pool = pool;
 	}
 
+	/**
+	 * returns the list of news as Timeline
+	 *
+	 * @param myFriends news is about friends activity
+	 */
 	public List<TimelineActivity> getTimeline(List<User> myFriends) {
 		List<TimelineActivity> newsFeed = new ArrayList<>();
 
