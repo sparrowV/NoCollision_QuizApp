@@ -19,7 +19,10 @@ public class ChallengeDAO {
 		this.pool = pool;
 	}
 
-
+	/**
+	 * @param currentUserID
+	 * @return returns the ArrayList of challenges which he/she received
+	 */
 	public ArrayList<Challenges> getMyChallenges(int currentUserID) {
 		Connection connection = null;
 		ArrayList<Challenges> myChallenges = new ArrayList<>();
@@ -54,14 +57,27 @@ public class ChallengeDAO {
 		}
 	}
 
+	/**
+	 * @param currentUserID
+	 * @param friendUserID
+	 * @param quizID        currentUser sends the challenge to friendUser of quizID
+	 */
 	public void sendChallenge(int currentUserID, int friendUserID, int quizID) {
 		challengeTask(currentUserID, friendUserID, quizID, DBContract.Challenges.SQL.SEND_CHALLENGE);
 	}
 
+	/**
+	 * @param currentUserID
+	 * @param friendUserID
+	 * @param quizID        accepts sent challenge
+	 */
 	public void acceptChalenge(int currentUserID, int friendUserID, int quizID) {
 		challengeTask(currentUserID, friendUserID, quizID, DBContract.Challenges.SQL.ACCEPT_CHALLENGE);
 	}
 
+	/**
+	 * executes the query string
+	 */
 	private void challengeTask(int currentUserID, int friendUserID, int quizID, String query) {
 		Connection connection = null;
 		try {

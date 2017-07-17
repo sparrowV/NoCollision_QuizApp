@@ -12,6 +12,9 @@ public class TimelineActivity {
 	private String score;
 	private String xp;
 
+	/**
+	 * container of the single news item in Timeline section
+	 */
 	public TimelineActivity(int userId, String userName, int quizId, String quizTitle, String duration, String score, String xp) {
 		this.userId = userId;
 		this.userName = userName;
