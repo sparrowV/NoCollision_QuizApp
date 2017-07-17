@@ -11,5 +11,13 @@
         <filter-name>UserFilter</filter-name>
         <url-pattern>/user/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>QuizFilter</filter-name>
+        <filter-class>filter.QuizFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>QuizFilter</filter-name>
+        <url-pattern>/quiz/*</url-pattern>
+    </filter-mapping>
 </web-app>
 

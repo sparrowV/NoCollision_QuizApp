@@ -1,15 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+	<%
+		QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+		UserManager userManager = (UserManager) application.getAttribute(ContextKey.USER_MANAGER);
+		LeaderboardManager leaderboardManager = (LeaderboardManager) application.getAttribute(ContextKey.LEADERBOARD_MANAGER);
+		int quizId = Integer.parseInt((String) request.getAttribute("id"));
+		Quiz quiz = quizManager.getQuizById(quizId);
+		User author = userManager.getUserById(quiz.getAuthorId());
+		Category category = quizManager.getCategoryById(quiz.getCategoryId());
+	%>
 	<title>
-		Quiz Website
+		<%= quiz.getTitle() %>
 	</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Custom styles for this web-page -->
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="/style.css">
 
 	<!-- Bootstrap core JS and CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -72,23 +81,32 @@
 		<div class="col-lg-2">
 			<div class="wrapper">
 				<p>Created By:</p>
-				<p><img src="user.png" alt="Site Logo"> Tokoko</p>
-				<button class="btn btn-primary">View Profile</button>
+				<p><img src="user.png" alt="Site Logo"> <%= author.getUsername() %>
+				</p>
+				<a href="<%=author.getProfilePath()%>">
+					<button class="btn btn-primary">View Profile</button>
+				</a>
 			</div>
 		</div>
 		<div class="col-lg-6">
 			<div class="wrapper">
-				<p>Category > Sport</p>
-				<hr style="color: black">
-				<h2>The History of the United States of America</h2>
-				<hr style="color: black">
+				<p>Category > <%=category.getCategoryName()%>
+				</p>
+				<hr>
+				<h2><%=quiz.getTitle()%>
+				</h2>
+				<hr>
 			</div>
 		</div>
 		<div class="col-lg-4">
 			<div class="wrapper">
-				<button class="btn btn-warning">Practice Mode</button>
+				<a href="<%=quiz.getPath(true)%>">
+					<button class="btn btn-warning">Practice Mode</button>
+				</a>
 				<br>
-				<button class="btn btn-primary">Take Quiz</button>
+				<a href="<%=quiz.getPath(false)%>">
+					<button class="btn btn-primary">Take Quiz</button>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -105,120 +123,21 @@
 							<th>Country</th>
 							<th>Score</th>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Username</td>
-							<td>Georgia</td>
-							<td>168.5</td>
-						</tr>
+						<%
+							Leaderboard board = leaderboardManager.getLeaderboardByQuizId(quizId);
+							List<Leaderboard.Entry> entries = board.getEntries();
+							for (int i = 0; i < board.size(); i++) {
+								User user = entries.get(i).user;
+								double score = entries.get(i).score;
+								out.write("<tr>");
+								out.write(Integer.toBinaryString(i));
+								out.write(user.getUsername());
+								out.write(user.getCountry());
+								out.write(Double.toString(score));
+								out.write("</tr>");
+							}
+						%>
+
 					</table>
 				</div>
 			</div>
@@ -231,17 +150,7 @@
 					<li class="list-group-item">Second item</li>
 					<li class="list-group-item">Third item</li>
 				</ul>
-
-
 			</div>
-			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
-			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
-			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-
 		</div>
 
 	</div>

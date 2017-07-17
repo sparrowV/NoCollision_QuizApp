@@ -12,9 +12,9 @@ public class Quiz implements HtmlSerializable {
 	private int quizId;
 	private String title;
 	private Date dateCreated;
-	private boolean IsRandomizedOrder;
-	private boolean IsMultiplePages;
-	private boolean IsImmediateCorrection;
+	private boolean isRandomizedOrder;
+	private boolean isMultiplePages;
+	private boolean isImmediateCorrection;
 	private List<Question> questions;
 	private int categoryId;
 
@@ -22,40 +22,40 @@ public class Quiz implements HtmlSerializable {
 
 	}
 
-	public Quiz(int author_id, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages,
+	public Quiz(int authorId, String title, Date dateCreated, boolean randomizedOrder, boolean multiplePages,
 	            List<Question> questions, int categoryId, boolean immediateCorrection) {
-		this.authorId = author_id;
+		this.authorId = authorId;
 		this.title = title;
 		this.dateCreated = dateCreated;
 		this.questions = questions;
-		this.IsRandomizedOrder = randomizedOrder;
-		this.IsMultiplePages = multiplePages;
+		this.isRandomizedOrder = randomizedOrder;
+		this.isMultiplePages = multiplePages;
 		this.categoryId = categoryId;
-		this.IsImmediateCorrection = immediateCorrection;
+		this.isImmediateCorrection = immediateCorrection;
 	}
 
 	public boolean getIsRandomizedOrder() {
-		return IsRandomizedOrder;
+		return isRandomizedOrder;
 	}
 
 	public void setIsRandomizedOrder(boolean order) {
-		this.IsRandomizedOrder = order;
+		this.isRandomizedOrder = order;
 	}
 
 	public boolean getIsMultiplePages() {
-		return IsMultiplePages;
+		return isMultiplePages;
 	}
 
 	public void setIsMultiplePages(boolean value) {
-		this.IsMultiplePages = value;
+		this.isMultiplePages = value;
 	}
 
 	public boolean getIsImmediateCorrection() {
-		return IsImmediateCorrection;
+		return isImmediateCorrection;
 	}
 
 	public void setIsImmediateCorrection(boolean value) {
-		this.IsImmediateCorrection = value;
+		this.isImmediateCorrection = value;
 	}
 
 	public int getQuizId() {
@@ -191,6 +191,12 @@ public class Quiz implements HtmlSerializable {
 				"</div> </td>" +
 				"    </tr>";
 		return res;
+	}
+
+	public String getPath(boolean practice) {
+		String url = "/do-quiz.jsp?id=" + quizId;
+		if (practice) url += "&mode=practice";
+		return url;
 	}
 
 
