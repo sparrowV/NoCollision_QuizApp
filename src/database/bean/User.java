@@ -155,6 +155,7 @@ public class User implements HtmlSerializable {
 		status = PLAIN_USER_STATUS;
 	}
 
+
 	private String makeFormButtonHtml(String pageUrl, int id, String buttonName) {
 		if (buttonName.equals("Delete User") || buttonName.equals("Seize Admin Status"))
 			return "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
@@ -182,6 +183,10 @@ public class User implements HtmlSerializable {
 				"<td>" + deleteUserButton + "</td>\n" +
 				"<td>" + makeAdminButton + "</td>\n" +
 				"</tr>\n";
+	}
+
+	public String getProfilePath() {
+		return "/user/" + userId;
 	}
 
 	@Override

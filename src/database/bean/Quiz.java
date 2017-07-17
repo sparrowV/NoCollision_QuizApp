@@ -193,5 +193,11 @@ public class Quiz implements HtmlSerializable {
 		return res;
 	}
 
+	public String getPath(boolean practice) {
+		String url = "/do-quiz.jsp?id=" + quizId;
+		if (practice) url += "&mode=practice";
+		return url;
+	}
+
 
 }
