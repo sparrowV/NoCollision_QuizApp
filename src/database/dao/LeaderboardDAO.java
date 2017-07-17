@@ -35,8 +35,7 @@ public class LeaderboardDAO {
 					" FROM " + DBContract.UserQuizHistoryTable.TABLE_NAME +
 					" WHERE " + DBContract.UserQuizHistoryTable.COLUMN_NAME_QUIZ_ID + " = ? " +
 					" GROUP BY " + DBContract.UserQuizHistoryTable.COLUMN_NAME_USER_ID +
-					" ORDER BY MAX(" + DBContract.UserQuizHistoryTable.COLUMN_NAME_SCORE + ") " +
-					DBContract.UserQuizHistoryTable.COLUMN_NAME_DURATION;
+					" ORDER BY score;";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, quizId);

@@ -10,6 +10,7 @@ public class Leaderboard {
 	private int quizId;
 
 	public Leaderboard(int quizId) {
+		users = new ArrayList<Entry>();
 		this.quizId = quizId;
 	}
 

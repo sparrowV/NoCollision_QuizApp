@@ -96,10 +96,9 @@
 			padding: 10px;
 		}
 
-		header {
-			color: rgba(149, 165, 166, 20);
+		.question_container {
+			margin-bottom: 15px;
 		}
-
 
 	</style>
 
@@ -114,9 +113,6 @@
 	session.setAttribute(ServletKey.DONE_QUIZ_ID, quizId);
 	Quiz quiz = manager.getQuizById(quizId);
 
-	//out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>");
-	//out.write("<br></br>");
-	//out.write("<br></br>");
 %>
 
 <div class="page" id="page">

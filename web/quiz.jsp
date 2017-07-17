@@ -81,7 +81,7 @@
 		<div class="col-lg-2">
 			<div class="wrapper">
 				<p>Created By:</p>
-				<p><img src="user.png" alt="Site Logo"> <%= author.getUsername() %>
+				<p><%= author.getUsername() %>
 				</p>
 				<a href="<%=author.getProfilePath()%>">
 					<button class="btn btn-primary">View Profile</button>
@@ -130,10 +130,10 @@
 								User user = entries.get(i).user;
 								double score = entries.get(i).score;
 								out.write("<tr>");
-								out.write(Integer.toBinaryString(i));
-								out.write(user.getUsername());
-								out.write(user.getCountry());
-								out.write(Double.toString(score));
+								out.write("<td>" + Integer.toBinaryString(i) + "</td>");
+								out.write("<td>" + user.getUsername() + "</td>");
+								out.write("<td>" + user.getCountry() + "</td>");
+								out.write("<td>" + Double.toString(score) + "</td>");
 								out.write("</tr>");
 							}
 						%>
