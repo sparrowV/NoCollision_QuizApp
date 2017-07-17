@@ -51,7 +51,7 @@
 
 			<div class="features" style="background-color: darkgrey ">
 
-				<p>Selext desired features:</p>
+				<p>Select desired features:</p>
 				<form>
 					<div class="checkbox">
 						<input type="checkbox" id="random_order">

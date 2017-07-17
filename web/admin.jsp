@@ -111,9 +111,9 @@
 						<tr>
 							<th>ID</th>
 							<th>Username</th>
-							<th>Birth date</th>
+							<th>Birth Date</th>
 							<th>Delete</th>
-							<th>Change status</th>
+							<th>Change Status</th>
 						<tr>
 						</thead>
 						<tbody>
@@ -142,7 +142,7 @@
 						<tr>
 							<th>ID</th>
 							<th>Title</th>
-							<th>Date</th>
+							<th>Issue Date</th>
 							<th>Delete</th>
 						<tr>
 						</thead>
