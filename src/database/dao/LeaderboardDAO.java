@@ -3,14 +3,11 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.Badge;
 import database.bean.Leaderboard;
 import model.UserManager;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeaderboardDAO {
 

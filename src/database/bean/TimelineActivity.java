@@ -1,7 +1,5 @@
 package database.bean;
 
-import database.DBContract;
-
 /**
  * Created by m1sho on 16.07.2017.
  */

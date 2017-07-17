@@ -2,7 +2,6 @@ package database.dao;
 
 import database.DBContract;
 import database.DBInfo;
-import database.bean.AnswerPlain;
 import database.bean.Badge;
 
 import javax.sql.DataSource;
