@@ -18,7 +18,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<title>Write quiz</title>
+	<title>Take Quiz</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,8 +29,84 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+
+	<script src="/imports/scripts.js" type="text/javascript"></script>
+
+	<style>
+		.myHeader {
+			padding-left: 5%;
+			padding-top: 3%;
+			font-weight: bold;
+			background-color: #4CAF50;
+		}
+
+		#question_text {
+			text-align: center;
+		}
+
+		.answer {
+			text-align: center;
+		}
+
+	</style>
+
+	<style>
+		.wrapper {
+			padding: 20px;
+		}
+
+		.wrapper button {
+			margin: 5px;
+			margin-left: 40px;
+			width: 130px;
+		}
+
+		.table {
+			border: 2px solid;
+			border-radius: 20px;
+			box-shadow: 1px 1px 15px black;
+		}
+
+		.row {
+			background-color: white;
+		}
+
+		::-webkit-scrollbar {
+			width: 12px;
+		}
+
+		::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+		}
+
+		#quiz-metadata {
+			/*background-color: #D2D7D3;*/
+			background: linear-gradient(to bottom right, #D2D7D3, #6C7A89);
+			border-radius: 2%;
+			border-bottom-right-radius: 40%;
+		}
+
+		#quiz_container {
+			padding: 10px;
+		}
+
+		header {
+			color: rgba(149, 165, 166, 20);
+		}
+
+
+	</style>
+
+
 </head>
 <body class="w3-content">
+<%@include file="imports/header.jsp" %>
 
 <%
 	QuizManager manager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
@@ -38,33 +114,10 @@
 	session.setAttribute(ServletKey.DONE_QUIZ_ID, quizId);
 	Quiz quiz = manager.getQuizById(quizId);
 
-	out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>");
-	out.write("<br></br>");
-	out.write("<br></br>");
+	//out.write("<h2> <i>Quiz Name:</i><b> " + quiz.getTitle() + "</b></h2>");
+	//out.write("<br></br>");
+	//out.write("<br></br>");
 %>
-
-<h1 id="stopwatch">
-	<time>00:00:00</time>
-</h1>
-
-<style>
-	.myHeader {
-		padding-left: 5%;
-		padding-top: 3%;
-		font-weight: bold;
-		background-color: #4CAF50;
-	}
-
-	#question_text {
-		text-align: center;
-	}
-
-	.answer {
-		text-align: center;
-	}
-
-</style>
-
 
 <div class="page" id="page">
 
@@ -87,41 +140,67 @@
 		if (practice) immediateCorrection = true;
 	</script>
 
-	<%
+	<div class="row" id="quiz-metadata">
+		<div class="col-lg-3">
+			<h1 id="stopwatch">
+				<time>00:00:00</time>
+			</h1>
+		</div>
+		<div class="col-lg-6">
+			<div class="wrapper">
+				<h2><%=quiz.getTitle()%>
+				</h2>
+				<hr>
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+					     aria-valuemin="0" aria-valuemax="100" style="width:40%">
+						40% Complete (success)
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="wrapper">
+				<a href="<%=quiz.getPath(true)%>">
+					<button class="btn btn-warning">Practice Mode</button>
+				</a>
+				<br>
+				<a href="<%=quiz.getPath(false)%>">
+					<button class="btn btn-primary">Take Quiz</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<%
 		if (multiplePages) {
 			questions = questions.subList(0, 1);
 		}
+
 
 		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
 		for (int i = 1; i <= questions.size(); i++) {
 			Question question = questions.get(i - 1);
 			out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
 			out.write("<div class =\"question_container\" id=\"question_container\" " + i + ">\n");
-			out.write("<header class=\"w3-container w3-light-green\">\n");
+			out.write("<header class=\"w3-container w3-light-gray\">\n");
 			out.write("<h3>№" + i + "</h3>\n");
 			out.write("</header>\n");
 			out.write("<div id=\"questionHtml\">");
 			out.write(question.toHtml());
 			out.write("</div>");
-
-			out.write("<br/>\n");
-			out.write("<br/>\n");
-			out.write("<hr>\n");
-			out.write("<br/>\n");
-
+			out.write("<br/><br/><br/><br/>");
 			out.write("<div class=\"w3-container\">\n");
 			out.write("<div id=\"answerHtml\">");
 			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
 			out.write("</div>");
 			out.write("</div>\n");
-
-			out.write("<br/>\n");
-			out.write("<br/>\n");
-
+			out.write("<br/><br/>");
 			out.write("</div>\n");
 			out.write("</div>\n");
-			out.write("<br/>\n");
-			out.write("<br/>\n");
 		}
 		out.write("</div>\n");
 	%>
@@ -135,7 +214,7 @@
 	--%>
 	<div class="w3-container">
 
-		<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-green">
+		<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-gray">
 			<%= quiz.getIsMultiplePages() ? "Next" : "Finish" %>
 		</button>
 		<div id="id01" class="w3-modal">
@@ -384,7 +463,6 @@
 	}
 
 	timer();
-
 
 </script>
 

@@ -45,7 +45,6 @@
 .form-group {
 	margin: auto;
 	text-align: left;
-
 }
 
 .profile-info {
@@ -57,7 +56,7 @@
 }
 
 body {
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 .btn-link {
