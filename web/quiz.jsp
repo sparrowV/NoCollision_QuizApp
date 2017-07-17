@@ -81,8 +81,8 @@
 		<div class="col-lg-2">
 			<div class="wrapper">
 				<p>Created By:</p>
-				<p><%= author.getUsername() %>
-				</p>
+				<a href=<%="/user/" + author.getUserId()%>><p><%= author.getUsername() %>
+				</p></a>
 				<a href="<%=author.getProfilePath()%>">
 					<button class="btn btn-primary">View Profile</button>
 				</a>

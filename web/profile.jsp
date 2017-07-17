@@ -55,8 +55,8 @@
 	<div class="profile">
 		<div class="jumbotron">
 			<div class="page-header">
-				<h4><%=user.getFirstName() + " " + user.getLastName()%>
-				</h4>
+				<h3><%=user.getFirstName() + " " + user.getLastName()%>
+				</h3>
 				<div class="profile-picture">
 					<img src="<%= pictureUrl%>" class="img-thumbnail"
 					     height="450" width="450"
