@@ -14,6 +14,14 @@ public class TimelineActivity {
 
 	/**
 	 * container of the single news item in Timeline section
+	 *
+	 * @param userId
+	 * @param userName
+	 * @param quizId
+	 * @param quizTitle
+	 * @param duration
+	 * @param score
+	 * @param xp
 	 */
 	public TimelineActivity(int userId, String userName, int quizId, String quizTitle, String duration, String score, String xp) {
 		this.userId = userId;

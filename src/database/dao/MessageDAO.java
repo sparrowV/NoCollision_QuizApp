@@ -48,7 +48,10 @@ public class MessageDAO {
 	}
 
 	/**
-	 * returns the chat history
+	 * @param currentUserId
+	 * @param friendUserID
+	 * @param friendName
+	 * @return the chat history
 	 */
 	public String getChatHistory(int currentUserId, int friendUserID, String friendName) {
 		Connection connection = null;

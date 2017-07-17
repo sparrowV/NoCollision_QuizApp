@@ -76,7 +76,10 @@ public class ChallengeDAO {
 	}
 
 	/**
-	 * executes the query string
+	 * @param currentUserID
+	 * @param friendUserID
+	 * @param quizID
+	 * @param query         executes the query string
 	 */
 	private void challengeTask(int currentUserID, int friendUserID, int quizID, String query) {
 		Connection connection = null;
