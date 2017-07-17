@@ -1,3 +1,32 @@
+<%@ page import="database.bean.*" %>
+<%@ page import="listener.ContextKey" %>
+<%@ page import="model.*" %>
+<%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%
+	FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
+	User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
+	if (currentUser == null) {
+		response.sendRedirect("/index.jsp");
+		return;
+	}
+	List<User> friendRequests = friendshipManager.getReceivedFriendRequests(currentUser.getUserId());
+	String friendRequestNotification = "";
+	if (!friendRequests.isEmpty()) {
+		friendRequestNotification = " (" + friendRequests.size() + ")";
+	}
+
+	List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
+
+	ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
+	ArrayList<Challenges> myChallenges = challengeManager.getMyChallenges(currentUser.getUserId());
+	String challengeTitle = "Challenges";
+	if (myChallenges.size() != 0) {
+		challengeTitle = "Challenges (" + myChallenges.size() + ")";
+	}
+%>
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -197,6 +226,13 @@
 				alert("ERROR");
 			}
 		}
+	}
+
+	function logOut() {
+		$('<form>', {
+			'action': 'Logout',
+			'method': 'post'
+		}).appendTo(document.body).submit().remove();
 	}
 
 </script>

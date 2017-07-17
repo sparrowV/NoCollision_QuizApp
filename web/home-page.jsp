@@ -2,7 +2,6 @@
 <%@ page import="listener.ContextKey" %>
 <%@ page import="model.*" %>
 <%@ page import="servlet.ServletKey" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -19,7 +18,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script type='text/javascript'>
 		$(document).ready(function () {
@@ -29,71 +27,16 @@
 
 	<script src="/imports/scripts.js" type="text/javascript"></script>
 
-	<%
-		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
-		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
-		if (currentUser == null) {
-			response.sendRedirect("/index.jsp");
-			return;
-		}
-		List<User> friendRequests = friendshipManager.getReceivedFriendRequests(currentUser.getUserId());
-		String friendRequestNotification = "";
-		if (!friendRequests.isEmpty()) {
-			friendRequestNotification = " (" + friendRequests.size() + ")";
-		}
-
-		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
-
-		ChallengeManager challengeManager = (ChallengeManager) application.getAttribute(ContextKey.CHALLENGE_MANAGER);
-		ArrayList<Challenges> myChallenges = challengeManager.getMyChallenges(currentUser.getUserId());
-		String challengeTitle = "Challenges";
-		if (myChallenges.size() != 0) {
-			challengeTitle = "Challenges (" + myChallenges.size() + ")";
-		}
-
-		AnnouncementManager announcementManager = (AnnouncementManager) application.getAttribute(ContextKey.ANNOUNCEMENT_MANAGER);
-		Announcement announcement = announcementManager.getLastAnnouncement();
-		TimelineManager timelineManager = (TimelineManager) application.getAttribute(ContextKey.TIMELINE_MANAGER);
-		List<TimelineActivity> timeline = timelineManager.getTimeline(friendshipManager.getFriends(currentUser.getUserId()));
-	%>
-	<%--copied from w3schools material--%>
-	<style>
-		.dropdown {
-			position: relative;
-			display: inline-block;
-		}
-
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			background-color: #f9f9f9;
-			min-width: 160px;
-			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-			z-index: 1;
-		}
-
-		.dropdown-content a {
-			color: black;
-			padding: 12px 16px;
-			text-decoration: none;
-			display: block;
-		}
-
-		.dropdown-content a:hover {
-			background-color: #f1f1f1
-		}
-
-		.dropdown:hover .dropdown-content {
-			display: block;
-		}
-
-		.dropdown:hover .dropbtn {
-			background-color: #3e8e41;
-		}</style>
 </head>
 <body>
-
 <%@include file="imports/header.jsp" %>
+
+<%
+	AnnouncementManager announcementManager = (AnnouncementManager) application.getAttribute(ContextKey.ANNOUNCEMENT_MANAGER);
+	Announcement announcement = announcementManager.getLastAnnouncement();
+	TimelineManager timelineManager = (TimelineManager) application.getAttribute(ContextKey.TIMELINE_MANAGER);
+	List<TimelineActivity> timeline = timelineManager.getTimeline(friendshipManager.getFriends(currentUser.getUserId()));
+%>
 
 <div class="container">
 	<div class="home-page">
@@ -169,16 +112,6 @@
 	%>
 
 </div>
-
-<script language="javascript">
-	function logOut() {
-		$('<form>', {
-			'action': 'Logout',
-			'method': 'post'
-		}).appendTo(document.body).submit().remove();
-	}
-</script>
-
 
 </body>
 </html>
