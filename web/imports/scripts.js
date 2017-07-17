@@ -2,6 +2,11 @@
  * Created by m1sho on 17.07.2017.
  */
 
+/**
+ *
+ * @param quiz_id
+ * @param friend_id sends quiz challenge to friend_id
+ */
 function sendChallenge(quiz_id, friend_id) {
 	xhr2 = new XMLHttpRequest();
 
@@ -23,7 +28,9 @@ function sendChallengHandler() {
 	}
 }
 
-
+/**
+ * @param sends friend request
+ */
 function sendRequest(id) {
 	try {
 		xhr = new XMLHttpRequest();
