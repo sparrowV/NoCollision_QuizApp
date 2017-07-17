@@ -33,6 +33,8 @@ public class TimelineActivity {
 		this.xp = xp;
 	}
 
+	public TimelineActivity() {}
+
 	public int getQuizId() {
 		return quizId;
 	}
