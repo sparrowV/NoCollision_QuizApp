@@ -2,12 +2,8 @@
 <%@ page import="database.bean.HtmlSerializable" %>
 <%@ page import="database.bean.Question" %>
 <%@ page import="database.bean.Quiz" %>
-<%@ page import="listener.ContextKey" %>
 <%@ page import="model.QuizManager" %>
-<%@ page import="servlet.ServletKey" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: sparrow
@@ -127,6 +123,12 @@
 		boolean practice = false;
 		if (practice) multiplePages = true;
 
+
+		String mode = request.getParameter("mode");
+		boolean isPractice = false;
+		if (mode != null)
+			isPractice = true;
+
 	%>
 
 	<script>
@@ -158,13 +160,20 @@
 		</div>
 		<div class="col-lg-3">
 			<div class="wrapper">
-				<a href="<%=quiz.getPath(true)%>">
-					<button class="btn btn-warning">Practice Mode</button>
-				</a>
+				<%
+
+					if (isPractice) {
+						out.write("<a href=\"" + quiz.getPath(false) + "\"> <button class=\"btn btn-primary\">Take Quiz</button>  \t</a>\n");
+					} else {
+						out.write("<a href=\"" + quiz.getPath(true) + "\"> <button class=\"btn btn-warning\">Practice Mode</button>  \t</a>\n");
+					}
+
+				%>
+				<%--<a href="<%=quiz.getPath(true)%>"> 		<button class="btn btn-warning">Practice Mode</button> 	</a>
 				<br>
-				<a href="<%=quiz.getPath(false)%>">
-					<button class="btn btn-primary">Take Quiz</button>
-				</a>
+
+				<a href="<%=quiz.getPath(false)%>">  <button class="btn btn-primary">Take Quiz</button>  	</a>--%>
+
 			</div>
 		</div>
 	</div>
@@ -172,69 +181,69 @@
 
 
 <%
-		if (multiplePages) {
-			questions = questions.subList(0, 1);
-		}
+	if (multiplePages) {
+		questions = questions.subList(0, 1);
+	}
 
 
-		out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
-		for (int i = 1; i <= questions.size(); i++) {
-			Question question = questions.get(i - 1);
-			out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
-			out.write("<div class =\"question_container\" id=\"question_container\" " + i + ">\n");
-			out.write("<header class=\"w3-container w3-light-gray\">\n");
-			out.write("<h3>№" + i + "</h3>\n");
-			out.write("</header>\n");
-			out.write("<div id=\"questionHtml\">");
-			out.write(question.toHtml());
-			out.write("</div>");
-			out.write("<br/><br/><br/><br/>");
-			out.write("<div class=\"w3-container\">\n");
-			out.write("<div id=\"answerHtml\">");
-			out.write(((HtmlSerializable) question.getAnswer()).toHtml());
-			out.write("</div>");
-			out.write("</div>\n");
-			out.write("<br/><br/>");
-			out.write("</div>\n");
-			out.write("</div>\n");
-		}
+	out.write("<div id=\"quiz_container\" data-quiz-id=\"" + quizId + "\">\n");
+	for (int i = 1; i <= questions.size(); i++) {
+		Question question = questions.get(i - 1);
+		out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
+		out.write("<div class =\"question_container\" id=\"question_container\" " + i + ">\n");
+		out.write("<header class=\"w3-container w3-light-gray\">\n");
+		out.write("<h3>№" + i + "</h3>\n");
+		out.write("</header>\n");
+		out.write("<div id=\"questionHtml\">");
+		out.write(question.toHtml());
+		out.write("</div>");
+		out.write("<br/><br/><br/><br/>");
+		out.write("<div class=\"w3-container\">\n");
+		out.write("<div id=\"answerHtml\">");
+		out.write(((HtmlSerializable) question.getAnswer()).toHtml());
+		out.write("</div>");
 		out.write("</div>\n");
-	%>
+		out.write("<br/><br/>");
+		out.write("</div>\n");
+		out.write("</div>\n");
+	}
+	out.write("</div>\n");
+%>
 
-	<br/>
-	<br/>
+<br/>
+<br/>
 
 
-	<%--
-		used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4
-	--%>
-	<div class="w3-container">
+<%--
+	used material: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal4
+--%>
+<div class="w3-container">
 
-		<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-gray">
-			<%= quiz.getIsMultiplePages() ? "Next" : "Finish" %>
-		</button>
-		<div id="id01" class="w3-modal">
-			<div class="w3-modal-content w3-animate-top w3-card-4">
-				<header class="w3-container w3-khaki" bor>
+	<button type="submit" id="submit_btn" class="w3-button w3-block w3-light-gray">
+		<%= quiz.getIsMultiplePages() ? "Next" : "Finish" %>
+	</button>
+	<div id="id01" class="w3-modal">
+		<div class="w3-modal-content w3-animate-top w3-card-4">
+			<header class="w3-container w3-khaki" bor>
         <span onclick="document.getElementById('id01').style.display='none'"
               class="w3-button w3-display-topright">&times;</span>
-					<h1>Quiz Finished
-					</h1>
-				</header>
-				<div class="w3-container">
-					<h2>Your score is:
-						<snap id="result"></snap>
-					</h2>
-					<h2>Time:
-						<snap id="duration"></snap>
-					</h2>
-				</div>
-				<footer class="w3-container w3-khaki">
-					<a href="${pageContext.request.contextPath}/home-page.jsp">Go To Home Page</a>
-				</footer>
+				<h1>Quiz Finished
+				</h1>
+			</header>
+			<div class="w3-container">
+				<h2>Your score is:
+					<snap id="result"></snap>
+				</h2>
+				<h2>Time:
+					<snap id="duration"></snap>
+				</h2>
 			</div>
+			<footer class="w3-container w3-khaki">
+				<a href="${pageContext.request.contextPath}/home-page.jsp">Go To Home Page</a>
+			</footer>
 		</div>
 	</div>
+</div>
 
 
 </div>
