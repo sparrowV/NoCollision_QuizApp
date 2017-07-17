@@ -15,7 +15,5 @@ public class Logout extends HttpServlet {
 		response.sendRedirect(ServletKey.INDEX_JSP);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 }
