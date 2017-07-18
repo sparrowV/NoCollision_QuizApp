@@ -25,7 +25,5 @@ public class SendChallenge extends HttpServlet {
 		challengeManager.sendChallenge(currentUserID, friend_id, challengedQuizID);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 }
