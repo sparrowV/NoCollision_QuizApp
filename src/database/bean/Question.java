@@ -9,6 +9,8 @@ public class Question implements HtmlSerializable {
 	private String fillText = null; // instance variable to store text with blank parts (may be null)
 	private Answer answer = null; // relevant answer object
 
+	public Question() {}
+
 	public Question(String text, String media, String fillText, Answer answer) {
 		this.text = text;
 		this.media = media;
@@ -42,6 +44,26 @@ public class Question implements HtmlSerializable {
 
 	public Answer getAnswer() {
 		return answer;
+	}
+
+	public void setQuestionText(String text) {
+		this.text = text;
+	}
+
+	public void setQuestionId(int id) {
+		this.id = id;
+	}
+
+	public void setFillText(String fillText) {
+		this.fillText = fillText;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
+	}
+
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
 	}
 
 

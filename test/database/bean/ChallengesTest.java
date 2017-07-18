@@ -2,9 +2,7 @@ package database.bean;
 
 import org.junit.Test;
 
-/**
- * Created by Irakli on 17/07/17.
- */
+
 public class ChallengesTest {
 	@Test
 	public void getChallengerID() throws Exception {
