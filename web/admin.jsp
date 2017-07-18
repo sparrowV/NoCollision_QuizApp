@@ -4,6 +4,8 @@
 <%@ page import="model.QuizManager" %>
 <%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="database.bean.Category" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: janxo
@@ -204,6 +206,135 @@
 
 				</script>
 			</div>
+
+			<br>
+
+			<div id="badges">
+
+				<button class="btn bg-primary" id="pre_add_new_bagde" onclick="addBadge()">Add New Badge
+				</button>
+				<label id="label_badge_name" style="display:none;">Badge Name:</label>
+				<textarea id="badge_name" style="display:none;" class="form-control"></textarea>
+				<label id="label_badge_description" style="display:none;">Badge Description:</label>
+				<textarea id="badge_description" style="display:none;" class="form-control"></textarea>
+				<label id="label_category" style="display:none;">Choose Category:</label>
+
+				<%
+					List<Category> categoryList = quizManager.getQuizCategories();
+					out.write("<select  style=\"display:none;\" id=\"categories_selector\" name=\"category\">\n");
+					for (Category category : categoryList) {
+						out.write("<option value=\"" + category.getCategoryId()
+								+ "\">" + category.getCategoryName() + "</option>\n");
+					}
+					out.write("</select>\n");
+				%>
+
+				<label style="display:none;" id="label_number_quiz">Number Of Minimal Done Quizzes:</label>
+				<%
+					out.write("<select  style=\"display:none;\" id=\"required_num_quizz\" name=\"category\">\n");
+
+					for (int i = 1; i < 101; i++) {
+						out.write("<option value=\"" + i + "\">" + i + "</option>\n");
+					}
+					out.write("</select>\n");
+
+				%>
+
+				<label style="display:none;" id="label_xp">Number of Minimal XP:</label>
+				<%
+					out.write("<select  style=\"display:none;\" id=\"required_xp\" name=\"category\">\n");
+
+					for (int i = 1; i < 201; i++) {
+						out.write("<option value=\"" + i + "\">" + i + " XP</option>\n");
+					}
+					out.write("</select>\n");
+
+				%>
+				<br>
+				<button style="display:none;" class="btn bg-primary" id="add_new_bagde" onclick="addNewBadge()">Add
+					Badge
+				</button>
+
+				<script>
+
+					function addBadge() {
+						document.getElementById('badge_name').style.display = "block";
+						document.getElementById('badge_description').style.display = "block";
+						document.getElementById('categories_selector').style.display = "block";
+
+						document.getElementById('label_category').style.display = "block";
+						document.getElementById('label_badge_description').style.display = "block";
+						document.getElementById('label_badge_name').style.display = "block";
+
+						document.getElementById('label_number_quiz').style.display = "block";
+						document.getElementById('label_xp').style.display = "block";
+
+						document.getElementById('required_num_quizz').style.display = "block";
+						document.getElementById('required_xp').style.display = "block";
+
+
+						document.getElementById('add_new_bagde').style.display = "block";
+
+						document.getElementById('pre_add_new_bagde').style.display = "none";
+					}
+
+
+					function addNewBadge() {
+						xhr1 = new XMLHttpRequest();
+						//	var new_category = document.getElementById('new_category').value;
+
+						var badge_name = document.getElementById('badge_name').value;
+						var badge_description = document.getElementById('badge_description').value;
+						var category_id = document.getElementById('categories_selector').value;
+						var required_num_quiz = document.getElementById('required_num_quizz').value;
+						var required_xp = document.getElementById('required_xp').value;
+
+
+						/*	console.log(badge_name);
+						 console.log(badge_description);
+						 console.log(category_id);
+						 console.log(required_num_quiz);
+						 console.log(required_xp);*/
+
+						var url1 = "/AddNewBadge?badge_name=" + badge_name + "&badge_description=" + badge_description + "&category_id=" + category_id + "&num_quiz=" + required_num_quiz + "&xp=" + required_xp;
+
+						xhr1.onreadystatechange = addNewBadgeHandler;
+						xhr1.open("POST", url1, true);
+						xhr1.send(null);
+					}
+
+					function addNewBadgeHandler() {
+						if (xhr1.readyState === 4) {
+							if (xhr1.status === 200) {
+
+							} else {
+								alert('Adding New Badge Problem...');
+							}
+						}
+						document.getElementById('badge_name').style.display = "none";
+						document.getElementById('badge_description').style.display = "none";
+						document.getElementById('categories_selector').style.display = "none";
+
+						document.getElementById('label_category').style.display = "none";
+						document.getElementById('label_badge_description').style.display = "none";
+						document.getElementById('label_badge_name').style.display = "none";
+
+						document.getElementById('label_number_quiz').style.display = "none";
+						document.getElementById('label_xp').style.display = "none";
+
+						document.getElementById('required_num_quizz').style.display = "none";
+						document.getElementById('required_xp').style.display = "none";
+
+
+						document.getElementById('add_new_bagde').style.display = "none";
+
+						document.getElementById('pre_add_new_bagde').style.display = "block";
+					}
+
+				</script>
+
+			</div>
+
 		</div>
 	</div>
 </div>
