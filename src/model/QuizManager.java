@@ -42,6 +42,8 @@ public class QuizManager {
 		return dao.getQuizByTitle(title);
 	}
 
+	public List<Quiz> getQuizByCategoryId(int categoryId) {return dao.getQuizByCategoryId(categoryId); }
+
 	public List<Category> getQuizCategories() {
 		return dao.getQuizCategories();
 	}

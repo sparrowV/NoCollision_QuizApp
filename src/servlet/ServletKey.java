@@ -31,9 +31,11 @@ public final class ServletKey {
 	public static final String PROFILE_JSP = "profile.jsp";
 	public static final String MY_FRIENDS_JSP = "my-friends.jsp";
 	public static final String ADMIN_JSP = "admin.jsp";
+	public static final String QUIZ_BY_CATEGORY_JSP = "quiz-by-category.jsp";
 	public static final String DELETE_USER_SERVLET = "DeleteUser";
 	public static final String CHANGE_USER_STATUS_SERVLET = "ChangeUserStatus";
 	public static final String DELETE_QUIZ_SERVLET ="DeleteQuiz";
+
 
 	public static final String SEARCH_PREFIX_USER = "user:";
 	public static final String SEARCH_PREFIX_QUIZ = "quiz:";

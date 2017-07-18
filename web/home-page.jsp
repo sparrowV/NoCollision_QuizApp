@@ -57,61 +57,79 @@
 				out.write("</div>");
 			%>
 
-			<p><a class="btn btn-default bg-info"
-			      href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a></p>
+			<td>
+
+				<p><a class="btn btn-default bg-info"
+				      href="${pageContext.request.contextPath}/<%= ServletKey.CREATE_QUIZ_JSP%>">Create New Quiz</a>
+				</p>
+
+				<div class="dropdown">
+					<button class="btn btn-default">Quiz By Category</button>
+					<div class="dropdown-content">
+						<%
+							QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
+							List<Category> categories = quizManager.getQuizCategories();
+							for (int i = 0; i < categories.size(); i++) {
+								Category currCategory = categories.get(i);
+								out.print("<a href=" + ServletKey.QUIZ_BY_CATEGORY_JSP + "?id=" + currCategory.getCategoryId()
+										+ ">" + currCategory.getCategoryName() + "</a>");
+							}
+						%>
+
+					</div>
+				</div>
 		</div>
+
+
 	</div>
 
+	<div class="w3-container">
 
-</div>
-
-<div class="w3-container">
-
-	<%--announcement--%>
-	<%
-		if (announcement != null) {
-			out.write("  <div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
-					"    <header class=\"w3-container w3-orange\">\n" +
-					"      <h1>Admin Announcement</h1>\n" +
-					"    </header>\n" +
-					"    <div class=\"w3-container\">\n" +
-					"      <hr>\n" +
-					"      <h1>" + announcement.getAnnouncement() + "</h1>" +
-					"<br>\n" +
-					"    </div>\n" +
-					"  </div>\n" +
-					"<br>\n" +
-					"<br>\n");
-		}
-	%>
-
-
-	<% // friends activity
-		for (int i = 0; i < timeline.size(); i++) {
-			out.write("<div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
-					"\t\t<header class=\"w3-container w3-cyan\">\n");
-			out.write("<h1> <b>" + timeline.get(i).getUserName() + "<b><h1>\n");
-			out.write("\t\t</header>\n");
-
-			out.write("\t\t<div class=\"w3-container\">\n");
-			out.write("<h1> Quiz: " + timeline.get(i).getQuizTitle() + "<h1>\n");
-			out.write("<h2>Score: " + timeline.get(i).getScore() + "<h2>\n");
-			out.write("<h2>XP: " + timeline.get(i).getXp() + "<h2>\n");
-			out.write("<h2>Time: " + timeline.get(i).getDuration() + "<h2>\n");
-
-			out.write("\t\t</div>\n");
-
-
-			out.write("\t</div>\n");
-			if (i != timeline.size() - 1) {
-				out.write("<br>\n");
-				out.write("<br>\n");
+		<%--announcement--%>
+		<%
+			if (announcement != null) {
+				out.write("  <div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
+						"    <header class=\"w3-container w3-orange\">\n" +
+						"      <h1>Admin Announcement</h1>\n" +
+						"    </header>\n" +
+						"    <div class=\"w3-container\">\n" +
+						"      <hr>\n" +
+						"      <h1>" + announcement.getAnnouncement() + "</h1>" +
+						"<br>\n" +
+						"    </div>\n" +
+						"  </div>\n" +
+						"<br>\n" +
+						"<br>\n");
 			}
-		}
+		%>
 
-	%>
 
-</div>
+		<% // friends activity
+			for (int i = 0; i < timeline.size(); i++) {
+				out.write("<div class=\"w3-card-4\" style=\"width:50%; text-align: center; margin: auto;\">\n" +
+						"\t\t<header class=\"w3-container w3-cyan\">\n");
+				out.write("<h1> <b>" + timeline.get(i).getUserName() + "<b><h1>\n");
+				out.write("\t\t</header>\n");
+
+				out.write("\t\t<div class=\"w3-container\">\n");
+				out.write("<h1> Quiz: " + timeline.get(i).getQuizTitle() + "<h1>\n");
+				out.write("<h2>Score: " + timeline.get(i).getScore() + "<h2>\n");
+				out.write("<h2>XP: " + timeline.get(i).getXp() + "<h2>\n");
+				out.write("<h2>Time: " + timeline.get(i).getDuration() + "<h2>\n");
+
+				out.write("\t\t</div>\n");
+
+
+				out.write("\t</div>\n");
+				if (i != timeline.size() - 1) {
+					out.write("<br>\n");
+					out.write("<br>\n");
+				}
+			}
+
+		%>
+
+	</div>
 
 </body>
 </html>
