@@ -147,9 +147,9 @@
 				</h2>
 				<hr>
 				<div class="progress">
-					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"
+					<div class="progress-bar" role="progressbar" aria-valuenow="0"
 					     aria-valuemin="0" aria-valuemax="100" style="width:0">
-						0% Complete
+						<!--0% Complete-->
 					</div>
 				</div>
 
@@ -189,7 +189,11 @@
 		out.write("<div class=\"w3-card-4\" style=\"width:100%\">\n");
 		out.write("<div class =\"question_container\" id=\"question_container\" " + i + ">\n");
 		out.write("<header class=\"w3-container w3-light-gray\">\n");
-		out.write("<h3>№" + i + "</h3>\n");
+		if (!multiplePages) {
+			out.write("<center><h3>Question №" + i + "</h3></center>");
+		} else {
+			out.write("<center><h3>Question</h3></center>");
+		}
 		out.write("</header>\n");
 		out.write("<div id=\"questionHtml\">");
 		out.write(question.toHtml());
@@ -274,6 +278,12 @@
 			}
 		});
 
+		if (!immediateCorrection) {
+			$('.progress-bar').addClass("progress-bar-info");
+		} else {
+			$('.progress-bar').addClass("progress-bar-success");
+		}
+
 	});
 
 	var results = {"type": "normal"};
@@ -297,16 +307,13 @@
 
 	// .question_container .answer[data-type="multiple"] input[data-last]
 	$("#submit_btn").click(function () {
-
 		$(".question_container .answer").each(function () {
 			results.answers[counter] = getInsertedAnswer(this, counter);
 			counter++;
 		});
-
 		var value = counter / questionIdList.length * 100;
 		$('.progress-bar').css('width', value + '%').attr('aria-valuenow', value);
-
-
+		//$('.progress-bar').html(Math.round((value) + '% Complete'));
 		if (counter < questionIdList.length) {
 
 			if (immediateCorrection) {
@@ -318,20 +325,11 @@
 							$('.progress-bar').removeClass("progress-bar-danger");
 							$('.progress-bar').addClass("progress-bar-success");
 						}
-
-						/*$("<span>", {
-							class: "glyphicon glyphicon-ok",
-							"style": "color:green"
-						 }).insertAfter("#questionHtml .question");*/
 					} else {
 						if ($('.progress-bar').hasClass("progress-bar-success")) {
 							$('.progress-bar').removeClass("progress-bar-success");
 							$('.progress-bar').addClass("progress-bar-danger");
 						}
-						/*						$("<span>", {
-							class: "glyphicon glyphicon-remove",
-							"style": "color:red"
-						 }).insertAfter("#questionHtml .question");*/
 						if (practice) {
 							questionIdList.push(questionIdList[counter - 1]);
 						}
@@ -343,39 +341,43 @@
 					$("button#submit_btn").html("Finish");
 				changeQuestion();
 			}
-		} else if (counter == questionIdList.length && !practice) {
+		} else if (counter == questionIdList.length) {
 			var time = $("#stopwatch")[0].innerHTML;
 			clearTimeout(t); //stop stopwatch
 			results.time = time;
+			if (!practice) {
+				$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
+					$("#result").html(data["correct"] + "/" + data["total"]);
+					$("#duration").html(time);
+					$("#id01").css('display', 'block');
 
-			$.post("/CheckAnswers", JSON.stringify((results)), function (data) {
-				$("#result").html(data["correct"] + "/" + data["total"]);
+					var arr = [];
+					arr = data["correctAnswers"];
+
+					var quiz = $("#quiz_container");
+					var question = $(quiz).find(".question");
+					console.log(arr);
+					for (var i = 0; i < question.length + 1; i++) {
+						if (arr.includes(i.toString())) {
+							var correct = document.createElement('span');
+							correct.classList = "glyphicon glyphicon-ok";
+							correct.style = "color:green";
+							console.log(i);
+							$(question).eq(i).append(correct)
+						} else {
+							var not_correct = document.createElement('span');
+							not_correct.classList = "glyphicon glyphicon-remove";
+							not_correct.style = "color:red";
+							$(question).eq(i).append(not_correct)
+						}
+
+					}
+				}, "json")
+			} else {
+				$("#result").html("Practice session has been completed");
 				$("#duration").html(time);
 				$("#id01").css('display', 'block');
-
-				var arr = [];
-				arr = data["correctAnswers"];
-
-
-				var quiz = $("#quiz_container");
-				var question = $(quiz).find(".question");
-				console.log(arr);
-				for (var i = 0; i < question.length + 1; i++) {
-					if (arr.includes(i.toString())) {
-						var correct = document.createElement('span');
-						correct.classList = "glyphicon glyphicon-ok";
-						correct.style = "color:green";
-						console.log(i);
-						$(question).eq(i).append(correct)
-					} else {
-						var not_correct = document.createElement('span');
-						not_correct.classList = "glyphicon glyphicon-remove";
-						not_correct.style = "color:red";
-						$(question).eq(i).append(not_correct)
-					}
-
-				}
-			}, "json")
+			}
 		}
 	});
 
