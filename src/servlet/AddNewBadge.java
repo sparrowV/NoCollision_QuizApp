@@ -4,7 +4,6 @@ import database.bean.Badge;
 import database.bean.User;
 import listener.ContextKey;
 import model.BadgeManager;
-import model.CategoryManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +38,5 @@ public class AddNewBadge extends HttpServlet {
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 }

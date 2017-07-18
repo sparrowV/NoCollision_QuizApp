@@ -36,7 +36,7 @@
 
 </head>
 <body>
-
+<%@include file="imports/navbar.html" %>
 <style>
 	.w3-container {
 		text-align: center;

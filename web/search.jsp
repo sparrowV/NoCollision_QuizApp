@@ -22,14 +22,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="javascript:history.back()">Back</a>
-		</div>
-	</div>
-</nav>
-
+<%@include file="imports/navbar.html" %>
 <div class="container">
 	<div class="search-results">
 		<div class="jumbotron">

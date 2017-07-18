@@ -3,7 +3,6 @@ package servlet;
 import database.bean.User;
 import listener.ContextKey;
 import model.CategoryManager;
-import model.ChallengeManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +27,5 @@ public class AddCategory extends HttpServlet {
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 }

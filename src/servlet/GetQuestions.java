@@ -16,9 +16,7 @@ import java.io.IOException;
 
 @WebServlet(name = "GetQuestions", value = "/GetQuestions")
 public class GetQuestions extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int questionId = Integer.parseInt(request.getParameter("question_id"));
