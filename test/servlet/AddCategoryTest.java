@@ -20,7 +20,6 @@ import static org.mockito.Mockito.*;
  */
 public class AddCategoryTest {
 	private HttpSession sessionMock;
-	private User userMock;
 	private HttpServletRequest requestMock;
 	private HttpServletResponse responseMock;
 	private ServletContext servletContextMock;
