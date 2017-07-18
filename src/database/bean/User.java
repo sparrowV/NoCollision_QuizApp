@@ -5,8 +5,11 @@ import servlet.ServletKey;
 import java.util.Date;
 
 public class User implements HtmlSerializable {
+	// Private static variables.
 	private static final int ADMIN_STATUS = 1;
 	private static final int PLAIN_USER_STATUS = 0;
+
+	// Private instance variables.
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -155,7 +158,6 @@ public class User implements HtmlSerializable {
 		status = PLAIN_USER_STATUS;
 	}
 
-
 	private String makeFormButtonHtml(String pageUrl, int id, String buttonName) {
 		if (buttonName.equals("Delete User") || buttonName.equals("Seize Admin Status"))
 			return "<form method=\"post\" action=\"" + pageUrl + "\">\n" +
@@ -168,6 +170,11 @@ public class User implements HtmlSerializable {
 				"</form>\n";
 	}
 
+	/**
+	 * Formats user data as html table.
+	 *
+	 * @return html table data
+	 */
 	public String toHtmlTableFormat() {
 		String makeAdminButtonName;
 		if (status == 0) {
@@ -185,6 +192,10 @@ public class User implements HtmlSerializable {
 				"</tr>\n";
 	}
 
+	/**
+	 * Returns user's profile path.
+	 * @return profile path
+	 */
 	public String getProfilePath() {
 		return "/user/" + userId;
 	}

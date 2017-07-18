@@ -2,7 +2,6 @@ package database.dao;
 
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.*;
 
 import javax.sql.DataSource;
@@ -11,8 +10,9 @@ import java.util.*;
 
 public class AnswerDAO {
 	private DataSource pool;
+	private String databaseName;
 
-	public AnswerDAO(DataSource pool) {
+	public AnswerDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -23,7 +23,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			List<String> answers = answer.getAnswers();
 
@@ -71,7 +71,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			Map<String, Boolean> answers = answer.getAnswers();
 			Iterator<String> iterator = answers.keySet().iterator();
@@ -126,7 +126,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			List<String> answers = answer.getAnswers();
 
@@ -182,7 +182,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			Map<String, String> answers = answer.getAnswers();
 			Iterator<String> iterator = answers.keySet().iterator();
@@ -236,7 +236,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "INSERT INTO " + DBContract.AnswerQuestionTable.TABLE_NAME + " " + "(" +
@@ -273,7 +273,7 @@ public class AnswerDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.AnswerQuestionTable.TABLE_NAME +

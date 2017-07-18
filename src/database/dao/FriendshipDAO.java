@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.User;
 
 import javax.sql.DataSource;
@@ -15,8 +14,9 @@ import java.util.List;
 public class FriendshipDAO {
 
 	private DataSource pool;
+	private String databaseName;
 
-	public FriendshipDAO(DataSource pool) {
+	public FriendshipDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -32,7 +32,7 @@ public class FriendshipDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// this query selects A->B friendship where A are we and the status of this relationship is 1 (active, friends)
 			PreparedStatement preparedStatement1 = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_FIRST_QUERY);
@@ -64,7 +64,7 @@ public class FriendshipDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 			String query = "INSERT INTO " + DBContract.Friends.TABLE_NAME + " (" +
 					DBContract.Friends.FRIEND_ONE + ", " +
 					DBContract.Friends.FRIEND_TWO + ") " +
@@ -89,7 +89,7 @@ public class FriendshipDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.GET_FRIENDS_SECOND_QUERY);
 			preparedStatement.setString(1, Integer.toString(currentUserId));
@@ -110,7 +110,7 @@ public class FriendshipDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.ACCEPT_REQUEST_QUERY);
 			preparedStatement.setString(1, Integer.toString(currentUserId));
@@ -134,7 +134,7 @@ public class FriendshipDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.REJECT_REQUEST_QUERY);
 			preparedStatement.setString(1, Integer.toString(currentUserId));
@@ -158,7 +158,7 @@ public class FriendshipDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Friends.SQL.ARE_FRIENDS_QUERY);
 			preparedStatement.setString(1, Integer.toString(currentUserId));

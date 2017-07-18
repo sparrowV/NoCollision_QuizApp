@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -12,8 +11,9 @@ import java.sql.*;
 public class MessageDAO {
 
 	private DataSource pool;
+	private String databaseName;
 
-	public MessageDAO(DataSource pool) {
+	public MessageDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -30,7 +30,7 @@ public class MessageDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Messages.SQL.SEND_MESSAGE_QUERY);
 			preparedStatement.setString(1, Integer.toString(currentUserId));
@@ -60,7 +60,7 @@ public class MessageDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Messages.SQL.GET_CHAT_HISTORY);
 			preparedStatement.setString(1, String.valueOf(currentUserId));

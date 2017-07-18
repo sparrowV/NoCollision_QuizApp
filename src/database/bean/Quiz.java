@@ -173,24 +173,22 @@ public class Quiz implements HtmlSerializable {
 	}
 
 	public String toHtml(List<User> friends) {
-		String res = "<tr>\n" +
+		StringBuilder res = new StringBuilder("<tr>\n" +
 				"      <th scope=\"row\">" + quizId + "</th>\n" +
 				"      <td>" + "<a href=/quiz/" + quizId +
 				">" + title + "</a>" + "</td>\n" +
 				"      <td>" + dateCreated + "</td>\n" +
 				"<td><div class=\"dropdown\">\n" +
 				"  <button class=\"btn btn-default\">Challenge Friend</button>\n" +
-				"  <div class=\"dropdown-content\">\n";
+				"  <div class=\"dropdown-content\">\n");
 
 		for (int i = 0; i < friends.size(); i++) {
-			res += "<a onclick=\"sendChallenge(" + quizId + "," + friends.get(i).getUserId() + ");\" href=\"" + "#" + "\">" + friends.get(i).getFirstName() + " " + friends.get(i).getLastName() + "</a>\n";
+			res.append("<a onclick=\"sendChallenge(").append(quizId).append(",").append(friends.get(i).getUserId()).append(");\" href=\"").append("#").append("\">").append(friends.get(i).getFirstName()).append(" ").append(friends.get(i).getLastName()).append("</a>\n");
 		}
 
 
-		res += "  </div>\n" +
-				"</div> </td>" +
-				"    </tr>";
-		return res;
+		res.append("  </div>\n" + "</div> </td>" + "    </tr>");
+		return res.toString();
 	}
 
 	public String getPath(boolean practice) {

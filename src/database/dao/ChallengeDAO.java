@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Challenges;
 
 import javax.sql.DataSource;
@@ -14,8 +13,9 @@ import java.util.ArrayList;
 public class ChallengeDAO {
 
 	private DataSource pool;
+	private String databaseName;
 
-	public ChallengeDAO(DataSource pool) {
+	public ChallengeDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -30,7 +30,7 @@ public class ChallengeDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.Challenges.SQL.GET_MY_CHALLENGES);
 			preparedStatement.setString(1, String.valueOf(currentUserID));
@@ -87,7 +87,7 @@ public class ChallengeDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, String.valueOf(currentUserID));

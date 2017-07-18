@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Badge;
 
 import javax.sql.DataSource;
@@ -12,8 +11,9 @@ import java.util.List;
 public class BadgeDAO {
 
 	private DataSource pool;
+	private String databaseName;
 
-	public BadgeDAO(DataSource pool) {
+	public BadgeDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -23,7 +23,7 @@ public class BadgeDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "INSERT INTO " + DBContract.BadgeTable.TABLE_NAME + " " + "(" +
@@ -64,7 +64,7 @@ public class BadgeDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String q = DBContract.QuizTable.TABLE_NAME;
 			String q_catId = DBContract.QuizTable.COLUMN_NAME_CATEGORY_ID;
@@ -145,7 +145,7 @@ public class BadgeDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.UserBadgeTable.TABLE_NAME +
