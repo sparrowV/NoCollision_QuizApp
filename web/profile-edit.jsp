@@ -21,6 +21,7 @@
 	%>
 </head>
 <body>
+<%@include file="imports/navbar.html" %>
 <div class="container">
 	<div class="page-header">
 		<h1>Edit Profile</h1>

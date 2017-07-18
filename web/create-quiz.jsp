@@ -1,9 +1,9 @@
-<%@ page import="database.bean.Quiz" %>
-<%@ page import="servlet.ServletKey" %>
-<%@ page import="model.QuizManager" %>
-<%@ page import="listener.ContextKey" %>
-<%@ page import="java.util.List" %>
 <%@ page import="database.bean.Category" %>
+<%@ page import="database.bean.Quiz" %>
+<%@ page import="listener.ContextKey" %>
+<%@ page import="model.QuizManager" %>
+<%@ page import="servlet.ServletKey" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -25,6 +25,7 @@
 	      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 <body>
+
 <div class="container">
 	<div class="jumbotron">
 		<!-- Header -->
