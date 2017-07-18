@@ -18,6 +18,7 @@ public class FriendshipDAO {
 
 	public FriendshipDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 

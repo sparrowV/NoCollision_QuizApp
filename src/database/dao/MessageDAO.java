@@ -15,6 +15,7 @@ public class MessageDAO {
 
 	public MessageDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	/**

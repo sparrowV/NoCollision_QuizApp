@@ -17,6 +17,7 @@ public class LeaderboardDAO {
 	public LeaderboardDAO(DataSource pool, String databaseName, UserManager userManager) {
 		this.userManager = userManager;
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	public Leaderboard getLeaderboardByQuizId(int quizId) {

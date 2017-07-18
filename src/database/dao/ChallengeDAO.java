@@ -17,6 +17,7 @@ public class ChallengeDAO {
 
 	public ChallengeDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	/**

@@ -14,6 +14,7 @@ public class AnswerDAO {
 
 	public AnswerDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	public List<Integer> addAnswerPlain(AnswerPlain answer) {
@@ -28,12 +29,12 @@ public class AnswerDAO {
 			List<String> answers = answer.getAnswers();
 
 			// query inserting into users table
-			String query = "INSERT INTO " + DBContract.AnswerTable.TABLE_NAME + " " + "(" +
+			StringBuilder query = new StringBuilder("INSERT INTO " + DBContract.AnswerTable.TABLE_NAME + " " + "(" +
 					DBContract.AnswerTable.COLUMN_NAME_TYPE_ID + ", " +
-					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT + ") VALUES ";
-			for (int i = 0; i < answers.size() - 1; i++) query += "(?, ?),";
-			query += "(?, ?);";
-			PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+					DBContract.AnswerTable.COLUMN_NAME_ANSWER_TEXT + ") VALUES ");
+			for (int i = 0; i < answers.size() - 1; i++) query.append("(?, ?),");
+			query.append("(?, ?);");
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
 
 			int i = 0;
 			for (String str : answers) {

@@ -1,13 +1,13 @@
+<%@ page import="database.bean.Badge" %>
 <%@ page import="database.bean.Quiz" %>
 <%@ page import="database.bean.User" %>
 <%@ page import="listener.ContextKey" %>
+<%@ page import="model.BadgeManager" %>
 <%@ page import="model.FriendshipManager" %>
 <%@ page import="model.QuizManager" %>
 <%@ page import="model.UserManager" %>
 <%@ page import="servlet.ServletKey" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.BadgeManager" %>
-<%@ page import="database.bean.Badge" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -41,7 +41,7 @@
 		List<Quiz> quizzes = quizManager.getQuizzesByAuthorId(user.getUserId());
 		String pictureUrl = user.getPicture();
 		if (pictureUrl == null || pictureUrl.isEmpty()) {
-			pictureUrl = "resources/profile.PNG";
+			pictureUrl = "/resources/profile.PNG";
 		}
 	%>
 	<title><%=user.getFirstName() + " " + user.getLastName()%>
@@ -50,6 +50,7 @@
 
 </head>
 <body>
+<%@include file="imports/navbar.html" %>
 
 <div class="container">
 	<div class="profile">

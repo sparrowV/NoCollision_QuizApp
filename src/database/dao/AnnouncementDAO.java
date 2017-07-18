@@ -15,6 +15,7 @@ public class AnnouncementDAO {
 
 	public AnnouncementDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	public void addAnnouncement(Announcement announcement) {

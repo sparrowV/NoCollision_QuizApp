@@ -15,6 +15,7 @@ public class BadgeDAO {
 
 	public BadgeDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	public void addBadge(Badge badge) {

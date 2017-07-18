@@ -17,6 +17,7 @@ public class CategoryDAO {
 
 	public CategoryDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	public void addCategory(String newCategory) {

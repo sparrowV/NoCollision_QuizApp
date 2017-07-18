@@ -21,6 +21,7 @@ public class QuestionDAO {
 	public QuestionDAO(DataSource pool, String databaseName, AnswerManager answerManager) {
 		this.pool = pool;
 		this.answerManager = answerManager;
+		this.databaseName = databaseName;
 	}
 
 	public Question getQuestionById(int questionId) {
