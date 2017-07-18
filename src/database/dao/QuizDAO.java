@@ -334,6 +334,51 @@ public class QuizDAO {
 		return res;
 	}
 
+	public List<Quiz> getQuizByCategoryId(int categoryId) {
+		Connection connection = null;
+		List<Quiz> quizzesByCategory = null;
+
+		try {
+			// Get the connection from the pool.
+			connection = pool.getConnection();
+
+			quizzesByCategory = new ArrayList<>();
+
+			Statement statement = connection.createStatement();
+			statement.executeQuery("USE " + databaseName);
+
+			// Prepare and execute 'SELECT' query.
+			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + " WHERE " +
+					DBContract.QuizTable.COLUMN_NAME_CATEGORY_ID + " =?;";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, categoryId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			// add quizzes to list
+			while (resultSet.next()) {
+				quizzesByCategory.add(fetchQuiz(resultSet));
+			}
+
+
+			// Close statement and result set.
+			resultSet.close();
+			preparedStatement.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null) try {
+				// Returns the connection to the pool.
+				connection.close();
+			} catch (Exception ignored) {
+			}
+		}
+
+		return quizzesByCategory;
+	}
+
 	/**
 	 * Creates and returns user from result set.
 	 *
@@ -356,6 +401,7 @@ public class QuizDAO {
 		quiz.setCategoryId(resultSet.getInt(DBContract.QuizTable.COLUMN_NAME_CATEGORY_ID));
 		return quiz;
 	}
+
 
 
 }
