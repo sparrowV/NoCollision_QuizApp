@@ -33,21 +33,16 @@ public class DeleteQuizTest {
 		when(requestMock.getServletContext()).thenReturn(servletContextMock);
 		when(requestMock.getParameter(ServletKey.ID)).thenReturn("1");
 		when(servletContextMock.getAttribute(ContextKey.QUIZ_MANAGER)).thenReturn(quizManagerMock);
-
-
 	}
 
 	@Test
 	public void Test() throws Exception {
-
 		deleteQuiz.doPost(requestMock, responseMock);
 
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 		verify(responseMock, times(1)).sendRedirect(captor.capture());
 
 		assertEquals(captor.getAllValues().get(0), ServletKey.ADMIN_JSP);
-
-
 	}
 
 }

@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,8 +13,9 @@ import java.sql.Statement;
  */
 public class CategoryDAO {
 	private DataSource pool;
+	private String databaseName;
 
-	public CategoryDAO(DataSource pool) {
+	public CategoryDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -25,7 +25,7 @@ public class CategoryDAO {
 		try {
 			connection = pool.getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			PreparedStatement preparedStatement = connection.prepareStatement(DBContract.QuizCategoryTable.SQL.ADD_NEW_CATEGORY);
 			preparedStatement.setString(1, newCategory);

@@ -36,5 +36,14 @@
     <orderEntry type="library" exported="" name="jQuery" level="application" />
     <orderEntry type="library" exported="" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" exported="" name="jquery" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Apache Software Foundation/Tomcat 8.5/bin/tomcat-juli.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.User;
 
 import javax.sql.DataSource;
@@ -11,9 +10,11 @@ import java.util.List;
 
 public class UserDAO {
 	private DataSource pool;
+	private String databaseName;
 
-	public UserDAO(DataSource pool) {
+	public UserDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	/**
@@ -31,7 +32,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME + ";";
@@ -74,7 +75,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "INSERT INTO " + DBContract.UserTable.TABLE_NAME + " " + "(" +
@@ -126,7 +127,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT COUNT(*) FROM " + DBContract.UserTable.TABLE_NAME +
 					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?";
@@ -159,7 +160,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
 					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?" + " AND " +
@@ -193,7 +194,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
 					" WHERE " + DBContract.UserTable.COLUMN_NAME_USERNAME + " = ?";
@@ -224,7 +225,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.UserTable.TABLE_NAME +
 					" WHERE " + DBContract.UserTable.COLUMN_NAME_ID + " = ?";
@@ -254,7 +255,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "UPDATE " + DBContract.UserTable.TABLE_NAME + " SET "
@@ -295,7 +296,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "UPDATE " + DBContract.UserTable.TABLE_NAME + " SET "
@@ -329,7 +330,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// delete query
 			String deleteUserQuery = "DELETE FROM " + DBContract.UserTable.TABLE_NAME + " WHERE " +
@@ -338,11 +339,11 @@ public class UserDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(deleteUserQuery);
 			preparedStatement.setInt(1, userId);
 
+			System.out.println(preparedStatement.toString());
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			statement.close();
-
-
 		} catch (SQLException e) {
 			e.getStackTrace();
 		} finally {
@@ -361,7 +362,7 @@ public class UserDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into userQuizHistoryTable table
 			String query = "INSERT INTO " + DBContract.UserQuizHistoryTable.TABLE_NAME + " " + "(" +

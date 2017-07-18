@@ -19,10 +19,8 @@ public class Login extends HttpServlet {
 		ServletContext context = getServletContext();
 		UserManager manager = (UserManager) context.getAttribute(ContextKey.USER_MANAGER);
 
-
 		String username = request.getParameter(ServletKey.USERNAME);
 		String hashedPassword = Hash.encode(request.getParameter(ServletKey.PASSWORD));
-
 
 		User user = manager.getUser(username, hashedPassword);
 

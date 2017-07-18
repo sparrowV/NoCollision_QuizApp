@@ -29,11 +29,11 @@ public class ContextListener implements ServletContextListener {
 			pool.setPoolProperties(properties);
 
 			// Create DAOs
-			AnswerManager answerManager = new AnswerManager(new AnswerDAO(pool));
-			QuestionManager questionManager = new QuestionManager(new QuestionDAO(pool, answerManager));
-			QuizManager quizManager = new QuizManager(new QuizDAO(pool, questionManager));
-			UserManager userManager = new UserManager(new UserDAO(pool));
-			LeaderboardManager leaderboardManager = new LeaderboardManager(new LeaderboardDAO(pool, userManager));
+			AnswerManager answerManager = new AnswerManager(new AnswerDAO(pool, DBInfo.MYSQL_DATABASE_NAME));
+			QuestionManager questionManager = new QuestionManager(new QuestionDAO(pool, DBInfo.MYSQL_DATABASE_NAME, answerManager));
+			QuizManager quizManager = new QuizManager(new QuizDAO(pool, DBInfo.MYSQL_DATABASE_NAME, questionManager));
+			UserManager userManager = new UserManager(new UserDAO(pool, DBInfo.MYSQL_DATABASE_NAME));
+			LeaderboardManager leaderboardManager = new LeaderboardManager(new LeaderboardDAO(pool, DBInfo.MYSQL_DATABASE_NAME, userManager));
 
 			// Save the database and UserDao in context.
 			context.setAttribute(ContextKey.CONNECTION_POOL, pool);
@@ -41,14 +41,14 @@ public class ContextListener implements ServletContextListener {
 			context.setAttribute(ContextKey.QUIZ_MANAGER, quizManager);
 			context.setAttribute(ContextKey.QUESTION_MANAGER, questionManager);
 			context.setAttribute(ContextKey.ANSWER_MANAGER, answerManager);
-			context.setAttribute(ContextKey.FRIENDSHIP_MANAGER, new FriendshipManager(new FriendshipDAO(pool)));
-			context.setAttribute(ContextKey.MESSAGE_MANAGER, new MessageManager(new MessageDAO(pool)));
-			context.setAttribute(ContextKey.ANNOUNCEMENT_MANAGER, new AnnouncementManager(new AnnouncementDAO(pool)));
-			context.setAttribute(ContextKey.CHALLENGE_MANAGER, new ChallengeManager(new ChallengeDAO(pool)));
-			context.setAttribute(ContextKey.BADGE_MANAGER, new BadgeManager(new BadgeDAO(pool)));
-			context.setAttribute(ContextKey.TIMELINE_MANAGER, new TimelineManager(new TimelineDAO(pool)));
+			context.setAttribute(ContextKey.FRIENDSHIP_MANAGER, new FriendshipManager(new FriendshipDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
+			context.setAttribute(ContextKey.MESSAGE_MANAGER, new MessageManager(new MessageDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
+			context.setAttribute(ContextKey.ANNOUNCEMENT_MANAGER, new AnnouncementManager(new AnnouncementDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
+			context.setAttribute(ContextKey.CHALLENGE_MANAGER, new ChallengeManager(new ChallengeDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
+			context.setAttribute(ContextKey.BADGE_MANAGER, new BadgeManager(new BadgeDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
+			context.setAttribute(ContextKey.TIMELINE_MANAGER, new TimelineManager(new TimelineDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
 			context.setAttribute(ContextKey.LEADERBOARD_MANAGER, leaderboardManager);
-			context.setAttribute(ContextKey.CATEGORY_MANAGER, new CategoryManager(new CategoryDAO(pool)));
+			context.setAttribute(ContextKey.CATEGORY_MANAGER, new CategoryManager(new CategoryDAO(pool, DBInfo.MYSQL_DATABASE_NAME)));
 		} catch (Exception ignored) {
 		}
 	}

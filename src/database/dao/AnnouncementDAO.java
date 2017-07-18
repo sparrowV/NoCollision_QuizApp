@@ -2,7 +2,6 @@ package database.dao;
 
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Announcement;
 
 import javax.sql.DataSource;
@@ -11,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnnouncementDAO {
-
 	private DataSource pool;
+	private String databaseName;
 
-	public AnnouncementDAO(DataSource pool) {
+	public AnnouncementDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
 	}
 
@@ -25,7 +24,7 @@ public class AnnouncementDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "INSERT INTO " + DBContract.AnnouncementTable.TABLE_NAME + " (" +
 					DBContract.AnnouncementTable.COLUMN_NAME_TEXT + ", " +
@@ -60,7 +59,7 @@ public class AnnouncementDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Query for selecting announcement of given user
 			String query = "SELECT * FROM " + DBContract.AnnouncementTable.TABLE_NAME + " WHERE " +
@@ -101,7 +100,7 @@ public class AnnouncementDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			ResultSet resultSet;
 			// Query for selecting last announcement

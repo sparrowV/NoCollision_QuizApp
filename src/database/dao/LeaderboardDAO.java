@@ -2,7 +2,6 @@ package database.dao;
 
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Leaderboard;
 import model.UserManager;
 
@@ -13,8 +12,9 @@ public class LeaderboardDAO {
 
 	private DataSource pool;
 	private UserManager userManager;
+	private String databaseName;
 
-	public LeaderboardDAO(DataSource pool, UserManager userManager) {
+	public LeaderboardDAO(DataSource pool, String databaseName, UserManager userManager) {
 		this.userManager = userManager;
 		this.pool = pool;
 	}
@@ -27,7 +27,7 @@ public class LeaderboardDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT " + DBContract.UserQuizHistoryTable.COLUMN_NAME_USER_ID + ", MAX(" +

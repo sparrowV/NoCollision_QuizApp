@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.TimelineActivity;
 import database.bean.User;
 
@@ -15,9 +14,11 @@ import java.util.List;
  */
 public class TimelineDAO {
 	private DataSource pool;
+	private String databaseName;
 
-	public TimelineDAO(DataSource pool) {
+	public TimelineDAO(DataSource pool, String databaseName) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 	}
 
 	/**
@@ -33,11 +34,11 @@ public class TimelineDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
-			for (int i = 0; i < myFriends.size(); i++) {
+			for (User myFriend : myFriends) {
 				PreparedStatement preparedStatement = connection.prepareStatement(DBContract.TimeLine.SQL.GET_FRIENDS_QUIZ_ACTIVITY);
-				preparedStatement.setString(1, String.valueOf(myFriends.get(i).getUserId()));
+				preparedStatement.setString(1, String.valueOf(myFriend.getUserId()));
 				ResultSet resultSet = null;
 				resultSet = preparedStatement.executeQuery();
 
@@ -48,9 +49,8 @@ public class TimelineDAO {
 					String score = resultSet.getString(DBContract.UserQuizHistoryTable.COLUMN_NAME_SCORE);
 					String xp = resultSet.getString(DBContract.UserQuizHistoryTable.COLUMN_NAME_XP);
 
-					newsFeed.add(new TimelineActivity(myFriends.get(i).getUserId(), myFriends.get(i).getFirstName() + " " + myFriends.get(i).getLastName(), quiz_id, quizTitle, duration, score, xp));
+					newsFeed.add(new TimelineActivity(myFriend.getUserId(), myFriend.getFirstName() + " " + myFriend.getLastName(), quiz_id, quizTitle, duration, score, xp));
 				}
-
 
 				preparedStatement.close();
 			}

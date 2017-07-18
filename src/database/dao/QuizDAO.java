@@ -2,7 +2,6 @@ package database.dao;
 
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Category;
 import database.bean.Question;
 import database.bean.Quiz;
@@ -16,9 +15,11 @@ import java.util.List;
 public class QuizDAO {
 	private DataSource pool;
 	private QuestionManager questionManager;
+	private String databaseName;
 
-	public QuizDAO(DataSource pool, QuestionManager questionManager) {
+	public QuizDAO(DataSource pool, String databaseName, QuestionManager questionManager) {
 		this.pool = pool;
+		this.databaseName = databaseName;
 		this.questionManager = questionManager;
 	}
 
@@ -35,7 +36,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + " WHERE " +
@@ -81,7 +82,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into quizzes table
 			String query = "INSERT INTO " + DBContract.QuizTable.TABLE_NAME + " " + "(" +
@@ -138,7 +139,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// delete query
 			String deleteUserQuery = "DELETE FROM " + DBContract.QuizTable.TABLE_NAME + " WHERE " +
@@ -170,7 +171,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME +
 					" WHERE " + DBContract.QuizTable.COLUMN_NAME_ID + " = ?";
@@ -205,7 +206,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME + ";";
@@ -243,7 +244,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.QuizTable.TABLE_NAME +
 					" WHERE " + DBContract.QuizTable.COLUMN_NAME_TITLE + " = ?";
@@ -276,7 +277,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.QuizCategoryTable.TABLE_NAME +
 					" ORDER BY " + DBContract.QuizCategoryTable.COLUMN_NAME_CATEGORY_ID + ";";
@@ -309,7 +310,7 @@ public class QuizDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			String query = "SELECT * FROM " + DBContract.QuizCategoryTable.TABLE_NAME +
 					" WHERE " + DBContract.QuizCategoryTable.COLUMN_NAME_CATEGORY_ID + " = ? ;";

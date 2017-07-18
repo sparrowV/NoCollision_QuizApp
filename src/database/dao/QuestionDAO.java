@@ -2,7 +2,6 @@ package database.dao;
 
 
 import database.DBContract;
-import database.DBInfo;
 import database.bean.Answer;
 import database.bean.Question;
 import model.AnswerManager;
@@ -17,8 +16,9 @@ public class QuestionDAO {
 	private DataSource pool;
 	private AnswerManager answerManager;
 	private HashMap<Integer, String> questionTypeMapping;
+	private String databaseName;
 
-	public QuestionDAO(DataSource pool, AnswerManager answerManager) {
+	public QuestionDAO(DataSource pool, String databaseName, AnswerManager answerManager) {
 		this.pool = pool;
 		this.answerManager = answerManager;
 	}
@@ -31,7 +31,7 @@ public class QuestionDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.QuestionTable.TABLE_NAME + " WHERE " +
@@ -68,7 +68,7 @@ public class QuestionDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// Prepare and execute 'SELECT' query.
 			String query = "SELECT * FROM " + DBContract.QuestionTable.TABLE_NAME + " JOIN " +
@@ -119,7 +119,7 @@ public class QuestionDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "INSERT INTO " + DBContract.QuestionTable.TABLE_NAME + " " + "(" +
@@ -161,7 +161,7 @@ public class QuestionDAO {
 			connection = pool.getConnection();
 
 			Statement statement = connection.createStatement();
-			statement.executeQuery("USE " + DBInfo.MYSQL_DATABASE_NAME);
+			statement.executeQuery("USE " + databaseName);
 
 			// query inserting into users table
 			String query = "INSERT INTO " + DBContract.QuestionQuizTable.TABLE_NAME + " " + "(" +
