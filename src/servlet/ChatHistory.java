@@ -17,9 +17,7 @@ import java.io.PrintWriter;
  */
 @WebServlet(name = "ChatHistory", value = "/ChatHistory")
 public class ChatHistory extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User currentUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
@@ -31,6 +29,6 @@ public class ChatHistory extends HttpServlet {
 		String chat = messageManager.getChatHistory(currentUserID, friendID, friendName);
 		PrintWriter out = response.getWriter();
 		out.append(chat);
-		System.out.println("");
+
 	}
 }
