@@ -157,6 +157,53 @@
 					</table>
 				</div>
 			</div>
+
+			<div id="categories">
+
+				<button class="btn bg-primary" id="pre_add_category" onclick="addCategory()">Add New Category
+				</button>
+				<button class="btn bg-primary" style="display:none;" onclick="addNewCategory()" id="add_new_category"
+				        onclick="addCategory()">Add
+					Category
+				</button>
+				<textarea id="new_category" style="display:none;" class="form-control"></textarea>
+
+
+				<script>
+
+					function addCategory() {
+						document.getElementById('new_category').style.display = "block";
+						document.getElementById('pre_add_category').style.display = "none";
+						document.getElementById('add_new_category').style.display = "block";
+					}
+
+					function addNewCategory() {
+						xhr = new XMLHttpRequest();
+						var new_category = document.getElementById('new_category').value;
+
+						var url = "/AddCategory?category_name=" + new_category;
+
+						xhr.onreadystatechange = addNewCategoryHandler;
+						xhr.open("POST", url, true);
+						xhr.send(null);
+					}
+
+					function addNewCategoryHandler() {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+
+							} else {
+								alert('Adding New Category Problem...');
+							}
+						}
+						document.getElementById('new_category').value = "";
+						document.getElementById('new_category').style.display = "none";
+						document.getElementById('pre_add_category').style.display = "block";
+						document.getElementById('add_new_category').style.display = "none";
+					}
+
+				</script>
+			</div>
 		</div>
 	</div>
 </div>
