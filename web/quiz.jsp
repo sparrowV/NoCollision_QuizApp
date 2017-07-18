@@ -146,9 +146,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Related Quizzes</div>
 				<ul class="list-group">
-					<li class="list-group-item">First item</li>
-					<li class="list-group-item">Second item</li>
-					<li class="list-group-item">Third item</li>
+					<%
+						List<Quiz> relatedQuizzes = quizManager.getQuizByCategoryId(quiz.getCategoryId());
+						int i = 0;
+						for (Quiz relatedQuiz : relatedQuizzes) {
+							if (quiz.getQuizId() != relatedQuiz.getQuizId()) {
+								out.write("<a href=" + relatedQuiz.getQuizId() + "><li class=\"list-group-item\">" + relatedQuiz.getTitle() + "</li>");
+								if (++i == 10) break;
+							}
+						}
+					%>
 				</ul>
 			</div>
 		</div>
