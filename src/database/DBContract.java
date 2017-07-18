@@ -183,6 +183,12 @@ public final class DBContract {
 		public static final String TABLE_NAME = "quiz_categories";
 		public static final String COLUMN_NAME_CATEGORY_ID = "category_id";
 		public static final String COLUMN_NAME_CATEGORY_NAME = "category_name";
+
+		public static class SQL {
+			public static final String ADD_NEW_CATEGORY = "insert into " + TABLE_NAME + " (" + COLUMN_NAME_CATEGORY_NAME + ")"
+					+ " values(?);";
+
+		}
 	}
 
 	public static class BadgeTable {
