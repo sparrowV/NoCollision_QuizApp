@@ -55,8 +55,8 @@
 	<div class="profile">
 		<div class="jumbotron">
 			<div class="page-header">
-				<h3><%=user.getFirstName() + " " + user.getLastName()%>
-				</h3>
+				<h4><%=user.getFirstName() + " " + user.getLastName()%>
+				</h4>
 				<div class="profile-picture">
 					<img src="<%= pictureUrl%>" class="img-thumbnail"
 					     height="450" width="450"
@@ -76,10 +76,17 @@
 
 				<%
 					List<Badge> badges = badgeManager.getBadgesByUserId(userId);
-					for (Badge badge : badges) {
-						out.write(badge.toString());
-						out.write("<br>");
+					if (badges.size() != 0) {
+						out.write("<h2>Badges:</h2>\n");
+						out.write("<br>\n");
 					}
+					for (Badge badge : badges) {
+						out.write(badge.toHTML());
+					/*	out.write("<h4></h4>\n");
+						out.write("<br>\n");*/
+					}
+					out.write("<br>\n");
+					out.write("<hr>\n");
 				%>
 
 
@@ -102,6 +109,7 @@
 						"      <th>ID</th>\n" +
 						"      <th>Title</th>\n" +
 						"      <th>Date Created</th>\n" +
+						"      <th>Challenges</th>\n" +
 						"    </tr>\n" +
 						"  </thead>\n" +
 						"  <tbody>");

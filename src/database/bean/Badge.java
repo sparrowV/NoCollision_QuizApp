@@ -1,5 +1,7 @@
 package database.bean;
 
+import java.util.Random;
+
 public class Badge {
 	private int badgeId;
 	private String badgeName;
@@ -78,5 +80,24 @@ public class Badge {
 				", xpNeeded=" + xpNeeded +
 				", categoryId=" + categoryId +
 				'}';*/
+	}
+
+	public String toHTML() {
+		Random rand = new Random();
+		int randomNum = rand.nextInt(5) + 1;
+		System.out.println(randomNum);
+		String color = "";
+		if (randomNum == 1) {
+			color = "btn btn-primary";
+		} else if (randomNum == 2) {
+			color = "btn btn-success";
+		} else if (randomNum == 3) {
+			color = "btn btn-info";
+		} else if (randomNum == 4) {
+			color = "btn btn-warning";
+		} else if (randomNum == 5) {
+			color = "btn btn-danger";
+		}
+		return "<button class=\"" + color + "\">" + this.badgeName + "</button>\n";
 	}
 }
