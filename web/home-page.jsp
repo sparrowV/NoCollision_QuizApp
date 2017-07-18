@@ -41,22 +41,6 @@
 <div class="container">
 	<div class="home-page">
 		<div class="jumbotron">
-
-			<%
-				//displaying all quizzes for given user
-				User user = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
-				int userId = user.getUserId();
-				QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
-
-				List<Quiz> quizzes = manager.getQuizzesByAuthorId(userId);
-				out.write("<div id='quizzes'>");
-				for (Quiz quiz : quizzes) {
-					out.write(quiz.toHtml(myFriends));
-
-				}
-				out.write("</div>");
-			%>
-
 			<td>
 
 				<p><a class="btn btn-default bg-info"
@@ -64,20 +48,38 @@
 				</p>
 
 				<div class="dropdown">
-					<button class="btn btn-default">Quiz By Category</button>
+					<button class="btn btn-default">Select Quiz By Category</button>
 					<div class="dropdown-content">
 						<%
 							QuizManager quizManager = (QuizManager) application.getAttribute(ContextKey.QUIZ_MANAGER);
 							List<Category> categories = quizManager.getQuizCategories();
 							for (int i = 0; i < categories.size(); i++) {
 								Category currCategory = categories.get(i);
-								out.print("<a href=" + ServletKey.QUIZ_BY_CATEGORY_JSP + "?id=" + currCategory.getCategoryId()
-										+ ">" + currCategory.getCategoryName() + "</a>");
+								out.print("<a href=" + ServletKey.QUIZ_BY_CATEGORY_JSP + "?id="
+										+ currCategory.getCategoryId() + ">" + currCategory.getCategoryName() + "</a>");
 							}
 						%>
 
 					</div>
 				</div>
+
+					<%
+				//displaying all quizzes for given user
+				User user = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
+				int userId = user.getUserId();
+				QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
+
+				List<Quiz> quizzes = manager.getQuizzesByAuthorId(userId);
+				out.write("<div id='quizzes'>");
+				out.write("<h3>My Quizzes</h3>");
+				for (Quiz quiz : quizzes) {
+					out.write(quiz.toHtml(myFriends));
+					out.write("<br>");
+
+				}
+				out.write("</div>");
+			%>
+
 		</div>
 
 
@@ -130,6 +132,6 @@
 		%>
 
 	</div>
-
+</div>
 </body>
 </html>
