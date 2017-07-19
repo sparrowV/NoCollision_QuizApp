@@ -1,17 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: m1sho
-  Date: 19.07.2017
-  Time: 23:50
+  Date: 20.07.2017
+  Time: 0:57
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Page Not Found</title>
+	<title>500 error</title>
 	<style>
-
 		* {
 			line-height: 1.2;
 			margin: 0;
@@ -53,17 +51,19 @@
 				margin: 0 0 0.3em;
 			}
 		}
-
 	</style>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<h1>404 Page Not Found</h1>
-<h1>=(</h1>
-<br/>
-<br/>
-<p>Sorry, but the page you were trying to view does not exist.</p>
+<h1>Webservice currently unavailable
+	<small>500 Error</small>
+</h1>
+<br>
+<br>
+<p>An unexpected condition was encountered</p>
+<br>
+<p>Our service team has been dispatched to bring it back online.</p>
+
 
 </body>
 </html>

@@ -23,6 +23,10 @@
 	<title>My Friends</title>
 	<%
 		User currentUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
+		if (currentUser == null) {
+			response.sendRedirect(ServletKey.INDEX_JSP);
+			return;
+		}
 		FriendshipManager friendshipManager = (FriendshipManager) application.getAttribute(ContextKey.FRIENDSHIP_MANAGER);
 		List<User> myFriends = friendshipManager.getFriends(currentUser.getUserId());
 		//	System.out.println("~~~~~" + myFriends.size());%>

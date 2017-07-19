@@ -31,6 +31,10 @@
 <%
 	// check if user is not admin send back to home page
 	User checkUser = (User) session.getAttribute(ServletKey.CURRENT_USER);
+	if (checkUser == null) {
+		response.sendRedirect(ServletKey.INDEX_JSP);
+		return;
+	}
 	if (!checkUser.isAdmin()) {
 		response.sendRedirect(ServletKey.HOME_PAGE_JSP);
 	}
