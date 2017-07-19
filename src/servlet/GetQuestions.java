@@ -19,6 +19,8 @@ public class GetQuestions extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+
 		int questionId = Integer.parseInt(request.getParameter("question_id"));
 		QuestionManager questionManager = (QuestionManager) getServletContext().getAttribute(ContextKey.QUESTION_MANAGER);
 		Question question = questionManager.getQuestionById(questionId);

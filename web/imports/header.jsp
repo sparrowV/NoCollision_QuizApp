@@ -42,7 +42,6 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
 				<li><a href="${pageContext.request.contextPath}/MyFriends">My Friends</a></li>
 
 				<li class="dropdown">

@@ -56,7 +56,7 @@
 							for (int i = 0; i < categories.size(); i++) {
 								Category currCategory = categories.get(i);
 								out.print("<a href=" + ServletKey.QUIZ_BY_CATEGORY_JSP + "?id="
-										+ currCategory.getCategoryId() + ">" + currCategory.getCategoryName() + "</a>");
+										+ currCategory.getCategoryId() + ">" + currCategory.getCategoryName() + "</a>\n");
 							}
 						%>
 
@@ -70,14 +70,14 @@
 				QuizManager manager = (QuizManager) request.getServletContext().getAttribute(ContextKey.QUIZ_MANAGER);
 
 				List<Quiz> quizzes = manager.getQuizzesByAuthorId(userId);
-				out.write("<div id='quizzes'>");
-				out.write("<h3>My Quizzes</h3>");
+				out.write("<div id='quizzes'>\n");
+				out.write("<h3>My Quizzes</h3>\n");
 				for (Quiz quiz : quizzes) {
 					out.write(quiz.toHtml(myFriends));
-					out.write("<br>");
+					out.write("<br>\n");
 
 				}
-				out.write("</div>");
+				out.write("</div>\n");
 			%>
 
 		</div>
@@ -96,7 +96,7 @@
 						"    </header>\n" +
 						"    <div class=\"w3-container\">\n" +
 						"      <hr>\n" +
-						"      <h1>" + announcement.getAnnouncement() + "</h1>" +
+						"      <h1>" + announcement.getAnnouncement() + "</h1>\n" +
 						"<br>\n" +
 						"    </div>\n" +
 						"  </div>\n" +

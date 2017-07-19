@@ -1,4 +1,5 @@
 <%@ page import="servlet.ServletKey" %>
+<%@ page import="database.bean.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -15,6 +16,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
 	        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
 	        crossorigin="anonymous"></script>
+
+	<%
+		User currentUser = (User) request.getSession().getAttribute(ServletKey.CURRENT_USER);
+		if (currentUser != null) {
+			response.sendRedirect(ServletKey.HOME_PAGE_JSP);
+		}
+	%>
 </head>
 <body>
 
