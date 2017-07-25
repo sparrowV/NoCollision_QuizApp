@@ -10,8 +10,7 @@ Otar Jankhoteli <a href="ojank14@freeuni.edu.ge">ojank14@freeuni.edu.ge</a>,  <
 Irakli Chkuaseli <a href="ichku14@freeuni.edu.ge ">ichku14@freeuni.edu.ge </a>,  <br>
 Otar Dvalishvili <a href="odval14@freeuni.edu.ge">odval14@freeuni.edu.ge</a>,  <br> 
 Tornike Gurgenidze <a href="togurg14@freeuni.edu.ge">togurg14@freeuni.edu.ge</a>  <br>
-<br>
-<h1>Here are the screenshots: </h1>
+
 ![login](https://user-images.githubusercontent.com/11095204/28544337-d3f07a70-70d3-11e7-8aff-ffe6a4aa5623.JPG)
 ![timeline](https://user-images.githubusercontent.com/11095204/28543608-5a788e1e-70d1-11e7-93e3-200d5adfdb3a.JPG)
 ![quiz stats](https://user-images.githubusercontent.com/11095204/28543605-5a604e12-70d1-11e7-893d-3eb5c210c085.JPG)
